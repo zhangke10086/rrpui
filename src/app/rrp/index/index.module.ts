@@ -18,27 +18,35 @@ import {RppmComponent} from '../rppm/rppm.component';
 const routes: Routes = [
   {
     path: '', component: IndexComponent, children: [
+      // 首页
       {
         path: 'welcome', component: WelcomeComponent, data: {reuse: false, track: false}
       },
+      // 互联网
       {
         path: 'rpit', loadChildren: () => import('../../rrp/rpit/rpit.module').then(m => m.RpitModule)
       },
+      // 维修维护
       {
         path: 'rpmt', loadChildren: () => import('../../rrp/rpmt/rpmt.module').then(m => m.RpmtModule)
       },
+      // 生产数据
       {
         path: 'rppd', loadChildren: () => import('../../rrp/rppd/rppd.module').then(m => m.RppdModule)
       },
+      // 生产管理
       {
         path: 'rppm', loadChildren: () => import('../../rrp/rppm/rppm.module').then(m => m.RppmModule)
       },
+      // 运行情况
       {
         path: 'rprs', loadChildren: () => import('../../rrp/rprs/rprs.module').then(m => m.RprsModule)
       },
+      // 租赁管理
       {
         path: 'rprm', loadChildren: () => import('../../rrp/rprm/rprm.module').then(m => m.RprmModule)
       },
+      // 系统配置
       {
         path: 'rpsc', loadChildren: () => import('../../rrp/rpsc/rpsc.module').then(m => m.RpscModule)
       },
