@@ -1,0 +1,26 @@
+<div style="width: 800px;float: right">
+  <nz-table #table nzBordered  [nzShowPagination]=true [nzShowSizeChanger]="true"
+            [nzShowQuickJumper]="true" [nzPageSizeOptions]="[5,10,20,50]" [nzData]="datalist">
+    <thead>
+    <tr>
+      <th nzWidth="50px">全选</th>
+      <th nzWidth="50px">序号</th>
+      <th nzWidth="120px">模台编号</th>
+      <th nzWidth="120px">参数序列号</th>
+      <th nzWidth="120px">设置时间</th>
+      <th nzWidth="300px">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of table.data">
+      <td nzShowCheckbox></td>
+      <td>{{datalist.indexOf(data) + 1}}</td>
+      <td>{{data}}</td>
+      <td>{{data}}</td>
+      <td>{{data}}</td>
+      <td>{{data}}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>
+
