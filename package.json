@@ -19,7 +19,11 @@
     "@angular/platform-browser": "~8.2.0",
     "@angular/platform-browser-dynamic": "~8.2.0",
     "@angular/router": "~8.2.0",
+    "echarts": "^4.7.0",
+    "install": "^0.13.0",
     "ng-zorro-antd": "^8.5.2",
+    "ngx-echarts": "^4.2.2",
+    "npm": "^6.14.2",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"

@@ -1,0 +1,25 @@
+<div class="left">
+  <div style="margin-top: 32px">
+    <div #map id="map" echarts [options]="regionOptions" ></div>
+  </div>
+</div>
+<div class="right">
+  <nz-list style="width: 250px;" [nzDataSource]="data" nzBordered [nzHeader]="header"    nzSize="small" [nzFooter]="nzTitle" [nzRenderItem]="defaultItem">
+    <ng-template #defaultItem let-item>
+      <nz-list-item style="height: 20px;font-size: 12px">
+        <div style="display: inline-block;width: 80px">
+          <nz-progress [nzPercent]="item.percent"  [nzStrokeColor]="{ '0%': '#108ee9', '100%': '#108ee9' }" [nzShowInfo]="false" nzSize="small"></nz-progress>
+        </div>
+        <div style="display: inline-block;margin-left: 8px">
+          <div style="display: inline-block">{{ item.province}}</div>-
+          <div style="display: inline-block">{{ item.name}}</div><span style="width: 4px;display: inline-block"></span>
+          <div style="display: inline-block;font-weight: bold">{{ item.num}}</div>家工厂
+        </div>
+      </nz-list-item>
+    </ng-template>
+    <ng-template #nzTitle>
+      <a href="">{{ footer }}</a>
+    </ng-template>
+  </nz-list>
+</div>
+
