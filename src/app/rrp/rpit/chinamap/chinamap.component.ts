@@ -39,23 +39,10 @@ export class ChinamapComponent implements OnInit {
             trigger: 'item',
             formatter: '{b}：{c}'
           },
-          // toolbox: {
-          //   show: true,
-          //   orient: 'vertical',
-          //   left: 'right',
-          //   top: 'center',
-          //   feature: {
-          //     dataView: { readOnly: false },
-          //     restore: {},
-          //     saveAsImage: {}
-          //   }
-          // },
           visualMap: {
             min: 0,
             max: 500,
-            // text: ['High', 'Low'],
             realtime: false,
-            // calculable: true,
             inRange: {
               color: ['#44608b', '#e66b00']
             }
@@ -114,8 +101,6 @@ export class ChinamapComponent implements OnInit {
         };
     const echart = echarts.init(document.getElementById('map')); // 获取视图的echarts的DOM节点，并初始化对象
     echart.on('click', function(obj) { // 绑定地图点击事件
-
-        console.log(obj);
         if (obj.data) {
           if (obj.data.name === '山东') {
             this.regionOptions = {
@@ -126,9 +111,7 @@ export class ChinamapComponent implements OnInit {
               visualMap: {
                 min: 0,
                 max: 100,
-                // text: ['High', 'Low'],
                 realtime: false,
-                // calculable: true,
                 inRange: {
                   color: ['#44608b', '#44608b', '#0d98bb', '#e69805']
                 }
