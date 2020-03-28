@@ -30,7 +30,7 @@ export class ChinamapComponent implements OnInit {
   ];
 
 
-  header;
+  header; //测试
   footer = '生产数据汇总图表';
   ngOnInit() {
     this.header = '各省地图|布料机器人分布';
