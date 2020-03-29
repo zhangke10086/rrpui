@@ -6,13 +6,13 @@ import {EmptyComponent} from './empty/empty.component';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {FormsModule} from '@angular/forms';
 import {WelcomeComponent} from './welcome/welcome.component';
-import {RprmComponent} from '../rprm/rprm.component';
-import {RprsComponent} from '../rprs/rprs.component';
-import {RpscComponent} from '../rpsc/rpsc.component';
-import {RpitComponent} from '../rpit/rpit.component';
-import {RpmtComponent} from '../rpmt/rpmt.component';
-import {RppdComponent} from '../rppd/rppd.component';
-import {RppmComponent} from '../rppm/rppm.component';
+import {ZlglComponent} from '../zlgl/zlgl.component';
+import {YxqkComponent} from '../yxqk/yxqk.component';
+import {XtpzComponent} from '../xtpz/xtpz.component';
+import {HlwComponent} from '../hlw/hlw.component';
+import {WxwhComponent} from '../wxwh/wxwh.component';
+import {ScsjComponent} from '../scsj/scsj.component';
+import {ScglComponent} from '../scgl/scgl.component';
 
 
 const routes: Routes = [
@@ -24,31 +24,31 @@ const routes: Routes = [
       },
       // 互联网
       {
-        path: 'rpit', loadChildren: () => import('../../rrp/rpit/rpit.module').then(m => m.RpitModule)
+        path: 'hlw', loadChildren: () => import('../hlw/hlw.module').then(m => m.HlwModule)
       },
       // 维修维护
       {
-        path: 'rpmt', loadChildren: () => import('../../rrp/rpmt/rpmt.module').then(m => m.RpmtModule)
+        path: 'wxwh', loadChildren: () => import('../wxwh/wxwh.module').then(m => m.WxwhModule)
       },
       // 生产数据
       {
-        path: 'rppd', loadChildren: () => import('../../rrp/rppd/rppd.module').then(m => m.RppdModule)
+        path: 'scsj', loadChildren: () => import('../scsj/scsj.module').then(m => m.ScsjModule)
       },
       // 生产管理
       {
-        path: 'rppm', loadChildren: () => import('../../rrp/rppm/rppm.module').then(m => m.RppmModule)
+        path: 'scgl', loadChildren: () => import('../scgl/scgl.module').then(m => m.ScglModule)
       },
       // 运行情况
       {
-        path: 'rprs', loadChildren: () => import('../../rrp/rprs/rprs.module').then(m => m.RprsModule)
+        path: 'yxqk', loadChildren: () => import('../yxqk/yxqk.module').then(m => m.YxqkModule)
       },
       // 租赁管理
       {
-        path: 'rprm', loadChildren: () => import('../../rrp/rprm/rprm.module').then(m => m.RprmModule)
+        path: 'zlgl', loadChildren: () => import('../zlgl/zlgl.module').then(m => m.ZlglModule)
       },
       // 系统配置
       {
-        path: 'rpsc', loadChildren: () => import('../../rrp/rpsc/rpsc.module').then(m => m.RpscModule)
+        path: 'xtpz', loadChildren: () => import('../xtpz/xtpz.module').then(m => m.XtpzModule)
       },
       {
         path: 'empty', component: EmptyComponent, data: {reuse: false, track: false}
@@ -61,13 +61,13 @@ const routes: Routes = [
     IndexComponent,
     WelcomeComponent,
     EmptyComponent,
-    RprmComponent,
-    RprsComponent,
-    RpscComponent,
-    RpitComponent,
-    RpmtComponent,
-    RppdComponent,
-    RppmComponent
+    ZlglComponent,
+    YxqkComponent,
+    XtpzComponent,
+    HlwComponent,
+    WxwhComponent,
+    ScsjComponent,
+    ScglComponent
   ],
   imports: [
     CommonModule,
