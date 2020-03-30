@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: 'chinamap', component: ChinamapComponent, data: { title: '互联网' },
   },
-  /***************挂自己功能组件 */
+  /**************挂自己功能组件 */
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],

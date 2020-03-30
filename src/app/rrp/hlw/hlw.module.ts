@@ -11,10 +11,11 @@ import { ChinamapComponent } from './chinamap/chinamap.component';
 
 @NgModule({
   declarations: [
-
-  DemoComponent,
-
-  ChinamapComponent],
+    /**************挂自己功能组件 */
+    DemoComponent,
+    ChinamapComponent
+    /**************挂自己功能组件 */
+  ],
   imports: [
     NgxEchartsModule,
     CommonModule,

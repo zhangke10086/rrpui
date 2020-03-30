@@ -21,9 +21,6 @@ export class IndexComponent implements OnInit {
   tabIndex = 0;
   theme = 'dark';
   headerBg = '#141a1e';
-  tabBg = '#4e4e4e';
-  tabcardBg = '#4e4e4e';
-  changeTheme = false;
   TabBarStyle = {
     color: '#4e4e4e',
     blackground: '#4e4e4e'
