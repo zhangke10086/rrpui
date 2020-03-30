@@ -32,29 +32,17 @@
               nzBreakpoint="md" class="out-div"
               [(nzCollapsed)]="isCollapsed"
               [nzTrigger]="null">
-      <ul nz-menu   [nzTheme]="theme" nzMode="inline" [nzInlineCollapsed]="isCollapsed" *ngFor="let a of menu">
-        <li *ngIf="a.hasOwnProperty('children') && a.display" nz-submenu  [nzTitle]="a.title" [nzIcon]="a.icon">
+      <ul nz-menu  nzMode="inline" [nzTheme]="theme"  [nzInlineCollapsed]="isCollapsed" *ngFor="let a of menus">
+        <li *ngIf="a.hasOwnProperty('children') && a.children" nz-submenu  [nzTitle]="a.title" [nzIcon]="a.icon">
           <ul>
-            <div *ngFor="let b of a.children">
-              <li  *ngIf="b.hasOwnProperty('children')&& b.display" nz-submenu  [nzTitle]="b.title">
-                <ul *ngIf="b.hasOwnProperty('children')&& b.display">
-                  <div *ngFor="let c of b.children">
-                    <li *ngIf="c.display" nz-menu-item (click)="navigateTo(c)"
-                        [nzSelected]="menuSelected(c)">
-                      {{c.title}}
-                    </li>
-                  </div>
-                </ul>
-              </li>
-              <li  *ngIf="!b.hasOwnProperty('children')&& b.display" nz-menu-item  (click)="navigateTo(b)"
+              <li *ngFor="let b of a.children" nz-menu-item  (click)="navigateTo(b)"
                    [nzSelected]="menuSelected(b)">
-                <div *ngIf="b.display"> {{b.title}}</div>
+                {{b.title}}
               </li>
-            </div>
           </ul>
         </li>
         <li (click)="navigateTo(a)"
-            *ngIf="a&&(!a.hasOwnProperty('children'))&&a.display" nz-menu-item
+            *ngIf="!(a.hasOwnProperty('children')&&a.children)" nz-menu-item
             [nzSelected]="menuSelected(a)">
           <i nz-icon [nzType]="a.icon"></i>
           <span>{{a.title}}</span>

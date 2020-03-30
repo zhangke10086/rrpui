@@ -1,11 +1,12 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
 // @ts-ignore
-import j from 'src/assets/config/menu.json';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {NzDropdownContextComponent, NzDropdownService} from 'ng-zorro-antd';
+import {NzDropdownContextComponent, NzDropdownService, NzMessageService} from 'ng-zorro-antd';
 import {PlatformLocation} from '@angular/common';
 import {RouteReuse} from '../../core/routereuse/routeReuse';
 import {filter, map, mergeMap} from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
+import {UrlService} from '../../core/service/url.service';
 
 @Component({
   selector: 'app-index',
@@ -15,7 +16,8 @@ import {filter, map, mergeMap} from 'rxjs/operators';
 export class IndexComponent implements OnInit {
   tabs: Array<any> = [];
   tabDropDown: NzDropdownContextComponent;
-  menu: any = j;
+  menu: any ;
+  menus = [];
   isCollapsed = false;
   showALL: boolean;
   tabIndex = 0;
@@ -32,7 +34,10 @@ export class IndexComponent implements OnInit {
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
               private dropDownService: NzDropdownService,
-              private location: PlatformLocation) {
+              private location: PlatformLocation,
+              private http: HttpClient,
+              private posturl: UrlService,
+              private message: NzMessageService) {
     // 锁死浏览器后退事件,防止出现empty缓冲页面
     location.onPopState(() => {
       router.navigate(['/index/empty']).then(res => {
@@ -64,9 +69,40 @@ export class IndexComponent implements OnInit {
       }
     });
 
+    const userId = JSON.parse(localStorage.getItem('userinfo')).id;
+    this.http.get(this.posturl.hostname + '/dynamicMenuService/getDynamicMenu?id=' + userId).subscribe((res: any) => {
+      if (res.state === 200) {
+        this.digoutMenu(res.data);
+        console.log(this.menus);
+      } else {
+        this.message.error('菜单加载失败');
+      }
+    });
   }
 
   ngOnInit() {
+  }
+  // 拼明细节点菜单
+  digoutMenu(data) {
+    data.forEach(m => {
+      const menu = {
+        title: '',
+        icon: 'book',
+        url: '',
+        children: []
+      };
+      if (m.hasOwnProperty('children') && m.children) {
+        menu.title = m.menu.title;
+        menu.url = m.menu.url;
+        menu.children = m.children;
+      }
+      if (m.hasOwnProperty('children') && !m.children) {
+        menu.title = m.menu.title;
+        menu.url = m.menu.url;
+        menu.children = null;
+      }
+      this.menus.push(menu);
+    });
   }
   navigateTo(data: any) {
     if (data === this.home && this.tabs.findIndex(p => data.url.includes(p.url))) {
@@ -180,7 +216,7 @@ export class IndexComponent implements OnInit {
     }
   }
   logout() {
-    delete localStorage['userinfo'];
+    delete localStorage.userinfo;
     this.router.navigate(['/login']);
   }
 }
