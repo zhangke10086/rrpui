@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
@@ -13,7 +12,6 @@ import {IndexModule} from './rrp/index/index.module';
 import {RouteReuseStrategy} from '@angular/router';
 import {RouteReuse} from './core/routereuse/routeReuse';
 import {LoginModule} from './login/login.module';
-
 registerLocaleData(zh);
 
 @NgModule({
@@ -27,8 +25,9 @@ registerLocaleData(zh);
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    IndexModule, // 需要在AppRoutingModule之后导入
     LoginModule,
+    IndexModule, // 需要在AppRoutingModule之后导入
+
   ],
   providers: [
     { provide: NZ_I18N, useValue: zh_CN },

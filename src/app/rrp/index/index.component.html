@@ -19,7 +19,8 @@
         <i class="trigger" nz-icon nzType="fullscreen-exit" nzTheme="outline"></i>
       </span>
         <div id="user">
-          <nz-avatar nzShape="circle" nzSrc="/assets/src/img/touxiang_.jpg"
+          <nz-avatar  [nzDropdownMenu]="user" nz-dropdown nzPlacement="bottomRight"
+                      nzShape="circle" nzSrc="/assets/src/img/touxiang_.jpg"
                      style="margin-right: 4px;margin-bottom:8px;cursor:pointer;display: inline-block;font-size: 16px;height: 36px;width: 36px">
           </nz-avatar>
         </div>
@@ -95,3 +96,12 @@
     </nz-layout>
   </nz-layout>
 </nz-layout>
+<nz-dropdown-menu #user="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item (click)="logout()">
+      <i style="margin-right: 8px;font-size: 16px" nz-icon nzType="logout" nzTheme="outline"></i>
+      <span style="font-size: 14px">注销</span>
+    </li>
+  </ul>
+
+</nz-dropdown-menu>

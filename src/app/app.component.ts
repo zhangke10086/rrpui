@@ -9,7 +9,13 @@ import {Router} from '@angular/router';
 export class AppComponent {
   constructor(
     private router: Router
-  ) {
-    this.router.navigate(['/index/welcome']);
+  )  {
+    // const token = localStorage.getItem('token');
+    const token = localStorage.getItem('userinfo');
+    if (token != null) {
+      this.router.navigate(['/index/welcome']);
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 }

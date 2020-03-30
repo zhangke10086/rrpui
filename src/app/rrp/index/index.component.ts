@@ -179,4 +179,8 @@ export class IndexComponent implements OnInit {
       this.showALL = false;
     }
   }
+  logout() {
+    delete localStorage['userinfo'];
+    this.router.navigate(['/login']);
+  }
 }
