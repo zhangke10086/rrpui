@@ -1,0 +1,100 @@
+<nz-table #basicTable [nzData]="warnings">
+  <thead>
+  <tr>
+    <th>序号</th>
+    <th>时间</th>
+    <th>大车（X轴）进限位开关</th>
+    <th>大车（X轴）退限位开关</th>
+    <th>小车（Y轴）进限位开关</th>
+    <th>小车（Y轴）退限位开关</th>
+    <th>料斗上升限位</th>
+    <th>料斗下降限位</th>
+    <th>X接料原点</th>
+    <th>Y接料原点</th>
+    <th>空气压力报警</th>
+    <th>碰撞保护</th>
+    <th>搅拌变频故障</th>
+    <th>1下料变频故障</th>
+    <th>2下料变频故障</th>
+    <th>3下料变频故障</th>
+    <th>4下料变频故障</th>
+    <th>5下料变频故障</th>
+    <th>6下料变频故障</th>
+    <th>7下料变频故障</th>
+    <th>8下料变频故障</th>
+    <th>X向变频故障</th>
+    <th>Y向变频故障</th>
+    <th>升降过载</th>
+    <th>振动过载</th>
+    <th>润滑泵过载</th>
+    <th>实际下料与理论下料不匹配</th>
+    <th>操作</th>
+
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of basicTable.data">
+    <td>{{ data.id }}</td>
+    <td>{{ data.time }}</td>
+    <td>{{ data.machine_signal0 }}</td>
+    <td>{{ data.machine_signal1 }}</td>
+    <td>{{ data.machine_signal2 }}</td>
+    <td>{{ data.machine_signal3 }}</td>
+    <td>{{ data.machine_signal4 }}</td>
+    <td>{{ data.machine_signal5 }}</td>
+    <td>{{ data.machine_signal6 }}</td>
+    <td>{{ data.machine_signal7 }}</td>
+    <td>{{ data.machine_signal8 }}</td>
+    <td>{{ data.machine_signal9 }}</td>
+    <td>{{ data.machine_signal10 }}</td>
+    <td>{{ data.machine_signal11 }}</td>
+    <td>{{ data.machine_signal12 }}</td>
+    <td>{{ data.machine_signal13 }}</td>
+    <td>{{ data.machine_signal14 }}</td>
+    <td>{{ data.machine_signal15 }}</td>
+    <td>{{ data.machine_signal16 }}</td>
+    <td>{{ data.machine_signal17 }}</td>
+    <td>{{ data.machine_signal18 }}</td>
+    <td>{{ data.machine_signal19 }}</td>
+    <td>{{ data.machine_signal20 }}</td>
+    <td>{{ data.machine_signal21 }}</td>
+    <td>{{ data.machine_signal22 }}</td>
+    <td>{{ data.machine_signal23 }}</td>
+    <td>{{ data.machine_signal24 }}</td>
+
+
+    <td>
+      <button nz-button [nzType]="'primary'" (click)="delete(data)"><span>删除</span></button>
+      <nz-divider nzType="vertical"></nz-divider>
+      <button nz-button [nzType]="'primary'" (click)="showModal(data)"><span>修改</span></button>
+      <nz-modal [(nzVisible)]="isVisible" nzTitle="update" (nzOnCancel)="handleCancel()" (nzOnOk)="update()">
+        <label>大车（X轴）进限位开关</label><input [(ngModel)]="data.machine_signal0"/>
+        <label>大车（X轴）退限位开关</label><input [(ngModel)]="data.machine_signal1"/>
+        <label>小车（Y轴）进限位开关</label><input [(ngModel)]="data.machine_signal2"/>
+        <label>小车（Y轴）退限位开关</label><input [(ngModel)]="data.machine_signal3"/>
+        <label>料斗上升限位</label><input [(ngModel)]="data.machine_signal4"/>
+        <label>料斗下降限位</label><input [(ngModel)]="data.machine_signal5"/>
+        <label>X接料原点</label><input [(ngModel)]="data.machine_signal6"/>
+        <label>Y接料原点</label><input [(ngModel)]="data.machine_signal7"/>
+        <label>空气压力报警</label><input [(ngModel)]="data.machine_signal8"/>
+        <label>碰撞保护</label><input [(ngModel)]="data.machine_signal9"/>
+        <label>搅拌变频故障</label><input [(ngModel)]="data.machine_signal10"/>
+        <label>1下料变频故障</label><input [(ngModel)]="data.machine_signal11"/>
+        <label>2下料变频故障</label><input [(ngModel)]="data.machine_signal12"/>
+        <label>3下料变频故障</label><input [(ngModel)]="data.machine_signal13"/>
+        <label>4下料变频故障</label><input [(ngModel)]="data.machine_signal14"/>
+        <label>5下料变频故障</label><input [(ngModel)]="data.machine_signal15"/>
+        <label>6下料变频故障</label><input [(ngModel)]="data.machine_signal16"/>
+        <label>7下料变频故障</label><input [(ngModel)]="data.machine_signal17"/>
+        <label>8下料变频故障</label><input [(ngModel)]="data.machine_signal18"/>
+        <label>X向变频故障</label><input [(ngModel)]="data.machine_signal19"/>
+        <label>Y向变频故障</label><input [(ngModel)]="data.machine_signal20"/>
+        <label>升降过载</label><input [(ngModel)]="data.machine_signal21"/>
+        <label>振动过载</label><input [(ngModel)]="data.machine_signal22"/>
+        <label>润滑泵过载</label><input [(ngModel)]="data.machine_signal23"/>
+        <label>实际下料与理论下料不匹配</label><input [(ngModel)]="data.machine_signal24"/>
+      </nz-modal>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
