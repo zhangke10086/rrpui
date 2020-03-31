@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {SoftwareUpdateService} from '../../../core/service/software-update.service';
+
 import {SoftwareUpgrade} from '../../../core/entity/entity';
+import {SoftwareUpdateService} from '../service/software-update.service';
 
 @Component({
   selector: 'app-software-update',
@@ -30,7 +31,7 @@ export class SoftwareUpdateComponent implements OnInit {
     this.isVisible1 = false;
     const add = {description: this.des}
     this.softwareUpdateService.addSoftwareUpgrade(add)
-      .subscribe((res) => {
+      .subscribe((res: any) => {
         this.getSoftwareUpgrades();
         alert(res.msg);
       });
@@ -48,7 +49,7 @@ export class SoftwareUpdateComponent implements OnInit {
   update(): void {
     this.isVisible = false;
     this.softwareUpdateService.updateSoftwareUpgrade(this.softwareUpgrade)
-      .subscribe((res) => {
+      .subscribe((res: any) => {
         this.getSoftwareUpgrades();
         alert(res.msg);
       });
@@ -64,14 +65,14 @@ export class SoftwareUpdateComponent implements OnInit {
 
   getSoftwareUpgrades(): void {
     this.softwareUpdateService.getSoftwareUpgrades()
-      .subscribe(res => {
+      .subscribe((res: any) => {
         this.softwareUpgrades = res.data;
       });
   }
 
   delete(data: SoftwareUpgrade | number): void {
     this.softwareUpdateService.deleteSoftwareUpgrade(data)
-      .subscribe(res => {
+      .subscribe((res: any) => {
         this.getSoftwareUpgrades();
         alert(res.msg);
       });

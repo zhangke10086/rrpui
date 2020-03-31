@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
-import {SoftwareUpgrade, Response} from '../entity/entity';
 import {catchError} from 'rxjs/operators';
+import {SoftwareUpgrade} from '../../../core/entity/entity';
+import {UrlService} from "../../../core/service/url.service";
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -13,12 +14,15 @@ const httpOptions = {
 
 export class SoftwareUpdateService {
   response: Response;
-  private softwareUpgradeListUrl = 'http://localhost:8080/softwareUpgrade/getSoftwareUpgrade';
-  private softwareUpgradeListByIdUrl = 'http://localhost:8080/softwareUpgrade/getSoftwareUpgradeById';
-  private softwareUpgradeDeleteUrl = 'http://localhost:8080/softwareUpgrade/deleteById';
-  private softwareUpgradeUpdateUrl = 'http://localhost:8080/softwareUpgrade/updateSoftwareUpgrade';
-  private softwareUpgradeAddteUrl = 'http://localhost:8080/softwareUpgrade/addSoftwareUpgrade';
-  constructor(private http: HttpClient) { }
+  private softwareUpgradeListUrl = this.url.hostname + '/softwareUpgrade/getSoftwareUpgrade';
+  private softwareUpgradeListByIdUrl = this.url.hostname + '/softwareUpgrade/getSoftwareUpgradeById';
+  private softwareUpgradeDeleteUrl = this.url.hostname + '/softwareUpgrade/deleteById';
+  private softwareUpgradeUpdateUrl = this.url.hostname + '/softwareUpgrade/updateSoftwareUpgrade';
+  private softwareUpgradeAddteUrl = this.url.hostname + '/softwareUpgrade/addSoftwareUpgrade';
+
+  // private softwareUpgradeAddteUrl = 'http://localhost:8080/softwareUpgrade/addSoftwareUpgrade';
+  constructor(private http: HttpClient,
+              private url: UrlService) { }
 
   /** DELETE: detail the softwareUpgrade from the server */
   deleteSoftwareUpgrade(softwareUpgrade: SoftwareUpgrade | number): Observable<Response> {

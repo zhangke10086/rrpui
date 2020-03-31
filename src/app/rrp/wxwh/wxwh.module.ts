@@ -5,7 +5,7 @@ import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {WarningComponent} from './warning/warning.component';
 import {SoftwareUpdateComponent} from './software-update/software-update.component';
 import { CssdComponent } from './cssd/cssd.component';
-
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [SoftwareUpdateComponent, WarningComponent, CssdComponent],
@@ -13,6 +13,7 @@ import { CssdComponent } from './cssd/cssd.component';
     CommonModule,
     WxwhRoutingModule,
     NgZorroAntdModule,
+    FormsModule
   ]
 })
 export class WxwhModule { }
