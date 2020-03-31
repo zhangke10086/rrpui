@@ -10,7 +10,7 @@ const routes: Routes = [
     path: 'demo', component: DemoComponent, data: { title: 'demo' },
   },
   {
-    path: 'chinamap', component: ChinamapComponent, data: { title: '互联网' },
+    path: '', component: ChinamapComponent, data: { title: '互联网' },
   },
   /**************挂自己功能组件 */
 ];
