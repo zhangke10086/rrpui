@@ -1,1 +1,65 @@
-<p>cssd works!</p>
+<nz-table #basicTable [nzData]="robotDatas">
+  <thead>
+  <tr>
+    <th>序号</th>
+<!--    <th>机器人编号</th>-->
+<!--    <th>机器人名称</th>-->
+    <th>操作</th>
+
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of basicTable.data">
+    <td>{{ data.id }}</td>
+<!--    <td>{{ data.robot.id}}</td>-->
+<!--    <td>{{ data.robot.name }}</td>-->
+    <td>
+      <button nz-button [nzType]="'primary'" (click)="showModal(data)"><span>修改参数</span></button>
+    </td>
+  </tr>
+  </tbody>
+  <nz-modal *ngIf="robotData" (nzAfterClose)="getRobotDatas()" [(nzVisible)]="isVisible" nzTitle="update" (nzOnCancel)="handleCancel()" (nzOnOk)="update()">
+    <label>序号</label><input [(ngModel)]="this.robotData.id"/>
+    <label>密度</label><input [(ngModel)]="this.robotData.concrete_density"/>
+    <label>塌落度</label><input [(ngModel)]="this.robotData.concrete_angle"/>
+    <label>混凝土厚度</label><input [(ngModel)]="this.robotData.concrete_thickness"/>
+    <label>落料延迟时间</label><input [(ngModel)]="this.robotData.concrete_delay"/>
+    <label>X方向最大速度</label><input [(ngModel)]="this.robotData.maxv_x"/>
+    <label>Y方向最大速度</label><input [(ngModel)]="this.robotData.maxv_y"/>
+    <label>Z方向最大速度</label><input [(ngModel)]="this.robotData.maxv_z"/>
+    <label>出料口最大速度</label><input [(ngModel)]="this.robotData.maxv_part"/>
+    <label>X位置</label><input [(ngModel)]="this.robotData.encodervalue_zero_X"/>
+    <label>Y位置</label><input [(ngModel)]="this.robotData.encodervalue_zero_Y"/>
+    <label>Z位置</label><input [(ngModel)]="this.robotData.encodervalue_zero_Z"/>
+    <label>X最小</label><input [(ngModel)]="this.robotData.mincoordinate_x"/>
+    <label>Y最小</label><input [(ngModel)]="this.robotData.mincoordinate_y"/>
+    <label>Z最小</label><input [(ngModel)]="this.robotData.mincoordinate_z"/>
+    <label>X最大</label><input [(ngModel)]="this.robotData.maxcoordinate_x"/>
+    <label>Y最大</label><input [(ngModel)]="this.robotData.maxcoordinate_y"/>
+    <label>Z最大</label><input [(ngModel)]="this.robotData.maxcoordinate_z"/>
+    <label>X位置</label><input [(ngModel)]="this.robotData.concretrreceive_coordinate_x"/>
+    <label>Y位置</label><input [(ngModel)]="this.robotData.concretrreceive_coordinate_y"/>
+    <label>Z位置</label><input [(ngModel)]="this.robotData.concretrreceive_coordinate_z"/>
+    <label>振动时间</label><input [(ngModel)]="this.robotData. vibrate_time"/>
+    <label>振动频率</label><input [(ngModel)]="this.robotData. vibration_frequency_1"/>
+    <label>下料速度</label><input [(ngModel)]="this.robotData.speed_default"/>
+    <label>自动行走速度</label><input [(ngModel)]="this.robotData.target_work_port_v"/>
+    <label>手动行走速度</label><input [(ngModel)]="this.robotData.move_speed"/>
+    <label>X缩减</label><input [(ngModel)]="this.robotData.crop_height_x"/>
+    <label>Y缩减</label><input [(ngModel)]="this.robotData.crop_width_y"/>
+    <label>反向起点偏移</label><input [(ngModel)]="this.robotData.crop_X_notpositive_distance"/>
+    <label>X偏移</label><input [(ngModel)]="this.robotData.port_work_distance_x"/>
+    <label>Y偏移</label><input [(ngModel)]="this.robotData.port_work_distance_y"/>
+    <label>反向添加重量-X方向长度</label><input [(ngModel)]="this.robotData.reversedweight_length"/>
+    <label>正向添加重量-X方向长度</label><input [(ngModel)]="this.robotData.reversedweight_lengthpositive"/>
+    <label>润滑时间</label><input [(ngModel)]="this.robotData.time_lubrication"/>
+    <label>间隔时间</label><input [(ngModel)]="this.robotData.Intervals_lubrication"/>
+    <label>振动输出1</label><input [(ngModel)]="this.robotData. vibrate_outputs0"/>
+    <label>振动输出2</label><input [(ngModel)]="this.robotData. vibrate_outputs1"/>
+    <label>振动输出3</label><input [(ngModel)]="this.robotData. vibrate_outputs2"/>
+    <label>振动输出4</label><input [(ngModel)]="this.robotData. vibrate_outputs3"/>
+    <label>模台偏移量</label><input [(ngModel)]="this.robotData.enddistance"/>
+
+  </nz-modal>
+</nz-table>
+

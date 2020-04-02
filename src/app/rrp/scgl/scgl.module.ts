@@ -1,16 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {ScglRoutingModule} from './scgl-routing.module';
-import { ProductionmanageComponent } from './productionmanage/productionmanage.component';
 import {FormsModule} from '@angular/forms';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
+import { MtglComponent } from './mtgl/mtgl.component';
+import { MtcsComponent } from './mtcs/mtcs.component';
+import { SccsComponent } from './sccs/sccs.component';
 
 
 
 @NgModule({
   declarations: [
     /**************定义自己功能组件 */
-    ProductionmanageComponent
+    MtglComponent,
+    MtcsComponent,
+    SccsComponent
     /**************定义自己功能组件 */
   ],
   imports: [

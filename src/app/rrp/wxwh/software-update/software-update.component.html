@@ -23,7 +23,7 @@
       <nz-divider nzType="vertical"></nz-divider>
       <button nz-button [nzType]="'primary'" (click)="showModal(data)"><span>修改</span></button>
       <nz-modal [(nzVisible)]="isVisible" nzTitle="update" (nzOnCancel)="handleCancel()" (nzOnOk)="update()">
-        <label>软件包名称:&nbsp;</label> <input [(ngModel)]="data.description"/>
+        <label>软件包名称:&nbsp;</label> <input *ngIf="softwareUpgrade" [(ngModel)]="this.softwareUpgrade.description"/>
       </nz-modal>
     </td>
     <td>

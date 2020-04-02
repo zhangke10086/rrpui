@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
-import {Warning, Response} from '../entity/entity';
+import {Warning, Response} from '../../../core/entity/entity';
 import {catchError} from 'rxjs/operators';
+import {UrlService} from '../../../core/service/url.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -13,12 +14,12 @@ const httpOptions = {
 
 export class WarningService {
   response: Response;
-  private warningListUrl = 'http://localhost:8080/warning/getWarning';
-  private warningListByIdUrl = 'http://localhost:8080/warning/getWarningById';
-  private warningDeleteUrl = 'http://localhost:8080/warning/deleteById';
-  private warningUpdateUrl = 'http://localhost:8080/warning/updateWarning';
-  private warningAddteUrl = 'http://localhost:8080/warning/addWarning';
-  constructor(private http: HttpClient) { }
+  private warningListUrl = this.url.hostname + '/warning/getWarning';
+  private warningListByIdUrl = this.url.hostname + '/warning/getWarningById';
+  private warningDeleteUrl = this.url.hostname + '/warning/deleteById';
+  private warningUpdateUrl = this.url.hostname + '/warning/updateWarning';
+  private warningAddteUrl = this.url.hostname + '/warning/addWarning';
+  constructor(private http: HttpClient , private url: UrlService) { }
 
   /** DELETE: detail the warning from the server */
   deleteWarning(warning: Warning | number): Observable<Response> {
