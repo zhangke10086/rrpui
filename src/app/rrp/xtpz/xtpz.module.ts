@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import {XtpzRoutingModule} from './xtpz-routing.module';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
 import { FormsModule } from '@angular/forms';
+import { YhglComponent } from './yhgl/yhgl.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [YhglComponent],
   imports: [
     CommonModule,
     XtpzRoutingModule,

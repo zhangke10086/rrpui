@@ -29,7 +29,7 @@ export class SoftwareUpdateComponent implements OnInit {
 
   add(): void {
     this.isVisible1 = false;
-    const add = {description: this.des}
+    const add = {description: this.des};
     this.softwareUpdateService.addSoftwareUpgrade(add)
       .subscribe((res: any) => {
         this.getSoftwareUpgrades();

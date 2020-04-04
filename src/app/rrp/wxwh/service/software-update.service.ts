@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {SoftwareUpgrade} from '../../../core/entity/entity';
-import {UrlService} from "../../../core/service/url.service";
+import {UrlService} from '../../../core/service/url.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
