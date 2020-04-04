@@ -1,0 +1,47 @@
+<button nz-button [nzType]="'primary'" (click)="showModal1()"><span>增加</span></button>
+<nz-modal [(nzVisible)]="isVisible1" nzTitle="add" (nzOnCancel)="handleCancel()" (nzOnOk)="add()">
+<!--  <label>姓名:&nbsp;</label> <input nz-input  [(ngModel)]="des" />-->
+  <label>所属公司：</label>
+  <select [(ngModel)]="company">
+    <option *ngFor="let company of companies" [ngValue]="company" >{{company.name}}</option>
+  </select> <br>
+<!--  <label>用户姓名:&nbsp;</label> <input nz-input  [(ngModel)]="role.id" />-->
+  <!--  <label>身份：</label>-->
+<!--  <select [(ngModel)]="role">-->
+<!--    <option *ngFor="let role of roles" [ngValue]="company" >{{role.id}}</option>-->
+<!--  </select> <br>-->
+</nz-modal>
+
+<nz-table #basicTable [nzData]="users">
+  <thead>
+  <tr>
+    <th>用户名</th>
+    <th>姓名</th>
+    <th>登陆时间</th>
+    <th>身份</th>
+    <th>所在公司</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of basicTable.data">
+    <td>{{ data.userName }}</td>
+    <td>{{ data.name }}</td>
+    <td>{{ data.login_time }}</td>
+    <td>{{ data.role.description}}</td>
+    <td>{{ data.company.name}}</td>
+<!--    <td>{{ data.login_time | date:'yyyy-MM-dd'}}</td>-->
+    <td>
+      <button nz-button [nzType]="'primary'" (click)="delete(data.id)"><span>删除</span></button>
+      <nz-divider nzType="vertical"></nz-divider>
+<!--      <button nz-button [nzType]="'primary'" (click)="showModal(data)"><span>修改</span></button>-->
+<!--      <nz-modal [(nzVisible)]="isVisible" nzTitle="update" (nzOnCancel)="handleCancel()" (nzOnOk)="update()">-->
+<!--        <label>软件包名称:&nbsp;</label>-->
+<!--        <input [(ngModel)]="data.description"/>-->
+<!--      </nz-modal>-->
+      <button nz-button [nzType]="'primary'" (click)="getUser(data.id)"><span>控制台查看个人信息</span></button>
+    </td>
+
+  </tr>
+  </tbody>
+</nz-table>
