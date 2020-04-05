@@ -1,15 +1,27 @@
+
 <button nz-button [nzType]="'primary'" (click)="showModal1()"><span>增加</span></button>
-<nz-modal [(nzVisible)]="isVisible1" nzTitle="add" (nzOnCancel)="handleCancel()" (nzOnOk)="add()">
+<nz-modal [(nzVisible)]="isVisible1" nzTitle="add" (nzOnCancel)="handleCancel()" (nzOnOk)="add(name,username,password,contact,company,role)">
 <!--  <label>姓名:&nbsp;</label> <input nz-input  [(ngModel)]="des" />-->
+
+  <label>姓名：</label><input #name /><br>
+  <label>用户名：</label><input #username /><br>
+  <label>密码：</label><input #password /><br>
+  <label>联系方式：</label><input #contact /><br>
+<!--  <label>最近登陆时间：</label><input #login_time /><br>-->
+
   <label>所属公司：</label>
   <select [(ngModel)]="company">
     <option *ngFor="let company of companies" [ngValue]="company" >{{company.name}}</option>
   </select> <br>
-<!--  <label>用户姓名:&nbsp;</label> <input nz-input  [(ngModel)]="role.id" />-->
-  <!--  <label>身份：</label>-->
+
+<!--  <label>身份：</label>-->
 <!--  <select [(ngModel)]="role">-->
-<!--    <option *ngFor="let role of roles" [ngValue]="company" >{{role.id}}</option>-->
+<!--    <option *ngFor="let role of roles" [ngValue]="role" >{{role.description}}</option>-->
 <!--  </select> <br>-->
+  <label>身份：</label>
+  <select [(ngModel)]="role">
+    <option *ngFor="let role of roles" [ngValue]="role" >{{role.description}}</option>
+  </select> <br>
 </nz-modal>
 
 <nz-table #basicTable [nzData]="users">
@@ -17,19 +29,21 @@
   <tr>
     <th>用户名</th>
     <th>姓名</th>
-    <th>登陆时间</th>
+    <th>最近登陆时间</th>
     <th>身份</th>
-    <th>所在公司</th>
+    <th>所在企业</th>
+    <th>企业类型</th>
     <th>操作</th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let data of basicTable.data">
-    <td>{{ data.userName }}</td>
+    <td>{{ data.username }}</td>
     <td>{{ data.name }}</td>
     <td>{{ data.login_time }}</td>
     <td>{{ data.role.description}}</td>
     <td>{{ data.company.name}}</td>
+    <td>{{ data.company.companyType.type}}</td>
 <!--    <td>{{ data.login_time | date:'yyyy-MM-dd'}}</td>-->
     <td>
       <button nz-button [nzType]="'primary'" (click)="delete(data.id)"><span>删除</span></button>
@@ -39,9 +53,10 @@
 <!--        <label>软件包名称:&nbsp;</label>-->
 <!--        <input [(ngModel)]="data.description"/>-->
 <!--      </nz-modal>-->
-      <button nz-button [nzType]="'primary'" (click)="getUser(data.id)"><span>控制台查看个人信息</span></button>
+      <button nz-button [nzType]="'primary'" (click)="resetPassword(data.id)"><span>重置密码</span></button>
     </td>
 
   </tr>
   </tbody>
 </nz-table>
+

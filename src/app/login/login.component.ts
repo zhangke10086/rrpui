@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
               private loginService: LoginService) {}
 
   login() {
-    this.loginService.login(this.validateForm.value.userName, this.validateForm.value.password).then((res: any) => {
+    this.loginService.login(this.validateForm.value.username, this.validateForm.value.password).then((res: any) => {
       if (res.state === 200) {
         this.message.success('欢迎' + res.data.name + '登陆成功,请稍后...');
         localStorage.setItem('userinfo', JSON.stringify(res.data));
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      userName: [null, [Validators.required]],
+      username: [null, [Validators.required]],
       password: [null, [Validators.required]],
       remember: [true]
     });

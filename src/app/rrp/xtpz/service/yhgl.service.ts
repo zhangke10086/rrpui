@@ -24,6 +24,7 @@ export class YhglService {
   private getCompanyByIdUrl = this.url.hostname + '/company/findById';
   private getRolesUrl = this.url.hostname + '/role/getRoles';
   private getRoleByIdUrl = this.url.hostname + 'role/getRoleById';
+  private resetPasswordUrl = this.url.hostname + '/user/resetPassword';
 
   constructor(private http: HttpClient,
               private url: UrlService) { }
@@ -43,16 +44,35 @@ export class YhglService {
     );
   }
 
-  /** POST: add a new user to the server */
-  addUser(softwareUpgrade: SoftwareUpgrade): Observable<Response> {
-    return this.http.put<Response>(this.addUserUrl, softwareUpgrade, httpOptions).pipe(
-      catchError(this.handleError<Response>('addUser'))
-    );
+  // /** POST: add a new user to the server */
+  // addUser(softwareUpgrade: SoftwareUpgrade): Observable<Response> {
+  //   return this.http.put<Response>(this.addUserUrl, softwareUpgrade, httpOptions).pipe(
+  //     catchError(this.handleError<Response>('addUser'))
+  //   );
+  // }
+
+  // // 两种方式都可以
+  // /** PUT: update the user on the server */
+  // resetPassword(user: any): Observable<Response> {
+  //   return this.http.put<Response>(this.resetPasswordUrl, user, httpOptions).pipe(
+  //     catchError(this.handleError<Response>('resetPassword'))
+  //   );
+  // }
+  // 两种方式都可以
+  /** PUT: update the user on the server */
+  resetPassword(id: number): Observable<Response> {
+    const url = this.resetPasswordUrl + '?id=' + id;
+    // return this.http.post<Response>(url).pipe(
+    //   catchError(this.handleError<Response>(`resetPassword id=${id}`))
+    //
+    // );
+    return this.http.post<Response>(url, id, httpOptions).pipe();
   }
-  /** PUT: update the hero on the server */
-  updateUser(softwareUpgrade: SoftwareUpgrade): Observable<Response> {
-    return this.http.put<Response>(this.updateUserUrl, softwareUpgrade, httpOptions).pipe(
-      catchError(this.handleError<Response>('updateUser'))
+
+  /** PUT: update the user on the server */
+  updateUser(user: any): Observable<Response> {
+    return this.http.put<Response>(this.resetPasswordUrl, user, httpOptions).pipe(
+      catchError(this.handleError<Response>('resetPassword'))
     );
   }
 
@@ -101,6 +121,11 @@ export class YhglService {
       catchError(this.handleError<Response>(`getCompany id=${id}`))
     );
   }
+
+  addUser(user: any): Observable<Response> {
+    return this.http.post<Response>(this.addUserUrl, user, httpOptions).pipe();
+  }
+
   /**
    * Handle Http operation that failed.
    * @param operation - name of the operation that failed
