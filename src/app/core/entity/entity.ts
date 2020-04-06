@@ -77,3 +77,56 @@ export class Bench {
   description: string;
   workshop: string;
 }
+
+export class CompanyType {
+  id: number;
+  type: string;
+}
+export class Company {
+  id: number;
+  name: string;
+  legalPerson: string;
+  province: string;
+  city: string;
+  address: string;
+  phone: string;
+  type: CompanyType;
+}
+export class Robot {
+  id: string;
+  name: string;
+  belongingCompany: Company;
+  way: string;
+  useSituation: string;
+}
+export class Lease {
+  id: number;
+  robot: Robot;
+  contractId: string;
+  company: Company;
+  costWay: string;
+  costMonth: string;
+  startTime: string;
+  paymentSituation: string;
+  workshopId: string;
+  internalId: string;
+  contract: string;
+  // 联系人
+  connector: string;
+}
+export class Pay {
+  id: number;
+  robot: Robot;
+  company: Company;
+  lease: Lease;
+  paymentAmount: number;
+  paymentTime: string;
+  // 缴费截止日期
+  paymentDeadline: string;
+  // 审核状态
+  examineSituation: string;
+  // 缴费时长
+  paymentDuration: string;
+  // 缴费凭证
+  paymentVouncher: string;
+}
