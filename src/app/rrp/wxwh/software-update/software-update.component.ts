@@ -38,6 +38,7 @@ export class SoftwareUpdateComponent implements OnInit {
   }
 
   handleCancel1(): void {
+    this.getSoftwareUpgrades();
     this.isVisible1 = false;
   }
 
@@ -56,6 +57,7 @@ export class SoftwareUpdateComponent implements OnInit {
   }
 
   handleCancel(): void {
+    this.getSoftwareUpgrades();
     this.isVisible = false;
   }
 

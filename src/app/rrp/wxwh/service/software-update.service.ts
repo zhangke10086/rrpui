@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {SoftwareUpgrade} from '../../../core/entity/entity';
-import {UrlService} from "../../../core/service/url.service";
+import {UrlService} from '../../../core/service/url.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -20,7 +20,6 @@ export class SoftwareUpdateService {
   private softwareUpgradeUpdateUrl = this.url.hostname + '/softwareUpgrade/updateSoftwareUpgrade';
   private softwareUpgradeAddteUrl = this.url.hostname + '/softwareUpgrade/addSoftwareUpgrade';
 
-  // private softwareUpgradeAddteUrl = 'http://localhost:8080/softwareUpgrade/addSoftwareUpgrade';
   constructor(private http: HttpClient,
               private url: UrlService) { }
 
