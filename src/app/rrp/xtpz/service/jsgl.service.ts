@@ -18,12 +18,13 @@ export class JsglService {
   private getOperationsUrl = this.url.hostname + '/operation/getOperations';
   private getRoleByIdUrl = this.url.hostname + '/role/getRoleById';
   private deleteRoleUrl = this.url.hostname + '/role/deleteRole';
-  private addRoleUrl = this.url.hostname + '/role/addRole';
-  private getRolesMaxIdUrl = this.url.hostname + '/role/getRolesMaxId';
+  // private addRoleUrl = this.url.hostname + '/role/addRole';
+  // private getRolesMaxIdUrl = this.url.hostname + '/role/getRolesMaxId';
   private getAllDynamicMenusUrl = this.url.hostname + '/dynamicMenuService/getAllDynamicMenus';
   private addAuthorityUrl = this.url.hostname + '/authority/addAuthority';
   // 其实是获得所有子菜单，获得全部菜单是/menu/getMenus
   private getMenusUrl = this.url.hostname + '/menu/getMenusByMenuNotNull';
+  private findByRoleIdUrl = this.url.hostname + '/authority/findByRoleId';
 
   constructor(private http: HttpClient,
               private url: UrlService) { }
@@ -36,8 +37,11 @@ export class JsglService {
     );
   }
 
-  getRolesMaxId(): Observable<Response> {
-    return this.http.get<Response>(this.getRolesMaxIdUrl);
+  findAuthorityByRoleId(id: number): Observable<Response> {
+    const url = this.findByRoleIdUrl + '?role_id=' + id;
+    return this.http.get<Response>(url).pipe(
+      catchError(this.handleError<Response>(`getRoleById id=${id}`))
+    );
   }
 
   getRoles(): Observable<Response> {
@@ -66,10 +70,6 @@ export class JsglService {
       .pipe(
         catchError(this.handleError<Response>('getMenus'))
       );
-  }
-
-  addRole(role: any): Observable<Response> {
-    return this.http.post<Response>(this.addRoleUrl, role, httpOptions).pipe();
   }
 
   addAuthority(authorityArray: any[]): Observable<Response> {
