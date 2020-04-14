@@ -242,5 +242,5 @@ export class RobotData {
   // tslint:disable-next-line:variable-name
   vibrate_outputs3: boolean;
   enddistance: number;
-  // robot: Robot;
+  robot: Robot;
 }

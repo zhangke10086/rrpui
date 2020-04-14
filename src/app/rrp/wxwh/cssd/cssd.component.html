@@ -2,8 +2,8 @@
   <thead>
   <tr>
     <th>序号</th>
-<!--    <th>机器人编号</th>-->
-<!--    <th>机器人名称</th>-->
+    <th>机器人编号</th>
+    <th>机器人名称</th>
     <th>操作</th>
 
   </tr>
@@ -11,8 +11,8 @@
   <tbody>
   <tr *ngFor="let data of basicTable.data">
     <td>{{ data.id }}</td>
-<!--    <td>{{ data.robot.id}}</td>-->
-<!--    <td>{{ data.robot.name }}</td>-->
+    <td>{{ data.robot.id}}</td>
+    <td>{{ data.robot.name }}</td>
     <td>
       <button nz-button [nzType]="'primary'" (click)="showModal(data)"><span>修改参数</span></button>
     </td>
