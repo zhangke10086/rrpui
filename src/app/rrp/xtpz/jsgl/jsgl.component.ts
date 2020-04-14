@@ -87,24 +87,18 @@ export class JsglComponent implements OnInit {
     };
 
     console.log(this.toAddRole);
-    alert(JSON.stringify(this.toAddRole));
-    this.jsglService.addRole(this.toAddRole).subscribe((res: any) => {
-      this.getRoles();
-      alert(res.msg);
-    });
 
     for (const sliced of this.menuOperations) {
       this.authorityArray.push({role: maxId, menu: Number(sliced['eMenu']), operation: Number(sliced['eOperation'])});
     }
 
-    console.log(this.authorityArray);
+    const completedAuthority: any = {toAddRole: this.toAddRole, authorityArray: this.authorityArray};
 
-    this.jsglService.addAuthority(this.authorityArray).subscribe((res: any) => {
+    this.jsglService.addAuthority(completedAuthority).subscribe((res: any) => {
       this.getRoles();
       alert(res.msg);
     });
 
-    // this.getRoles();
   }
 
   showModal(): void {
