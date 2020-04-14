@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {UrlService} from '../../../core/service/url.service';
-import {SoftwareUpgrade} from '../../../core/entity/entity';
 import {Observable, of} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 
