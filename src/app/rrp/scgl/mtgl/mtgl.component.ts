@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {Bench} from '../../../core/entity/entity';
 import {ActivatedRoute} from '@angular/router';
 import {MtglService} from '../service/mtgl.service';
+import { NzMessageService } from 'ng-zorro-antd';
+
+
 
 @Component({
   selector: 'app-mtgl',
@@ -19,7 +22,8 @@ export class MtglComponent implements OnInit {
 
   constructor(
     private benchService: MtglService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private message: NzMessageService
   ) {
   }
 
@@ -52,7 +56,7 @@ export class MtglComponent implements OnInit {
     this.benchService.updateBench(this.bench)
       .subscribe((res: any) => {
         this.getBenchs();
-        alert(res.msg);
+        this.message.success('修改成功！');
       });
   }
 
@@ -76,7 +80,7 @@ export class MtglComponent implements OnInit {
     this.benchService.deleteBench(data)
       .subscribe((res: any) => {
         this.getBenchs();
-        alert(res.msg);
+        this.message.success('删除成功！');
       });
   }
 

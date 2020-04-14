@@ -17,8 +17,10 @@
     <td>
       <button nz-button [nzType]="'primary'" (click)="delete(data)"><span>删除</span></button>
       <nz-divider nzType="vertical"></nz-divider>
-      <a routerLink="/index/scgl/sccs/{{data.bench.id}}"><button nz-button ><span>生产参数</span></button></a>
+      <a (click)="showModal(data)"><button nz-button>生产参数</button></a>
     </td>
   </tr>
   </tbody>
 </nz-table>
+<app-sccs></app-sccs>
+

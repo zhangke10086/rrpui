@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {SccsService} from '../service/sccs.service';
 import {Location} from '@angular/common';
 import {ProcessData} from '../../../core/entity/entity';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-sccs',
@@ -15,25 +16,34 @@ export class SccsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private sccsService: SccsService,
-    private location: Location
+    private location: Location,
+    private message: NzMessageService
   ) { }
-
+  @Output() onOk: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onCancel: EventEmitter<any> = new EventEmitter<any>();
+  isVisible = false;
+  id = null;
   ngOnInit() {
-    const id = this.route.snapshot.params.id;
-    this.sccsService.getProcessDataByBench(id)
-      .subscribe(res => this.processData = res.data);
   }
-
+  getdata(id) {
+    if (id !== null) {
+      this.sccsService.getProcessDataByBench(id)
+        .subscribe(res => this.processData = res.data);
+    }
+  }
   save(): void {
     this.sccsService.updateProcessData(this.processData)
       .subscribe((res) => {
-        alert(res.msg);
-        this.goBack();
+        if (res.state === 200) {
+          this.message.success('成功!');
+          this.isVisible = false;
+        }
       });
   }
 
   goBack(): void {
-    this.location.back();
+    this.isVisible = false;
+    // this.location.back();
   }
 
 }

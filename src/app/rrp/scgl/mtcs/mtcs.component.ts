@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {BenchData} from '../../../core/entity/entity';
 import {ActivatedRoute} from '@angular/router';
 import {MtcsService} from '../service/mtcs.service';
+import {SccsComponent} from "../sccs/sccs.component";
 
 @Component({
   selector: 'app-mtcs',
@@ -16,7 +17,8 @@ export class MtcsComponent implements OnInit {
   workshop = '';
   private benchDatas: BenchData[];
   benchData: BenchData;
-
+  benchid;
+  @ViewChild(SccsComponent, {static: false}) sccsComponent: SccsComponent;
   constructor(
     private benchDataService: MtcsService,
     private route: ActivatedRoute
@@ -44,7 +46,8 @@ export class MtcsComponent implements OnInit {
 
   showModal(data: BenchData): void {
     this.benchData = data;
-    this.isVisible = true;
+    this.sccsComponent.getdata(data.id);
+    this.sccsComponent.isVisible = true;
   }
 
   update(): void {
