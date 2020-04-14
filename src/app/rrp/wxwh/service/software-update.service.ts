@@ -20,7 +20,6 @@ export class SoftwareUpdateService {
   private softwareUpgradeUpdateUrl = this.url.hostname + '/softwareUpgrade/updateSoftwareUpgrade';
   private softwareUpgradeAddteUrl = this.url.hostname + '/softwareUpgrade/addSoftwareUpgrade';
 
-  // private softwareUpgradeAddteUrl = 'http://localhost:8080/softwareUpgrade/addSoftwareUpgrade';
   constructor(private http: HttpClient,
               private url: UrlService) { }
 

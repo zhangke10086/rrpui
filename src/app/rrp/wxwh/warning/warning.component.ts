@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {WarningService} from '../../../core/service/warning.service';
+import {WarningService} from '../service/warning.service';
 import {Warning} from '../../../core/entity/entity';
 
 @Component({
@@ -11,10 +11,10 @@ import {Warning} from '../../../core/entity/entity';
 
 export class WarningComponent implements OnInit {
   isVisible = false;
-  isVisible1 = false;
+  // isVisible1 = false;
   private warnings: Warning[];
   warning: Warning;
-  warning1: Warning;
+  // warning1: Warning;
 
   constructor(
     private warningService: WarningService,
@@ -22,23 +22,25 @@ export class WarningComponent implements OnInit {
   ) {
   }
 
-  showModal1(): void {
-    this.warning1 = null;
-    this.isVisible1 = true;
-  }
-
-  add(): void {
-    this.isVisible1 = false;
-    this.warningService.addWarning(this.warning1)
-      .subscribe((res) => {
-        this.getWarnings();
-        alert(res.msg);
-      });
-  }
-
-  handleCancel1(): void {
-    this.isVisible1 = false;
-  }
+  //
+  // showModal1(): void {
+  //   this.warning1 = null;
+  //   this.isVisible1 = true;
+  // }
+  //
+  // add(): void {
+  //   this.isVisible1 = false;
+  //   this.warningService.addWarning(this.warning1)
+  //     .subscribe((res) => {
+  //       this.getWarnings();
+  //       alert(res.msg);
+  //     });
+  // }
+  //
+  // handleCancel1(): void {
+  // this.getWarnings();
+  //   this.isVisible1 = false;
+  // }
 
   showModal(data: Warning): void {
     this.warning = data;
@@ -48,13 +50,14 @@ export class WarningComponent implements OnInit {
   update(): void {
     this.isVisible = false;
     this.warningService.updateWarning(this.warning)
-      .subscribe((res) => {
-        this.getWarnings();
-        alert(res.msg);
-      });
+        .subscribe((res) => {
+          this.getWarnings();
+          alert(res.msg);
+        });
   }
 
   handleCancel(): void {
+    this.getWarnings();
     this.isVisible = false;
   }
 

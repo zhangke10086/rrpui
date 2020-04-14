@@ -1,0 +1,26 @@
+<nz-table #basicTable [nzData]="benchDatas">
+  <thead>
+  <tr>
+    <th>序号</th>
+    <th>模台编号</th>
+    <th>参数序列号</th>
+    <th>设置时间</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of basicTable.data">
+    <td>{{ data.id }}</td>
+    <td>{{ data.bench.number }}</td>
+    <td>{{ data.number}}</td>
+    <td>{{ data.time | date:'yyyy-MM-dd'}}</td>
+    <td>
+      <button nz-button [nzType]="'primary'" (click)="delete(data)"><span>删除</span></button>
+      <nz-divider nzType="vertical"></nz-divider>
+      <a (click)="showModal(data)"><button nz-button>生产参数</button></a>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+<app-sccs></app-sccs>
+

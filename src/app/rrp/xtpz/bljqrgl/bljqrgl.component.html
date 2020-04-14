@@ -1,0 +1,61 @@
+<button nz-button [nzType]="'primary'" (click)="showModal1()"><span>增加</span></button>
+<nz-modal [(nzVisible)]="isVisible1" nzTitle="add" (nzOnCancel)="handleCancel1()" (nzOnOk)="add()">
+  <label>机器名称:&nbsp;</label> <input nz-input  [(ngModel)]="name" />
+  <label>唯一标识:&nbsp;</label> <input nz-input  [(ngModel)]="id" />
+  <label>归属企业:&nbsp;</label>
+  <select [(ngModel)]="company">
+    <option *ngFor="let obj of companys" [ngValue]="obj">{{obj.name}}</option>
+  </select><br>
+  <label>使用方式:&nbsp;</label>
+  <select [(ngModel)]="way">
+    <option [ngValue]="ways[0]">{{ways[0]}}</option>
+    <option [ngValue]="ways[1]">{{ways[1]}}</option>
+    <option [ngValue]="ways[2]">{{ways[2]}}</option>
+  </select>
+</nz-modal>
+
+<nz-table #basicTable [nzData]="robots">
+  <thead>
+  <tr>
+    <th>序号</th>
+    <th>机器人名称</th>
+    <th>唯一标识</th>
+    <th>归属企业</th>
+    <th>使用方式</th>
+    <th>使用状态</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of basicTable.data">
+    <td>{{ basicTable.data.indexOf(data) + 1 }}</td>
+    <td>{{ data.name }}</td>
+    <td>{{ data.id}}</td>
+    <td>{{ data.belongingCompany.name}}</td>
+    <td>{{ data.way}}</td>
+    <td>{{ data.use_situation}}</td>
+    <td>
+      <button nz-button [nzType]="'primary'" (click)="showModal(data)"><span>修改</span></button>
+      <nz-modal [(nzVisible)]="isVisible" nzTitle="update" (nzOnCancel)="handleCancel()" (nzOnOk)="update()">
+        <label>机器名称:&nbsp;</label> <input nz-input *ngIf="robot" [(ngModel)]="robot.name"/>
+        <label>归属企业:&nbsp;</label>
+        <div>
+        <select [(ngModel)]="this.robot.belongingCompany" *ngIf="robot">
+          <option *ngFor="let obj of companys" [ngValue]="obj" >{{obj.name}}</option>
+        </select>
+        </div>
+        <label>使用方式:&nbsp;</label>
+        <select *ngIf="robot" [(ngModel)]="this.robot.way">
+          <option [ngValue]="ways[0]">{{ways[0]}}</option>
+          <option [ngValue]="ways[1]">{{ways[1]}}</option>
+          <option [ngValue]="ways[2]">{{ways[2]}}</option>
+        </select>
+      </nz-modal>
+      <nz-divider nzType="vertical"></nz-divider>
+      <button nz-button [nzType]="'primary'" (click)="delete(data)"><span>删除</span></button>
+      <nz-divider nzType="vertical"></nz-divider>
+      <button nz-button>租赁</button>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>

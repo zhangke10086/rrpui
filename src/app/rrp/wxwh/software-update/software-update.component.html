@@ -3,7 +3,7 @@
   <label>软件包名称:&nbsp;</label> <input nz-input  [(ngModel)]="des" />
 </nz-modal>
 
-<nz-table #basicTable [nzData]="softwareUpgrades">
+<nz-table #basicTable [nzData]="softwareUpgrades" nzBordered>
   <thead>
   <tr>
     <th>序号</th>
@@ -22,9 +22,6 @@
       <button nz-button [nzType]="'primary'" (click)="delete(data)"><span>删除</span></button>
       <nz-divider nzType="vertical"></nz-divider>
       <button nz-button [nzType]="'primary'" (click)="showModal(data)"><span>修改</span></button>
-      <nz-modal [(nzVisible)]="isVisible" nzTitle="update" (nzOnCancel)="handleCancel()" (nzOnOk)="update()">
-        <label>软件包名称:&nbsp;</label> <input [(ngModel)]="data.description"/>
-      </nz-modal>
     </td>
     <td>
       <button nz-button>软件升级</button>
@@ -32,3 +29,6 @@
   </tr>
   </tbody>
 </nz-table>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="update" (nzOnCancel)="handleCancel()" (nzOnOk)="update()">
+  <label>软件包名称:&nbsp;</label> <input *ngIf="softwareUpgrade" [(ngModel)]="this.softwareUpgrade.description"/>
+</nz-modal>
