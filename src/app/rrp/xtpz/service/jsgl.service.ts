@@ -22,6 +22,7 @@ export class JsglService {
   // private getRolesMaxIdUrl = this.url.hostname + '/role/getRolesMaxId';
   private getAllDynamicMenusUrl = this.url.hostname + '/dynamicMenuService/getAllDynamicMenus';
   private addAuthorityUrl = this.url.hostname + '/authority/addAuthority';
+  private updateAuthorityUrl = this.url.hostname + '/authority/updateAuthority';
   // 其实是获得所有子菜单，获得全部菜单是/menu/getMenus
   private getMenusUrl = this.url.hostname + '/menu/getMenusByMenuNotNull';
   private findByRoleIdUrl = this.url.hostname + '/authority/findByRoleId';
@@ -83,6 +84,14 @@ export class JsglService {
       catchError(this.handleError<Response>(`role id=${id}`))
     );
   }
+
+  /** PUT: update the user on the server */
+  updateAuthority(completedAuthority: any): Observable<Response> {
+    return this.http.put<Response>(this.updateAuthorityUrl, completedAuthority, httpOptions).pipe(
+      catchError(this.handleError<Response>('resetPassword'))
+    );
+  }
+
   /**
    * Handle Http operation that failed.
    * @param operation - name of the operation that failed

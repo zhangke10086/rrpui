@@ -20,14 +20,10 @@ export class JsglComponent implements OnInit {
   private operation: any;
   private operations: [];
   private dynamicMenus: [];
-  // private tableData: { [key: string]: any[]; };
   private menus: [];
   // add
   private toAddRolesMenus: any[] = [];
   private menuOperations: any[] = [];
-  // update
-  private toUpdateRoleMenus: any[] = [];
-  private toUpdateMenuOperations: any[] = [];
   private authorityArray: any[] = [];
 
   constructor(
@@ -37,19 +33,18 @@ export class JsglComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getOperations();
+    // 存在并发
+    this.getMenus();
     this.getRoles();
+    this.getOperations();
     // @ts-ignore
     // this.role = this.roles[0];
     this.getAllDynamicMenus();
-    this.getMenus();
-    // this.tableData = {
-    //   dataRoles : this.roles,
-    //   dataOperations : this.operations
-    // };
-    console.log(this.roles);
   }
 
+  /**
+   * 使用jQuery，筛选，代替后台的查找
+   */
   search(): void {
     const sstxt = $('#filterName').val();
     $('tr').hide().filter(':contains(\'' + sstxt + '\')').show();
@@ -57,7 +52,7 @@ export class JsglComponent implements OnInit {
   }
 
   /**
-   * 这是一种不太好的办法，应该用[(ngModel)]绑定字典或者数组，使用下面update的方法，有空必须改
+   * 这是一种不太好的办法，应该用[(ngModel)]绑定字典或者数组，使用下面update的方法，有空改
    */
   joinAddMenus(menu: any, operation: any, isChecked: boolean): void {
     const eachMenuOperation = { eMenu: menu.id, eOperation: operation.id};
@@ -75,8 +70,8 @@ export class JsglComponent implements OnInit {
       // 删除toAddRolesMenu数组中国呢的指定元素
       this.toAddRolesMenus = this.toAddRolesMenus.filter(item => item !== menu);
     }
-    console.log(this.toAddRolesMenus);
-    console.log(this.menuOperations);
+    // console.log(this.toAddRolesMenus);
+    // console.log(this.menuOperations);
   }
 
   add(description: any): void {
@@ -93,9 +88,7 @@ export class JsglComponent implements OnInit {
     });
     this.isVisible = false;
 
-    this.toAddRole = {
-      id: ++maxId, description: description.value, menus: this.toAddRolesMenus
-    };
+    this.toAddRole = { id: ++maxId, description: description.value, menus: this.toAddRolesMenus };
 
     console.log(this.toAddRole);
 
@@ -110,6 +103,7 @@ export class JsglComponent implements OnInit {
       alert(res.msg);
     });
 
+    console.log(completedAuthority);
   }
 
   showModal(): void {
@@ -131,16 +125,13 @@ export class JsglComponent implements OnInit {
         console.log(id);
       });
   }
-  delete2(role: any): void {
-    console.log(role);
-  }
 
   getRoles(): void {
     this.jsglService.getRoles()
       .subscribe((res: any) => {
         this.roles = res.data;
         // @ts-ignore
-        // this.role = this.roles[0];
+        this.role = this.roles[0];
 
         // this.roles = res.data;
       });
@@ -159,8 +150,6 @@ export class JsglComponent implements OnInit {
     this.jsglService.getMenus()
       .subscribe((res: any) => {
         this.menus = res.data;
-        // @ts-ignore
-        // this.role = this.roles[0];
       });
   }
 
@@ -173,15 +162,6 @@ export class JsglComponent implements OnInit {
         // this.role = this.roles[0];
       });
   }
-
-  // getRole(id: number): void {
-  //   this.jsglService.getRole(id)
-  //     .subscribe((res: any) => {
-  //       this.role = res.data;
-  //       console.log(this.role);
-  //       // console.log(res.data);
-  //     });
-  // }
 
   getInfo(data: any, data2: any, data3: any): void {
     console.log(data);
@@ -196,26 +176,10 @@ export class JsglComponent implements OnInit {
     this.deleteVisible = true;
     // this.getUser(1);
   }
-  onClick() {
-    console.log(this);
-  }
 
-  // // private checkedForm: any[] = [];
-  initCheckedForm(): void {
-
-  }
-
-  initChecked(menuId: number, operationId: number): boolean {
-    // console.log(this.roles);
-    // if (Math.round(Math.random()) < 0.5) {
-    //   return true;
-    // } else { return false; }
-    // this.getRole(1);
-    // console.log(Math.round(Math.random()) < 0.5);
-    return true;
-  }
   private updateRoleMenuOperation: any[] = [];
   private checkDic: { [key: string]: boolean; } = {};
+
   showUpdateModal(role: any): void {
     this.updateVisible = true;
 
@@ -239,7 +203,7 @@ export class JsglComponent implements OnInit {
               }
             }
             // 没有复合索引，只能字符串或者数字
-            this.checkDic[sliceMenu['id'] + '  ' + sliceOperation['id']] = result;
+            this.checkDic[sliceMenu['id'] + '$' + sliceOperation['id']] = result;
           }
         }
         console.log(this.checkDic);
@@ -253,42 +217,45 @@ export class JsglComponent implements OnInit {
     // this.getRolesMaxId();
 
     this.isVisible = false;
-    let toUpdateRoleMenus = [];
-    // toUpdateRoleMenus = toUpdateRoleMenus.filter(item => item[] !== );
-    // for (const key in this.checkDic) {
-    //   if (this.checkDic[key] === true) {
-    //     toUpdateRoleMenus.push(this.checkDic[key]);
-    //   }
-    // }
-    this.toAddRole = {
-      id: this.role.id, description: description.value, menus: this.toAddRolesMenus
+    const toUpdateRoleMenus = [];
+    // 也应该用filter
+    for (const key in this.checkDic) {
+      if (this.checkDic[key] === true) {
+        const toEachUpdateRoleMenus = this.menus.filter(item => item['id'] === Number(key.substring(0, key.indexOf('$'))))[0];
+        if (!toUpdateRoleMenus.includes(toEachUpdateRoleMenus)) {
+          toUpdateRoleMenus.push(toEachUpdateRoleMenus);
+        }
+      }
+    }
+    const toUpdateRole =  {
+      id: this.role.id, description: description.value, menus: toUpdateRoleMenus
     };
-
-    for (const sliced of this.menuOperations) {
-      this.authorityArray.push({role: this.role.id, menu: Number(sliced['eMenu']), operation: Number(sliced['eOperation'])});
+    const toUpdateMenuOperations = [];
+    for (const key in this.checkDic) {
+      if (this.checkDic[key]) {
+        toUpdateMenuOperations.push({
+          // tslint:disable-next-line:max-line-length
+          role: this.role.id, menu: Number(key.substring(0, key.indexOf('$'))), operation: Number(key.substring(key.indexOf('$') + 1, key.length + 1))
+        });
+      }
     }
 
-    const completedAuthority: any = {toAddRole: this.toAddRole, authorityArray: this.authorityArray};
+    const completedAuthority: any = {toAddRole: toUpdateRole, authorityArray: toUpdateMenuOperations};
 
-    this.jsglService.addAuthority(completedAuthority).subscribe((res: any) => {
+    this.jsglService.updateAuthority(completedAuthority).subscribe((res: any) => {
       this.getRoles();
       alert(res.msg);
     });
-
+    // console.log(toUpdateRoleMenus);
+    // console.log(toUpdateMenuOperations);
+    // console.log(completedAuthority);
+    // this.getMenus();
+    // this.getAllDynamicMenus();
+    this.updateVisible = false;
   }
 
   handleUpdateCancel(): void {
     this.updateVisible = false;
   }
 
-  // getRole(id: number): void {
-  //   this.jsglService.getRole(id)
-  //     .subscribe((res: any) => {
-  //       console.log(res.data)
-  //       this.role = res.data;
-  //       // return res.data;
-  //       // @ts-ignore
-  //       // this.role = this.roles[0];
-  //     });
-  // }
 }

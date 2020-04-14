@@ -31,7 +31,6 @@
     </tbody>
   </nz-table>
 
-
 </nz-modal>
 
 <p> <br> 筛选： <input id="filterName" name="filterName"> <span (click)="search()">搜索</span> <br> </p>
@@ -50,15 +49,8 @@
     <td>{{ role.description }}</td>
     <td>
       <button nz-button [nzType]="'primary'" (click)="delete(role.id)"><span>删除</span></button>
-
-
-
-
       <button nz-button [nzType]="'primary'" (click)="showUpdateModal(role)"><span>修改权限</span></button>
     </td>
-
-
-
   </tr>
   </tbody>
 </nz-table>
@@ -66,7 +58,8 @@
 
 
 <nz-modal [(nzVisible)]="updateVisible" nzTitle="修改" (nzOnCancel)="handleUpdateCancel()" (nzOnOk)="update(newDescription)">
-  <label>身份：</label><input #newDescription /><br>
+<!--  可以提前用双向数据绑定-->
+  <label ><p>身份：</p></label><input value="请输入新名称" #newDescription/><br>
 
   <nz-table>
     <thead>
@@ -83,7 +76,7 @@
     <tr *ngFor="let menu2 of menus">
       <td>{{ menu2.title }}</td>
       <td *ngFor="let operation2 of operations">
-        <input type="checkbox" [(ngModel)]="checkDic[menu2.id+'  '+operation2.id]" [checked]="checkDic[menu2.id+'  '+operation2.id]" (click)="show()"/><label>{{ operation2.name }}</label><br>
+        <input type="checkbox" [(ngModel)]="checkDic[menu2.id+'$'+operation2.id]" [checked]="checkDic[menu2.id+'$'+operation2.id]" (click)="show()"/><label>{{ operation2.name }}</label><br>
       </td>
     </tr>
     </tbody>
