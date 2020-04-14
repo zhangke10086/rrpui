@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {RobotData} from '../../../core/entity/entity';
-import {CssdService} from '../service/Cssd.service';
+import {CssdService} from '../service/cssd.service';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
