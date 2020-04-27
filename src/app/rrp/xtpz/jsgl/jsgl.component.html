@@ -61,7 +61,7 @@
 <!--  可以提前用双向数据绑定-->
   <label ><p>身份：</p></label><input value="请输入新名称" #newDescription/><br>
 
-  <nz-table>
+  <nz-table #Table2 [nzData]="menus">
     <thead>
     <tr>
       <th></th>
@@ -73,7 +73,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let menu2 of menus">
+    <tr *ngFor="let menu2 of Table2.data">
       <td>{{ menu2.title }}</td>
       <td *ngFor="let operation2 of operations">
         <input type="checkbox" [(ngModel)]="checkDic[menu2.id+'$'+operation2.id]" [checked]="checkDic[menu2.id+'$'+operation2.id]" (click)="show()"/><label>{{ operation2.name }}</label><br>
