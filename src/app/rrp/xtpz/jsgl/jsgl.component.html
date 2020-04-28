@@ -57,9 +57,9 @@
 
 
 
-<nz-modal [(nzVisible)]="updateVisible" nzTitle="修改" (nzOnCancel)="handleUpdateCancel()" (nzOnOk)="update(newDescription)">
+<nz-modal [(nzVisible)]="updateVisible" nzTitle="修改" (nzOnCancel)="handleUpdateCancel()" (nzOnOk)="update()">
 <!--  可以提前用双向数据绑定-->
-  <label ><p>身份：</p></label><input value="请输入新名称" #newDescription/><br>
+<!--  <label ><p>身份：</p></label><input value="请输入新名称" #newDescription/><br>-->
 
   <nz-table #Table2 [nzData]="menus">
     <thead>
