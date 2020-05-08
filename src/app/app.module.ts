@@ -6,12 +6,13 @@ import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { registerLocaleData } from '@angular/common';
+import {DatePipe, registerLocaleData} from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import {IndexModule} from './rrp/index/index.module';
 import {RouteReuseStrategy} from '@angular/router';
 import {RouteReuse} from './core/routereuse/routeReuse';
 import {LoginModule} from './login/login.module';
+import { ChartModule } from 'angular-highcharts';
 registerLocaleData(zh);
 
 @NgModule({
@@ -27,12 +28,12 @@ registerLocaleData(zh);
     BrowserAnimationsModule,
     LoginModule,
     IndexModule, // 需要在AppRoutingModule之后导入
-
+    ChartModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: zh_CN },
     {provide: RouteReuseStrategy, useClass: RouteReuse},
-
+    DatePipe,
 
   ],
   bootstrap: [AppComponent]

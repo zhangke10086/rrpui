@@ -83,6 +83,7 @@ export class CompanyType {
   id: number;
   type: string;
 }
+
 export class Company {
   id: number;
   name: string;
@@ -93,6 +94,7 @@ export class Company {
   phone: string;
   type: CompanyType;
 }
+
 export class Robot {
   id: string;
   name: string;
@@ -100,6 +102,7 @@ export class Robot {
   way: string;
   useSituation: string;
 }
+
 export class Lease {
   id: number;
   robot: Robot;
@@ -115,6 +118,7 @@ export class Lease {
   // 联系人
   connector: string;
 }
+
 export class Pay {
   id: number;
   robot: Robot;
@@ -131,6 +135,7 @@ export class Pay {
   // 缴费凭证
   paymentVouncher: string;
 }
+
 export class ProcessData {
   id: number;
   // tslint:disable-next-line:variable-name
@@ -244,3 +249,49 @@ export class RobotData {
   enddistance: number;
   robot: Robot;
 }
+
+export class BenchCount {
+  id: number;
+  count: number;
+  time: Date;
+}
+
+export class BenchRatio {
+  id: number;
+  ratio: number;
+  time: Date;
+}
+
+export class BoardArea {
+  id: number;
+  area: number;
+  time: Date;
+}
+
+export class BoardCount {
+  id: number;
+  count: number;
+  time: Date;
+}
+
+export class ConcreteCount {
+  id: number;
+  count: number;
+  time: Date;
+}
+
+export class ProductRatio {
+  id: number;
+  ratio: number;
+  time: Date;
+}
+
+export class Run {
+  id: number;
+  open: number;
+  run: number;
+  wait: number;
+  warn: number;
+  time: Date;
+}
+
