@@ -103,6 +103,30 @@ export class IndexComponent implements OnInit {
       }
       this.menus.push(menu);
     });
+    for(const obj of this.menus) {
+      if(obj.title === '互联网') {
+        obj.icon = 'ie';
+      }
+      if(obj.title === '生产数据') {
+        obj.icon = 'bar-chart';
+      }
+      if(obj.title === '生产管理') {
+        obj.icon = 'robot';
+      }
+      if(obj.title === '运行情况') {
+        obj.icon = 'dashboard';
+      }
+      if(obj.title === '维修维护') {
+        obj.icon = 'scissor';
+      }
+      if(obj.title === '租赁管理') {
+        obj.icon = 'apartment';
+      }
+      if(obj.title === '系统配置') {
+        obj.icon = 'setting';
+      }
+    }
+    console.log(this.menus);
   }
   navigateTo(data: any) {
     if (data === this.home && this.tabs.findIndex(p => data.url.includes(p.url))) {

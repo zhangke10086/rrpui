@@ -1,7 +1,7 @@
 [
   {
     "title": "互联网",
-    "icon": "book",
+    "icon": "ie",
     "key": "1",
     "display": true,
     "url": "/index/rpit/chinamap",
@@ -9,7 +9,7 @@
   },
   {
     "title": "生产数据",
-    "icon": "book",
+    "icon": "pie-chart",
     "key": "2",
     "display": true,
     "children": [
@@ -140,7 +140,7 @@
   {
     "title": "系统配置",
     "key": "7",
-    "icon": "book",
+    "icon": "apartment",
     "display": true,
     "children": [
       {

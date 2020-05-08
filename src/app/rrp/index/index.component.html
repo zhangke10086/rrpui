@@ -50,36 +50,36 @@
       </ul>
     </nz-sider>
     <nz-layout class="inner-layout" >
-<!--      <nz-tabset *ngIf="tabs.length>0" [(nzSelectedIndex)]="tabIndex" [nzAnimated]="false" [nzTabBarGutter]="0"-->
-<!--                 [nzTabBarStyle]="TabBarStyle"-->
-<!--                 [nzType]="'card'" class="header-menu" >-->
-<!--        <nz-tab   (nzClick)="navigateTo(tab)" *ngFor="let tab of tabs" [nzTitle]="titleTemplate"  >-->
-<!--          <ng-template #template>-->
-<!--            <ul (nzClick)="dropDownClose()" nz-menu nzInDropDown>-->
-<!--              <li (click)="refresh(tab)" nz-menu-item>-->
-<!--                <i nz-icon nzType="reload" style="font-size: 12px;margin-right: 0;" nzTheme="outline"></i>-->
-<!--                刷新标签-->
-<!--              </li>-->
-<!--              <li (click)="closeUrl(tab)" class="top-border" nz-menu-item>-->
-<!--                <i nz-icon nzType="close-circle" style="font-size: 12px;margin-right: 0;" nzTheme="outline"></i>-->
-<!--                关闭标签-->
-<!--              </li>-->
-<!--              <li (click)="closeAllTab()" nz-menu-item>-->
-<!--                <i nz-icon nzType="close" style="font-size: 12px;margin-right: 0;" nzTheme="outline"></i>-->
-<!--                全部关闭-->
-<!--              </li>-->
-<!--            </ul>-->
-<!--          </ng-template>-->
-<!--          <ng-template #titleTemplate >-->
-<!--            <div-->
-<!--              (auxclick)="onAuxClick($event,tab)" (contextmenu)="contextMenu($event, template)"-->
-<!--              [ngStyle]="{'user-select':'none'}">-->
-<!--              {{ tab["title"] }}-->
-<!--              <i (click)="closeUrl(tab)" nz-icon style="font-size: 12px;margin-left: 8px" nzType="close" ></i>-->
-<!--            </div>-->
-<!--          </ng-template>-->
-<!--        </nz-tab>-->
-<!--      </nz-tabset>-->
+      <nz-tabset *ngIf="tabs.length>0" [(nzSelectedIndex)]="tabIndex" [nzAnimated]="false" [nzTabBarGutter]="0"
+                 [nzTabBarStyle]="TabBarStyle"
+                 [nzType]="'card'" class="header-menu" >
+        <nz-tab   (nzClick)="navigateTo(tab)" *ngFor="let tab of tabs" [nzTitle]="titleTemplate"  >
+          <ng-template #template>
+            <ul (nzClick)="dropDownClose()" nz-menu nzInDropDown>
+              <li (click)="refresh(tab)" nz-menu-item>
+                <i nz-icon nzType="reload" style="font-size: 12px;margin-right: 0;" nzTheme="outline"></i>
+                刷新标签
+              </li>
+              <li (click)="closeUrl(tab)" class="top-border" nz-menu-item>
+                <i nz-icon nzType="close-circle" style="font-size: 12px;margin-right: 0;" nzTheme="outline"></i>
+                关闭标签
+              </li>
+              <li (click)="closeAllTab()" nz-menu-item>
+                <i nz-icon nzType="close" style="font-size: 12px;margin-right: 0;" nzTheme="outline"></i>
+                全部关闭
+              </li>
+            </ul>
+          </ng-template>
+          <ng-template #titleTemplate >
+            <div
+              (auxclick)="onAuxClick($event,tab)" (contextmenu)="contextMenu($event, template)"
+              [ngStyle]="{'user-select':'none'}">
+              {{ tab["title"] }}
+              <i (click)="closeUrl(tab)" nz-icon style="font-size: 12px;margin-left: 8px" nzType="close" ></i>
+            </div>
+          </ng-template>
+        </nz-tab>
+      </nz-tabset>
       <nz-content style="width: 100%;height: calc(100% - 31px);overflow-y: auto;margin-left: 0"><router-outlet></router-outlet></nz-content>
     </nz-layout>
   </nz-layout>
