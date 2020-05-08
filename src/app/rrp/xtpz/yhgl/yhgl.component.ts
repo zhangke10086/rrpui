@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {YhglService} from '../service/yhgl.service';
 import {Location} from '@angular/common';
+import {NzMessageService} from 'ng-zorro-antd';
 declare var $: any;
 
 @Component({
@@ -31,7 +32,8 @@ export class YhglComponent implements OnInit {
   constructor(
     private yhglService: YhglService,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private message: NzMessageService
   ) { }
 
    // $(function(){
@@ -81,7 +83,7 @@ export class YhglComponent implements OnInit {
     this.yhglService.updateUser(this.user)
       .subscribe((res: any) => {
         this.user();
-        alert(res.msg);
+        if (res.state === 200) { this.message.success(res.msg); } else { this.message.error(res.msg); }
       });
   }
 
@@ -120,7 +122,7 @@ export class YhglComponent implements OnInit {
     this.yhglService.deleteUser(id)
       .subscribe((res: any) => {
         this.getUsers();
-        alert(res.msg);
+        if (res.state === 200) { this.message.success(res.msg); } else { this.message.error(res.msg); }
       });
   }
 
@@ -135,7 +137,7 @@ export class YhglComponent implements OnInit {
     this.resetVisible = false;
     this.yhglService.resetPassword(id)
       .subscribe((res: any) => {
-        alert(res.msg + ',密码重置为123456');
+        if (res.state === 200) {  this.message.success(res.msg + ',密码重置为123456'); } else { this.message.error(res.msg); }
         console.log(id);
       });
   }
@@ -157,7 +159,7 @@ export class YhglComponent implements OnInit {
     }; // 或者直接把密码设置为12345
     this.yhglService.addUser(this.user).subscribe((res: any) => {
       this.getUsers();
-      alert(res.msg);
+      if (res.state === 200) { this.message.success(res.msg); } else { this.message.error(res.msg); }
     });
   }
 

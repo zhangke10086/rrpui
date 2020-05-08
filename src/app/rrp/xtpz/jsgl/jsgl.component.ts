@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {JsglService} from '../service/jsgl.service';
+import {NzMessageService} from 'ng-zorro-antd';
 declare var $: any;
 
 @Component({
@@ -26,10 +27,14 @@ export class JsglComponent implements OnInit {
   private menuOperations: any[] = [];
   private authorityArray: any[] = [];
 
+  private updateRoleMenuOperation: any[] = [];
+  private checkDic: { [key: string]: boolean; } = {};
+
   constructor(
     private jsglService: JsglService,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private message: NzMessageService
   ) { }
 
   ngOnInit() {
@@ -100,7 +105,7 @@ export class JsglComponent implements OnInit {
 
     this.jsglService.addAuthority(completedAuthority).subscribe((res: any) => {
       this.getRoles();
-      alert(res.msg);
+      if (res.state === 200) { this.message.success(res.msg); } else { this.message.error(res.msg); }
     });
 
     console.log(completedAuthority);
@@ -121,7 +126,7 @@ export class JsglComponent implements OnInit {
     this.jsglService.deleteRole(id)
       .subscribe((res: any) => {
         this.getRoles();
-        alert(res.msg);
+        if (res.state === 200) { this.message.success(res.msg); } else { this.message.error(res.msg); }
         console.log(id);
       });
   }
@@ -177,8 +182,8 @@ export class JsglComponent implements OnInit {
     // this.getUser(1);
   }
 
-  private updateRoleMenuOperation: any[] = [];
-  private checkDic: { [key: string]: boolean; } = {};
+  // private updateRoleMenuOperation: any[] = [];
+  // private checkDic: { [key: string]: boolean; } = {};
 
   showUpdateModal(role: any): void {
     this.updateVisible = true;
@@ -213,7 +218,7 @@ export class JsglComponent implements OnInit {
   show() {
     console.log(this.checkDic);
   }
-  update(description: any): void {
+  update(): void {
     // this.getRolesMaxId();
 
     this.isVisible = false;
@@ -228,8 +233,9 @@ export class JsglComponent implements OnInit {
       }
     }
     const toUpdateRole =  {
-      id: this.role.id, description: description.value, menus: toUpdateRoleMenus
+      id: this.role.id, description: this.role.description, menus: toUpdateRoleMenus
     };
+    console.log(toUpdateRole);
     const toUpdateMenuOperations = [];
     for (const key in this.checkDic) {
       if (this.checkDic[key]) {
@@ -244,7 +250,7 @@ export class JsglComponent implements OnInit {
 
     this.jsglService.updateAuthority(completedAuthority).subscribe((res: any) => {
       this.getRoles();
-      alert(res.msg);
+      if (res.state === 200) { this.message.success(res.msg); } else { this.message.error(res.msg); }
     });
     // console.log(toUpdateRoleMenus);
     // console.log(toUpdateMenuOperations);
