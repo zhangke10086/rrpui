@@ -4,6 +4,7 @@ import {QyglService} from '../../xtpz/service/qygl.service';
 import {ActivatedRoute} from '@angular/router';
 import {Company, Lease, Robot} from '../../../core/entity/entity';
 import {Zlgl1Service} from '../service/zlgl1.service';
+import { NzModalService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-zlgl1',
@@ -45,7 +46,8 @@ export class Zlgl1Component implements OnInit {
     private zlgl1Service: Zlgl1Service,
     private jfglService: JfglService,
     private qyglService: QyglService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private modalService: NzModalService
   ) {
   }
   getLeases(): void {
@@ -150,5 +152,43 @@ export class Zlgl1Component implements OnInit {
   fresh(): void {
     window.location.reload();
   }
+  remind(data){
+    this.modalService.confirm({
+      nzTitle: null,
+      nzContent: '<b style="color: red;">您确定要对该布料机器人发送缴费提醒吗？</b>',
+      nzOkText: '确定',
+      nzOnOk: () => this.remindOk(data),
+      nzCancelText: '取消',
+      nzOnCancel: () => console.log('Cancel')
+    });
+  }
+  cancleremind(data){
+    this.modalService.confirm({
+      nzTitle: null,
+      nzContent: '<b style="color: red;">您确定要对该布料机器人取消提醒吗？</b>',
+      nzOkText: '确定',
+      nzOnOk: () => this.remindCancle(data),
+      nzCancelText: '取消',
+      nzOnCancel: () => console.log('Cancel')
+    });
+  }
+  remindOk(data){
+    console.log(data);
+    const robotid = data.robot.id;
+    const companyid = data.companyId.id;
+    this.zlgl1Service.remind(robotid, companyid).then(res => {
+      this.getLeases();
 
+    });
+  }
+  remindCancle(data) {
+    console.log(data);
+    const robotid = data.robot.id;
+    this.zlgl1Service.cancleremind(robotid).then(res => {
+      this.getLeases();
+    });
+  }
+  findRemindByrobotId() {
+
+  }
 }

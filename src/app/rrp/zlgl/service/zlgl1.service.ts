@@ -65,4 +65,38 @@ export class Zlgl1Service {
       return of(result as T);
     };
   }
+  remind(id1, id2) {
+    const body = {
+      robotid: id1,
+      companyid: id2
+    };
+    const url = this.url.hostname + '/remind/addRemind';
+    return new Promise(((resolve, reject) =>
+      this.http.post(url, body)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      })));
+  }
+  cancleremind(id) {
+    const url = this.url.hostname + '/lease/cancleRemind';
+    return new Promise(((resolve, reject) =>
+      this.http.post(url, id)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      })));
+  }
+  // findByRobotid(robotid) {
+  //   const Url = this.url.hostname + '/remind/findByRobotId';
+  //   return new Promise(((resolve, reject) =>
+  //       this.http.post(Url, robotid).toPromise().then(res => {
+  //         resolve(res);
+  //       }, error => {
+  //         reject(error);
+  //       })
+  //   ));
+  // }
 }

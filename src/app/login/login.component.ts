@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
-import {NzMessageService} from 'ng-zorro-antd';
+import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {HttpClient} from '@angular/common/http';
 import {LoginService} from './login.service';
 
@@ -18,7 +18,8 @@ export class LoginComponent implements OnInit {
               private router: Router,
               private message: NzMessageService,
               private http: HttpClient,
-              private loginService: LoginService) {}
+              private loginService: LoginService,
+              private modalService: NzModalService) {}
 
   login() {
     this.loginService.login(this.validateForm.value.username, this.validateForm.value.password).then((res: any) => {
@@ -27,6 +28,17 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('userinfo', JSON.stringify(res.data));
         setTimeout(() => {
           this.router.navigate(['/index']);
+          this.loginService.remind(res.data.company.id).then((obj: any) => {
+            if (obj.state === 200) {
+              if(obj.data != null) {
+                this.modalService.confirm({
+                  nzTitle: null,
+                  nzContent: obj.data.robot.name + '已被管理员进行缴费提醒！，' ,
+                  nzOkText: '确定',
+                });
+              }
+            }
+          });
         });
       } else {
         this.message.warning('用户名或密码错误');

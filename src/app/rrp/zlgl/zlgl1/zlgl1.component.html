@@ -62,7 +62,9 @@
         <label>合同内容:&nbsp;</label> <input nz-input  [(ngModel)]="this.contract" />
       </nz-modal>
       <nz-divider nzType="vertical"></nz-divider>
-      <button nz-button>提醒</button>
+        <button *ngIf="data.remind!=1" nz-button (click)="remind(data)">提醒</button>
+        <button *ngIf="data.remind==1" nz-button (click)="cancleremind(data)">取消提醒</button>
+
       <nz-divider nzType="vertical"></nz-divider>
       <button nz-button>续费</button>
       <nz-divider nzType="vertical"></nz-divider>
