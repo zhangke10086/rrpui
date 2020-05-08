@@ -77,6 +77,7 @@ export class Bench {
   number: string;
   description: string;
   workshop: string;
+  robot: Robot;
 }
 
 export class CompanyType {
