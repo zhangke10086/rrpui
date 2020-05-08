@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Bench} from '../../../core/entity/entity';
+import {Bench, Robot} from '../../../core/entity/entity';
 import {ActivatedRoute} from '@angular/router';
 import {MtglService} from '../service/mtgl.service';
 import { NzMessageService } from 'ng-zorro-antd';
+import {BljqrglService} from '../../xtpz/service/bljqrgl.service';
 
 
 
@@ -17,11 +18,13 @@ export class MtglComponent implements OnInit {
   number = '';
   des = '';
   workshop = '';
+  private robots: Robot[];
   private benchs: Bench[];
   bench: Bench;
 
   constructor(
     private benchService: MtglService,
+    private bljqrglService: BljqrglService,
     private route: ActivatedRoute,
     private message: NzMessageService
   ) {
@@ -67,8 +70,18 @@ export class MtglComponent implements OnInit {
 
   ngOnInit() {
     this.getBenchs();
+    this.getRobots();
   }
-
+  // @ts-ignore
+  compareFn(o1: Compare, o2: Compare): boolean {
+    return o1 && o2 ? o1.id === o2.id : o1 === o2;
+  }
+  getRobots(): void {
+    this.bljqrglService.getRobots()
+      .subscribe((res: any) => {
+        this.robots = res.data;
+      });
+  }
   getBenchs(): void {
     this.benchService.getBenchs()
       .subscribe((res: any) => {

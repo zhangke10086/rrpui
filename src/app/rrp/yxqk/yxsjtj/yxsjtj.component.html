@@ -1,0 +1,68 @@
+<div style="float: left ;margin-right: 10px">
+
+  <div>
+    <br><p><b>历史运行数据</b></p><button nz-button [value]="this.value" (click)="getValueOpen()">开机时长</button>
+    &nbsp;&nbsp;<button nz-button [value]="this.value" (click)="getValueRun()">运行时长</button>
+    &nbsp;&nbsp;<button nz-button [value]="this.value" (click)="getValueWait()">待机时长</button>
+    &nbsp;&nbsp;<button nz-button [value]="this.value" (click)="getValueWarn()">故障时长</button>
+  </div>
+  <br>&nbsp;&nbsp;&nbsp;开始时间：&nbsp;
+  <nz-date-picker [nzFormat]="dateFormat" [(ngModel)]=begin></nz-date-picker>
+  &nbsp;&nbsp;&nbsp;截止时间：&nbsp;
+  <nz-date-picker [nzFormat]="dateFormat" [(ngModel)]=end></nz-date-picker>
+  &nbsp;&nbsp;&nbsp;<Button nz-button (click)="getYxsjtj()">搜索</Button>
+  <div id="container" style="width: 800px; height: 300px; margin-top: 30px; margin-left: 20px;"></div>
+<br>
+
+  <nz-table #basicTable [nzData]="runs" nzBordered>
+    <thead>
+    <tr>
+      <th>开机时长</th>
+      <th>运行时长</th>
+      <th>待机时长</th>
+      <th>故障时长</th>
+      <th>日期</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{ data.open}}</td>
+      <td>{{ data.run}}</td>
+      <td>{{ data.wait}}</td>
+      <td>{{ data.warn}}</td>
+      <td>{{ data.time | date:'yyyy.MM.dd'}}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+
+</div>
+
+<div style="float: right;margin-right: 30px">
+  <br><p><b>历史故障数据</b>
+  &nbsp;&nbsp;&nbsp;开始时间：&nbsp;
+  <nz-date-picker [nzFormat]="dateFormat" [(ngModel)]=begin></nz-date-picker>
+  &nbsp;&nbsp;&nbsp;截止时间：&nbsp;
+  <nz-date-picker [nzFormat]="dateFormat" [(ngModel)]=end></nz-date-picker>
+  &nbsp;&nbsp;&nbsp;<Button nz-button (click)="getYxsjtj()">搜索</Button>
+
+  <nz-table #basicTable2 [nzData]="warnings" nzBordered>
+    <thead>
+    <tr>
+      <th>报警号</th>
+      <th>报警位置</th>
+      <th>报警内容</th>
+      <th>报警时间</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of basicTable2.data">
+      <td>{{ data.id}}</td>
+      <td>{{ data.run}}</td>
+      <td>{{ data.wait}}</td>
+      <td>{{ data.time | date:'yyyy.MM.dd'}}</td>
+      <td><button nz-button>详情</button></td>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>

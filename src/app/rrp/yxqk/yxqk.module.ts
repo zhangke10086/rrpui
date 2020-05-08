@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import {YxqkRoutingModule} from './yxqk-routing.module';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
 import { FormsModule } from '@angular/forms';
+import { SbyxztComponent } from './sbyxzt/sbyxzt.component';
+import { YxsjtjComponent } from './yxsjtj/yxsjtj.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [SbyxztComponent, YxsjtjComponent],
   imports: [
     CommonModule,
     YxqkRoutingModule,
