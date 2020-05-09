@@ -1,0 +1,27 @@
+<div
+  [ngStyle]="{'background-color':'rgb(240,240,240)'}">
+    <div style="padding: 0 8px;">
+      <div class="query-btns">
+        <button nz-button nzType="primary" nzSize="small" (click)="query()" style="margin-right: 0;">查询</button>
+        <a  (click)="reset()" style="margin-left: 20px;margin-right:20px;color: #000">清空</a>
+        <a  (click)="toggleCollapse()" style="color: #000">
+          {{isCollapse ? '展开' : '收起'}}
+          <i style="color: #000" [type]="isCollapse ? 'down' : 'up'" nz-icon></i>
+        </a>
+      </div>
+    </div>
+  <div
+    [ngStyle]="{'display':!isCollapse?'block':'none'}"
+    style="padding: 0 16px 8px 16px !important;">
+    <div nz-row style="margin-top: 8px">
+      <div>
+        <nz-select [(ngModel)]="selectedCompany" (ngModelChange)="CompanyChange($event)" nzPlaceHolder="请选择企业">
+          <nz-option *ngFor="let p of CompanyData" [nzValue]="p" [nzLabel]="p.name"></nz-option>
+        </nz-select>
+        <nz-select [(ngModel)]="selectedRobot" (ngModelChange)="RobotChange($event)" nzPlaceHolder="请选择机器">
+          <nz-option *ngFor="let p of RobotData" [nzValue]="p" [nzLabel]="p.name"></nz-option>
+        </nz-select>
+      </div>
+    </div>
+  </div>
+</div>

@@ -67,4 +67,14 @@ export class MtglService {
       return of(result as T);
     };
   }
+  getDataByRobotId(id) {
+    const url = this.url.hostname + '/bench/getBenchByRobot?robot_id=';
+    return new Promise(((resolve, reject) =>
+      this.http.get(url + id)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      })));
+  }
 }

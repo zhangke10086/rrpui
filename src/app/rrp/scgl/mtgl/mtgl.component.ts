@@ -21,7 +21,7 @@ export class MtglComponent implements OnInit {
   private robots: Robot[];
   private benchs: Bench[];
   bench: Bench;
-
+  jsondata;
   constructor(
     private benchService: MtglService,
     private bljqrglService: BljqrglService,
@@ -45,7 +45,7 @@ export class MtglComponent implements OnInit {
   }
 
   handleCancel1(): void {
-    this.getBenchs();
+    this.onquery(this.jsondata);
     this.isVisible1 = false;
   }
 
@@ -58,18 +58,18 @@ export class MtglComponent implements OnInit {
     this.isVisible = false;
     this.benchService.updateBench(this.bench)
       .subscribe((res: any) => {
-        this.getBenchs();
+        this.onquery(this.jsondata);
         this.message.success('修改成功！');
       });
   }
 
   handleCancel(): void {
-    this.getBenchs();
+    this.onquery(this.jsondata);
     this.isVisible = false;
   }
 
   ngOnInit() {
-    this.getBenchs();
+    this.onquery(this.jsondata);
     this.getRobots();
   }
   // @ts-ignore
@@ -92,12 +92,32 @@ export class MtglComponent implements OnInit {
   delete(data: Bench | number): void {
     this.benchService.deleteBench(data)
       .subscribe((res: any) => {
-        this.getBenchs();
+        this.onquery(this.jsondata);
         this.message.success('删除成功！');
       });
   }
 
   fresh(): void {
     window.location.reload();
+  }
+  onquery(data){
+    this.query(data);
+  }
+  query(data){
+    console.log(data);
+    if(data !=null){
+      this.jsondata = data;
+      if(data.robot != null) {
+        const robotid = data.robot.id;
+        this.benchService.getDataByRobotId(robotid).then((res:any)=>{
+          this.benchs = res.data;
+        })
+      } else {
+        this.getBenchs();
+      }
+    } else {
+      this.getBenchs();
+    }
+
   }
 }

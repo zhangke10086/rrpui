@@ -89,14 +89,27 @@ export class Zlgl1Service {
         reject(error);
       })));
   }
-  // findByRobotid(robotid) {
-  //   const Url = this.url.hostname + '/remind/findByRobotId';
-  //   return new Promise(((resolve, reject) =>
-  //       this.http.post(Url, robotid).toPromise().then(res => {
-  //         resolve(res);
-  //       }, error => {
-  //         reject(error);
-  //       })
-  //   ));
-  // }
+  //启用
+  start(data) {
+    const url = this.url.hostname + '/lease/start';
+    return new Promise(((resolve, reject) =>
+      this.http.post(url, data)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      })));
+  }
+
+  //停用
+  stop(data) {
+    const url = this.url.hostname + '/lease/stop';
+    return new Promise(((resolve, reject) =>
+      this.http.post(url, data)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      })));
+  }
 }

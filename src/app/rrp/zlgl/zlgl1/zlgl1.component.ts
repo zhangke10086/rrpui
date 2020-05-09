@@ -4,7 +4,7 @@ import {QyglService} from '../../xtpz/service/qygl.service';
 import {ActivatedRoute} from '@angular/router';
 import {Company, Lease, Robot} from '../../../core/entity/entity';
 import {Zlgl1Service} from '../service/zlgl1.service';
-import { NzModalService } from 'ng-zorro-antd';
+import { NzModalService, NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-zlgl1',
@@ -37,6 +37,12 @@ export class Zlgl1Component implements OnInit {
   private company1: Company;
   private companys1: Company[];
   private companys: Company[];
+  startVisible = false;
+  endVisible = false;
+  startdate;
+  enddate;
+  radioValue = '已缴费';
+  inputValue;
   ngOnInit() {
     this.getLeases();
     this.getCompanysWithRobot();
@@ -47,7 +53,8 @@ export class Zlgl1Component implements OnInit {
     private jfglService: JfglService,
     private qyglService: QyglService,
     private route: ActivatedRoute,
-    private modalService: NzModalService
+    private modalService: NzModalService,
+    private message: NzMessageService
   ) {
   }
   getLeases(): void {
@@ -153,6 +160,7 @@ export class Zlgl1Component implements OnInit {
     window.location.reload();
   }
   remind(data){
+    console.log(data);
     this.modalService.confirm({
       nzTitle: null,
       nzContent: '<b style="color: red;">您确定要对该布料机器人发送缴费提醒吗？</b>',
@@ -188,7 +196,53 @@ export class Zlgl1Component implements OnInit {
       this.getLeases();
     });
   }
-  findRemindByrobotId() {
+  start() {
+
+  }
+  end() {
+
+  }
+  onChangeStart(data) {
+
+  }
+  onChangeEnd(data) {
+
+  }
+  showModalVisible(data, state) {
+    console.log(data);
+    // 启用
+    if (state === 1) {
+      this.modalService.confirm({
+        nzTitle: null,
+        nzContent: '<b style="color: red;">您确定要启用该布料机器人吗？</b>',
+        nzOkText: '确定',
+        nzOnOk: () =>  this.zlgl1Service.start(data).then((res:any)=>{
+          if (res.state ===200){
+            this.getLeases();
+            this.message.success('启用成功！')
+          }
+        }),
+        nzCancelText: '取消',
+        nzOnCancel: () => console.log('Cancel')
+      });
+
+    }
+    if (state === 2) {
+      this.modalService.confirm({
+        nzTitle: null,
+        nzContent: '<b style="color: red;">您确定要停用该布料机器人吗？</b>',
+        nzOkText: '确定',
+        nzOnOk: () =>    this.zlgl1Service.stop(data).then((res:any)=>{
+          if (res.state ===200){
+            this.getLeases();
+            this.message.success('停用成功！')
+          }
+        }),
+        nzCancelText: '取消',
+        nzOnCancel: () => console.log('Cancel')
+      });
+
+    }
 
   }
 }

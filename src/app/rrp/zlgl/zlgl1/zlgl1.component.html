@@ -45,7 +45,7 @@
     <td>{{ data.companyId.id}}</td>
     <td>{{ data.contractId}}</td>
     <td>{{ data.costMonth}}</td>
-    <td>{{ data.startTime}}</td>
+    <td>{{ data.startTime | date:'yyyy-MM-dd'}}</td>
     <td>{{ data.paymentSituation}}</td>
     <td>{{ data.robot.use_situation}}</td>
     <td>
@@ -64,11 +64,11 @@
       <nz-divider nzType="vertical"></nz-divider>
         <button *ngIf="data.remind!=1" nz-button (click)="remind(data)">提醒</button>
         <button *ngIf="data.remind==1" nz-button (click)="cancleremind(data)">取消提醒</button>
-
       <nz-divider nzType="vertical"></nz-divider>
       <button nz-button>续费</button>
       <nz-divider nzType="vertical"></nz-divider>
-      <button nz-button>停用</button>
+      <button *ngIf="data.robot.use_situation=='未启用'" nz-button (click)="showModalVisible(data,1)">启用</button>
+      <button *ngIf="data.robot.use_situation=='启用'" nz-button (click)="showModalVisible(data,2)">停用</button>
       <nz-divider nzType="vertical"></nz-divider>
       <button nz-button [nzType]="'primary'" (click)="showModal(data)" ><span>修改</span></button>
       <nz-modal [(nzVisible)]="isVisible" nzTitle="update" (nzOnCancel)="handleCancel()" (nzOnOk)="update()">

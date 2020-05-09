@@ -159,4 +159,5 @@ export class ChinamapComponent implements OnInit {
         }
       }.bind(this));
   }
+
 }

@@ -1,3 +1,4 @@
+<app-querylist (onQuery)="onquery($event)"></app-querylist>
 <button nz-button [nzType]="'primary'" (click)="showModal1()"><span>增加</span></button>
 <nz-modal [(nzVisible)]="isVisible1" nzTitle="add" (nzOnCancel)="handleCancel1()" (nzOnOk)="add()">
   <div><label>模台编号:&nbsp;</label> <input nz-input  [(ngModel)]="number" /></div>

@@ -6,6 +6,7 @@ import {NgZorroAntdModule} from 'ng-zorro-antd';
 import { MtglComponent } from './mtgl/mtgl.component';
 import { MtcsComponent } from './mtcs/mtcs.component';
 import { SccsComponent } from './sccs/sccs.component';
+import {QuerylistModule} from "../../helpcenter/querylist/querylist.module";
 
 
 
@@ -17,11 +18,12 @@ import { SccsComponent } from './sccs/sccs.component';
     SccsComponent
     /**************定义自己功能组件 */
   ],
-  imports: [
-    CommonModule,
-    ScglRoutingModule,
-    FormsModule,
-    NgZorroAntdModule,
-  ]
+    imports: [
+        CommonModule,
+        ScglRoutingModule,
+        FormsModule,
+        NgZorroAntdModule,
+        QuerylistModule,
+    ]
 })
 export class ScglModule { }
