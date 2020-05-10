@@ -1,4 +1,5 @@
-<button nz-button [nzType]="'primary'" (click)="showModal1()"><span>添加缴费记录</span></button>
+<div *ngIf="operation.indexOf(4)!=-1">
+<button *ngIf="operation.indexOf(1)!=-1" nz-button [nzType]="'primary'" (click)="showModal1()"><span>添加缴费记录</span></button>
 <nz-modal [(nzVisible)]="isVisible1" nzTitle="add" (nzOnCancel)="handleCancel1()" (nzOnOk)="add()">
   <label>选择机器人所属公司:&nbsp;</label>
   <select [(ngModel)]="this.company1" (change)="getRobotsByBelongingComapnyId(this.company1.id)">
@@ -68,7 +69,7 @@
         <label>合同内容:&nbsp;</label> <input nz-input *ngIf="this.company" [(ngModel)]="this.lease.contract" />
       </nz-modal>
       <nz-divider nzType="vertical"></nz-divider>
-      <button nz-button [nzType]="'primary'" (click)="showModal(data)" ><span>修改</span></button>
+      <button *ngIf="operation.indexOf(3)!=-1" nz-button [nzType]="'primary'" (click)="showModal(data)" ><span>修改</span></button>
       <nz-modal [(nzVisible)]="isVisible" nzTitle="update" (nzOnCancel)="handleCancel()" (nzOnOk)="update()">
         <label>选择机器人所属公司:&nbsp;</label>
         <select [(ngModel)]="this.company1" (change)="getRobotsByBelongingComapnyId(this.company1.id)">
@@ -95,8 +96,9 @@
         <label>上传缴费凭证:&nbsp;</label> <input nz-input  [(ngModel)]="this.paymentVoucher" />
       </nz-modal>
       <nz-divider nzType="vertical"></nz-divider>
-      <button nz-button [nzType]="'primary'" (click)="delete(data)"><span>删除</span></button>
+      <button *ngIf="operation.indexOf(2)!=-1" nz-button [nzType]="'primary'" (click)="delete(data)"><span>删除</span></button>
     </td>
   </tr>
   </tbody>
 </nz-table>
+</div>

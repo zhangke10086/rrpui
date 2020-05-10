@@ -43,6 +43,7 @@ export class Zlgl1Component implements OnInit {
   enddate;
   radioValue = '已缴费';
   inputValue;
+  operation;
   ngOnInit() {
     this.getLeases();
     this.getCompanysWithRobot();
@@ -56,6 +57,19 @@ export class Zlgl1Component implements OnInit {
     private modalService: NzModalService,
     private message: NzMessageService
   ) {
+    this.route.queryParams.subscribe(params => {
+      if(params!=null){
+        let operation=JSON.parse(localStorage.getItem("Authority")).filter(t=>{
+          if(t.menu.toString() === params['menuid']){
+            return t.operations;
+          }
+        });
+        this.operation = operation[0].operations;
+      }
+    });
+    if (this.operation.indexOf(4) === -1) {
+      this.message.info('您没有打开此页面的权限');
+    }
   }
   getLeases(): void {
     this.zlgl1Service.getLeases()

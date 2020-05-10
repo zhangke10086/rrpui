@@ -1,5 +1,5 @@
-
-<button nz-button [nzType]="'primary'" (click)="showModal()"><span>增加</span></button>
+<div *ngIf="operation_Au.indexOf(4)!=-1">
+<button *ngIf="operation_Au.indexOf(1)!=-1" nz-button [nzType]="'primary'" (click)="showModal()"><span>增加</span></button>
 <nz-modal [(nzVisible)]="isVisible" nzTitle="增加" (nzOnCancel)="handleCancel()"  (nzOnOk)="add(description)">
   <!--  <label>姓名:&nbsp;</label> <input nz-input  [(ngModel)]="des" />-->
 
@@ -48,8 +48,8 @@
     <td>{{ role.id }}</td>
     <td>{{ role.description }}</td>
     <td>
-      <button nz-button [nzType]="'primary'" (click)="delete(role.id)"><span>删除</span></button>
-      <button nz-button [nzType]="'primary'" (click)="showUpdateModal(role)"><span>修改权限</span></button>
+      <button *ngIf="operation_Au.indexOf(2)!=-1" nz-button [nzType]="'primary'" (click)="delete(role.id)"><span>删除</span></button>
+      <button *ngIf="operation_Au.indexOf(3)!=-1" nz-button [nzType]="'primary'" (click)="showUpdateModal(role)"><span>修改权限</span></button>
     </td>
   </tr>
   </tbody>
@@ -84,3 +84,4 @@
 </nz-modal>
 
 
+</div>

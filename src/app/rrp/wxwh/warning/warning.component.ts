@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {WarningService} from '../service/warning.service';
 import {Warning} from '../../../core/entity/entity';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-warning',
@@ -15,11 +16,25 @@ export class WarningComponent implements OnInit {
   private warnings: Warning[];
   warning: Warning;
   // warning1: Warning;
-
+  operation;
   constructor(
     private warningService: WarningService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private message: NzMessageService
   ) {
+    this.route.queryParams.subscribe(params => {
+      if (params != null) {
+        const operation = JSON.parse(localStorage.getItem('Authority')).filter(t => {
+          if (t.menu.toString() === params.menuid) {
+            return t.operations;
+          }
+        });
+        this.operation = operation[0].operations;
+      }
+    });
+    if (this.operation.indexOf(4) === -1) {
+      this.message.info('您没有打开此页面的权限');
+    }
   }
 
   //

@@ -1,4 +1,5 @@
-<button nz-button [nzType]="'primary'" (click)="showModal1()"><span>增加</span></button>
+<div *ngIf="operation.indexOf(4)!=-1">
+<button *ngIf="operation.indexOf(1)!=-1" nz-button [nzType]="'primary'" (click)="showModal1()"><span>增加</span></button>
 <nz-modal [(nzVisible)]="isVisible1" nzTitle="add" (nzOnCancel)="handleCancel1()" (nzOnOk)="add()">
   <label>机器名称:&nbsp;</label> <input nz-input  [(ngModel)]="name" />
   <label>唯一标识:&nbsp;</label> <input nz-input  [(ngModel)]="id" />
@@ -35,7 +36,7 @@
     <td>{{ data.way}}</td>
     <td>{{ data.use_situation}}</td>
     <td>
-      <button nz-button [nzType]="'primary'" (click)="showModal(data)"><span>修改</span></button>
+      <button *ngIf="operation.indexOf(3)!=-1" nz-button [nzType]="'primary'" (click)="showModal(data)"><span>修改</span></button>
       <nz-modal [(nzVisible)]="isVisible" nzTitle="update" (nzOnCancel)="handleCancel()" (nzOnOk)="update()">
         <label>机器名称:&nbsp;</label> <input nz-input *ngIf="robot" [(ngModel)]="robot.name"/>
         <label>归属企业:&nbsp;</label>
@@ -52,10 +53,11 @@
         </select>
       </nz-modal>
       <nz-divider nzType="vertical"></nz-divider>
-      <button nz-button [nzType]="'primary'" (click)="delete(data)"><span>删除</span></button>
+      <button *ngIf="operation.indexOf(2)!=-1" nz-button [nzType]="'primary'" (click)="delete(data)"><span>删除</span></button>
       <nz-divider nzType="vertical"></nz-divider>
       <button nz-button>租赁</button>
     </td>
   </tr>
   </tbody>
 </nz-table>
+</div>

@@ -24,6 +24,9 @@ export class LoginComponent implements OnInit {
   login() {
     this.loginService.login(this.validateForm.value.username, this.validateForm.value.password).then((res: any) => {
       if (res.state === 200) {
+        this.loginService.findAuthority(res.data.role.id).then((d: any) => {
+          localStorage.setItem('Authority', JSON.stringify(d.data));
+        });
         this.message.success('欢迎' + res.data.name + '登陆成功,请稍后...');
         localStorage.setItem('userinfo', JSON.stringify(res.data));
         setTimeout(() => {

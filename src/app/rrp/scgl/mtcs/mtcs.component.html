@@ -1,3 +1,4 @@
+<div *ngIf="operation.indexOf(4)!=-1">
 <nz-table #basicTable [nzData]="benchDatas">
   <thead>
   <tr>
@@ -15,7 +16,7 @@
     <td>{{ data.number}}</td>
     <td>{{ data.time | date:'yyyy-MM-dd'}}</td>
     <td>
-      <button nz-button [nzType]="'primary'" (click)="delete(data)"><span>删除</span></button>
+      <button *ngIf="operation.indexOf(2)!=-1" nz-button [nzType]="'primary'" (click)="delete(data)"><span>删除</span></button>
       <nz-divider nzType="vertical"></nz-divider>
       <a (click)="showModal(data)"><button nz-button>生产参数</button></a>
     </td>
@@ -24,3 +25,4 @@
 </nz-table>
 <app-sccs></app-sccs>
 
+</div>

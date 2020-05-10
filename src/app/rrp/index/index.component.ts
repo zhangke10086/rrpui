@@ -134,11 +134,11 @@ export class IndexComponent implements OnInit {
     }
     if (this.tabs.includes(data)) {
       this.router.navigate(['/index/empty']).then(() => {
-        this.router.navigate([data.url]);
+        this.router.navigate([data.url], { queryParams: { menuid: data.id } });
       }); } else {
       this.tabs.push(data);
       this.router.navigate(['/index/empty']).then(res => {
-        this.router.navigate([data.url]); });
+        this.router.navigate([data.url], { queryParams: { menuid: data.id } }); });
     }
     this.tabIndex = this.tabs.findIndex(p => data.url.includes(p.url));
   }
@@ -241,6 +241,7 @@ export class IndexComponent implements OnInit {
   }
   logout() {
     delete localStorage.userinfo;
+    delete localStorage.Authority;
     this.router.navigate(['/login']);
   }
 }

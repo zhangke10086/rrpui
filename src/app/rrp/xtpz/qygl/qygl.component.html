@@ -1,3 +1,4 @@
+<div *ngIf="operation.indexOf(4)!=-1">
 <button nz-button [nzType]="'primary'" (click)="showModal1()"><span>增加</span></button>
 <nz-modal [(nzVisible)]="isVisible1" nzTitle="add" (nzOnCancel)="handleCancel1()" (nzOnOk)="add()">
   <label>企业名称:&nbsp;</label> <input nz-input  [(ngModel)]="name" />
@@ -95,3 +96,4 @@
   </tr>
   </tbody>
 </nz-table>
+</div>

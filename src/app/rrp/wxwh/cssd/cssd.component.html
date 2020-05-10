@@ -1,3 +1,4 @@
+<div *ngIf="operation.indexOf(4)!=-1">
 <nz-table #basicTable [nzData]="robotDatas">
   <thead>
   <tr>
@@ -14,7 +15,7 @@
     <td>{{ data.robot.id}}</td>
     <td>{{ data.robot.name }}</td>
     <td>
-      <button nz-button [nzType]="'primary'" (click)="showModal(data)"><span>修改参数</span></button>
+      <button *ngIf="operation.indexOf(3)!=-1" nz-button [nzType]="'primary'" (click)="showModal(data)"><span>修改参数</span></button>
     </td>
   </tr>
   </tbody>
@@ -62,4 +63,4 @@
 
   </nz-modal>
 </nz-table>
-
+</div>

@@ -3,6 +3,7 @@ import {BenchData} from '../../../core/entity/entity';
 import {ActivatedRoute} from '@angular/router';
 import {MtcsService} from '../service/mtcs.service';
 import {SccsComponent} from "../sccs/sccs.component";
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-mtcs',
@@ -18,11 +19,26 @@ export class MtcsComponent implements OnInit {
   private benchDatas: BenchData[];
   benchData: BenchData;
   benchid;
+  operation;
   @ViewChild(SccsComponent, {static: false}) sccsComponent: SccsComponent;
   constructor(
     private benchDataService: MtcsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private message: NzMessageService
   ) {
+    this.route.queryParams.subscribe(params => {
+      if(params!=null){
+        let operation=JSON.parse(localStorage.getItem("Authority")).filter(t=>{
+          if(t.menu.toString() === params['menuid']){
+            return t.operations;
+          }
+        });
+        this.operation = operation[0].operations;
+      }
+    });
+    if (this.operation.indexOf(4)==-1){
+      this.message.info('您没有打开此页面的权限')
+    }
   }
 
   showModal1(): void {

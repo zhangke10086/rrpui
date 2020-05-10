@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {QyglService} from '../service/qygl.service';
 import {Company, CompanyType, Robot} from '../../../core/entity/entity';
 import {ActivatedRoute} from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd';
 
 
 @Component({
@@ -26,14 +27,29 @@ export class QyglComponent implements OnInit {
   private robots: Robot[];
   private companys: Company[];
   company: Company;
+  operation;
   ngOnInit() {
     this.getCompanys();
     this.getCompanyTypes();
   }
   constructor(
     private qyglService: QyglService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private message: NzMessageService
   ) {
+    this.route.queryParams.subscribe(params => {
+      if (params != null) {
+        const operation = JSON.parse(localStorage.getItem('Authority')).filter(t => {
+          if (t.menu.toString() === params.menuid) {
+            return t.operations;
+          }
+        });
+        this.operation = operation[0].operations;
+      }
+    });
+    if (this.operation.indexOf(4) === -1) {
+      this.message.info('您没有打开此页面的权限');
+    }
   }
   getCompanys(): void {
     this.qyglService.getCompanys()

@@ -3,6 +3,7 @@ import {Company, Robot} from '../../../core/entity/entity';
 import {ActivatedRoute} from '@angular/router';
 import {BljqrglService} from '../service/bljqrgl.service';
 import {QyglService} from '../service/qygl.service';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-bljqrgl',
@@ -22,12 +23,26 @@ export class BljqrglComponent implements OnInit {
   private robots: Robot[];
   private companys: Company[];
   robot: Robot;
-
+  operation;
   constructor(
     private bljqrglService: BljqrglService,
     private qyglService: QyglService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private message: NzMessageService
   ) {
+    this.route.queryParams.subscribe(params => {
+      if (params != null) {
+        const operation = JSON.parse(localStorage.getItem('Authority')).filter(t => {
+          if (t.menu.toString() === params.menuid) {
+            return t.operations;
+          }
+        });
+        this.operation = operation[0].operations;
+      }
+    });
+    if (this.operation.indexOf(4) === -1) {
+      this.message.info('您没有打开此页面的权限');
+    }
   }
   ngOnInit() {
     this.getRobots();

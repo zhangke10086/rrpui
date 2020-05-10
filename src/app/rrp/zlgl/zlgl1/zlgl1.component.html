@@ -1,4 +1,5 @@
-<button nz-button [nzType]="'primary'" (click)="showModal1()"><span>增加租赁</span></button>
+<div *ngIf="operation.indexOf(4)!=-1">
+<button *ngIf="operation.indexOf(1)!=-1" nz-button [nzType]="'primary'" (click)="showModal1()"><span>增加租赁</span></button>
 <nz-modal [(nzVisible)]="isVisible1" nzTitle="add" (nzOnCancel)="handleCancel1()" (nzOnOk)="add()">
   <label>选择机器人所属公司:&nbsp;</label>
   <select [(ngModel)]="this.company" (change)="getRobotsByBelongingComapnyId(this.company.id)">
@@ -70,7 +71,7 @@
       <button *ngIf="data.robot.use_situation=='未启用'" nz-button (click)="showModalVisible(data,1)">启用</button>
       <button *ngIf="data.robot.use_situation=='启用'" nz-button (click)="showModalVisible(data,2)">停用</button>
       <nz-divider nzType="vertical"></nz-divider>
-      <button nz-button [nzType]="'primary'" (click)="showModal(data)" ><span>修改</span></button>
+      <button *ngIf="operation.indexOf(3)!=-1" nz-button [nzType]="'primary'" (click)="showModal(data)" ><span>修改</span></button>
       <nz-modal [(nzVisible)]="isVisible" nzTitle="update" (nzOnCancel)="handleCancel()" (nzOnOk)="update()">
         <label>选择机器人所属公司:&nbsp;</label>
         <select [(ngModel)]="this.company" (change)="getRobotsByBelongingComapnyId(this.company.id)">
@@ -93,8 +94,9 @@
         <label>上传合同:&nbsp;</label> <input nz-input  [(ngModel)]="this.connector" />
       </nz-modal>
       <nz-divider nzType="vertical"></nz-divider>
-      <button nz-button [nzType]="'primary'" (click)="delete(data)"><span>删除</span></button>
+      <button *ngIf="operation.indexOf(2)!=-1" nz-button [nzType]="'primary'" (click)="delete(data)"><span>删除</span></button>
     </td>
   </tr>
   </tbody>
 </nz-table>
+</div>

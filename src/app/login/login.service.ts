@@ -35,4 +35,14 @@ export class LoginService {
         })
     ));
   }
+  findAuthority(roidid) {
+    const Url = this.url.hostname + '/authority/findAuthorityByRoleIdWhenLogin?role_id=';
+    return new Promise(((resolve, reject) =>
+        this.http.get(Url + roidid).toPromise().then(res => {
+          resolve(res);
+        }, error => {
+          reject(error);
+        })
+    ));
+  }
 }

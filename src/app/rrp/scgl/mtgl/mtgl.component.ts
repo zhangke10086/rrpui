@@ -22,12 +22,26 @@ export class MtglComponent implements OnInit {
   private benchs: Bench[];
   bench: Bench;
   jsondata;
+  operation;
   constructor(
     private benchService: MtglService,
     private bljqrglService: BljqrglService,
     private route: ActivatedRoute,
     private message: NzMessageService
   ) {
+    this.route.queryParams.subscribe(params => {
+      if(params!=null){
+        let operation=JSON.parse(localStorage.getItem("Authority")).filter(t=>{
+          if(t.menu.toString() === params['menuid']){
+            return t.operations;
+          }
+        });
+        this.operation = operation[0].operations;
+      }
+    });
+    if (this.operation.indexOf(4)==-1){
+      this.message.info('您没有打开此页面的权限')
+    }
   }
 
   showModal1(): void {
@@ -104,7 +118,6 @@ export class MtglComponent implements OnInit {
     this.query(data);
   }
   query(data){
-    console.log(data);
     if(data !=null){
       this.jsondata = data;
       if(data.robot != null) {

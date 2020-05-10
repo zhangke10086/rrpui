@@ -4,6 +4,7 @@ import {QyglService} from '../../xtpz/service/qygl.service';
 import {ActivatedRoute} from '@angular/router';
 import {JfglService} from '../service/jfgl.service';
 import {Zlgl1Service} from '../service/zlgl1.service';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-jfgl',
@@ -37,6 +38,7 @@ export class JfglComponent implements OnInit {
   private companys1: Company[];
   private pays: Pay[];
   pay: Pay;
+  operation;
   ngOnInit() {
     this.getPays();
     this.getCompanys();
@@ -47,8 +49,22 @@ export class JfglComponent implements OnInit {
     private jfglService: JfglService,
     private qyglService: QyglService,
     private zlgl1Service: Zlgl1Service,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private message: NzMessageService
   ) {
+    this.route.queryParams.subscribe(params => {
+      if (params != null) {
+        const operation = JSON.parse(localStorage.getItem('Authority')).filter(t => {
+          if (t.menu.toString() === params.menuid) {
+            return t.operations;
+          }
+        });
+        this.operation = operation[0].operations;
+      }
+    });
+    if (this.operation.indexOf(4) === -1) {
+      this.message.info('您没有打开此页面的权限');
+    }
   }
   getPays(): void {
     this.jfglService.getPays()
@@ -116,7 +132,7 @@ export class JfglComponent implements OnInit {
     this.isVisible1 = false;
     const add = {robot: this.robot, paymentAmount: this.paymentAmount, company: this.company,
       paymentTime: this.paymentTime, paymentDeadline: this.paymentDeadline, examineSituation: this.examineSituation,
-      paymentDuration: this.paymentDuration, paymentVoucher: this.paymentVoucher, lease: this.lease }
+      paymentDuration: this.paymentDuration, paymentVoucher: this.paymentVoucher, lease: this.lease };
     this.jfglService.addPay(add)
       .subscribe((res: any) => {
         this.getPays();

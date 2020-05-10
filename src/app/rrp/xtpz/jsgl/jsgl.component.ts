@@ -29,13 +29,27 @@ export class JsglComponent implements OnInit {
 
   private updateRoleMenuOperation: any[] = [];
   private checkDic: { [key: string]: boolean; } = {};
-
+  operation_Au;
   constructor(
     private jsglService: JsglService,
     private route: ActivatedRoute,
     private location: Location,
     private message: NzMessageService
-  ) { }
+  ) {
+    this.route.queryParams.subscribe(params => {
+      if (params != null) {
+        const operation = JSON.parse(localStorage.getItem('Authority')).filter(t => {
+          if (t.menu.toString() === params.menuid) {
+            return t.operations;
+          }
+        });
+        this.operation_Au = operation[0].operations;
+      }
+    });
+    if (this.operation_Au.indexOf(4) === -1) {
+      this.message.info('您没有打开此页面的权限');
+    }
+  }
 
   ngOnInit() {
     // 存在并发

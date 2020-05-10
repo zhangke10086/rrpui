@@ -18,11 +18,23 @@ export class SccsComponent implements OnInit {
     private sccsService: SccsService,
     private location: Location,
     private message: NzMessageService
-  ) { }
+  ) {
+    this.route.queryParams.subscribe(params => {
+      if (params != null) {
+        const operation = JSON.parse(localStorage.getItem('Authority')).filter(t => {
+          if (t.menu.toString() === params.menuid) {
+            return t.operations;
+          }
+        });
+        this.operation = operation[0].operations;
+      }
+    });
+  }
   @Output() onOk: EventEmitter<any> = new EventEmitter<any>();
   @Output() onCancel: EventEmitter<any> = new EventEmitter<any>();
   isVisible = false;
   id = null;
+  operation
   ngOnInit() {
   }
   getdata(id) {
