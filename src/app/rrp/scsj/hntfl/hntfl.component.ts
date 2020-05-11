@@ -49,7 +49,7 @@ export class HntflComponent implements OnInit {
         for (const concreteCount of this.concreteCounts) {
           countNum.push(concreteCount.count);
           // tslint:disable-next-line:variable-name
-          const time_str = this.datePipe.transform(concreteCount.time, 'yyyy年MM月-dd日');
+          const time_str = this.datePipe.transform(concreteCount.time, 'yyyy年MM月dd日');
           time.push(time_str);
         }
         // @ts-ignore

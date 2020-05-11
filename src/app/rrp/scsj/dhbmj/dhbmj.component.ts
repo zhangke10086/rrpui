@@ -49,7 +49,7 @@ export class DhbmjComponent implements OnInit {
         for (const benchArea of this.benchAreas) {
           areaNum.push(benchArea.area);
           // tslint:disable-next-line:variable-name
-          const time_str = this.datePipe.transform(benchArea.time, 'yyyy年MM月-dd日');
+          const time_str = this.datePipe.transform(benchArea.time, 'yyyy年MM月dd日');
           time.push(time_str);
         }
         // @ts-ignore

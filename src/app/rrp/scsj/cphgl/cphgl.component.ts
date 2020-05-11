@@ -49,7 +49,7 @@ export class CphglComponent implements OnInit {
         for (const productRatio of this.productRatios) {
           ratioNum.push(productRatio.ratio);
           // tslint:disable-next-line:variable-name
-          const time_str = this.datePipe.transform(productRatio.time, 'yyyy年MM月-dd日');
+          const time_str = this.datePipe.transform(productRatio.time, 'yyyy年MM月dd日');
           time.push(time_str);
         }
         // @ts-ignore

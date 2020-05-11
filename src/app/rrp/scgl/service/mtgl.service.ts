@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Response, Bench} from '../../../core/entity/entity';
+import {Response, Bench, Robot} from '../../../core/entity/entity';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {UrlService} from '../../../core/service/url.service';
 import {Observable, of} from 'rxjs';
@@ -44,7 +44,7 @@ export class MtglService {
     );
   }
   /** POST: add a new bench to the server */
-  addBench(bench: {number: string, description: string, workshop: string}): Observable<Response> {
+  addBench(bench: {number: string, description: string, workshop: string, robot: Robot}): Observable<Response> {
     return this.http.post<Response>(this.benchAddteUrl, bench, httpOptions).pipe(
       catchError(this.handleError<any>('addBench'))
     );

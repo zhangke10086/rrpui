@@ -59,7 +59,7 @@ export class YxsjtjComponent implements OnInit {
             ratioNum.push(run.run);
           }
           // tslint:disable-next-line:variable-name
-          const time_str = this.datePipe.transform(run.time, 'yyyy年MM月-dd日');
+          const time_str = this.datePipe.transform(run.time, 'yyyy年MM月dd日');
           time.push(time_str);
         }
         // @ts-ignore

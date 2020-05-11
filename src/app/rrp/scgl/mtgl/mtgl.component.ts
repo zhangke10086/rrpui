@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Bench, Robot} from '../../../core/entity/entity';
 import {ActivatedRoute} from '@angular/router';
 import {MtglService} from '../service/mtgl.service';
-import { NzMessageService } from 'ng-zorro-antd';
+import {NzMessageService} from 'ng-zorro-antd';
 import {BljqrglService} from '../../xtpz/service/bljqrgl.service';
-
 
 
 @Component({
@@ -18,11 +17,13 @@ export class MtglComponent implements OnInit {
   number = '';
   des = '';
   workshop = '';
+  robot;
   private robots: Robot[];
   private benchs: Bench[];
   bench: Bench;
   jsondata;
   operation;
+
   constructor(
     private benchService: MtglService,
     private bljqrglService: BljqrglService,
@@ -30,16 +31,16 @@ export class MtglComponent implements OnInit {
     private message: NzMessageService
   ) {
     this.route.queryParams.subscribe(params => {
-      if(params!=null){
-        let operation=JSON.parse(localStorage.getItem("Authority")).filter(t=>{
-          if(t.menu.toString() === params['menuid']){
+      if (params != null) {
+        let operation = JSON.parse(localStorage.getItem("Authority")).filter(t => {
+          if (t.menu.toString() === params['menuid']) {
             return t.operations;
           }
         });
         this.operation = operation[0].operations;
       }
     });
-    if (this.operation.indexOf(4)==-1){
+    if (this.operation.indexOf(4) == -1) {
       this.message.info('您没有打开此页面的权限')
     }
   }
@@ -50,7 +51,7 @@ export class MtglComponent implements OnInit {
 
   add(): void {
     this.isVisible1 = false;
-    const add = {number: this.number, description: this.des, workshop: this.workshop};
+    const add = {number: this.number, description: this.des, workshop: this.workshop, robot: this.robot};
     this.benchService.addBench(add)
       .subscribe((res: any) => {
         this.getBenchs();
@@ -86,16 +87,19 @@ export class MtglComponent implements OnInit {
     this.onquery(this.jsondata);
     this.getRobots();
   }
+
   // @ts-ignore
   compareFn(o1: Compare, o2: Compare): boolean {
     return o1 && o2 ? o1.id === o2.id : o1 === o2;
   }
+
   getRobots(): void {
     this.bljqrglService.getRobots()
       .subscribe((res: any) => {
         this.robots = res.data;
       });
   }
+
   getBenchs(): void {
     this.benchService.getBenchs()
       .subscribe((res: any) => {
@@ -114,15 +118,17 @@ export class MtglComponent implements OnInit {
   fresh(): void {
     window.location.reload();
   }
-  onquery(data){
+
+  onquery(data) {
     this.query(data);
   }
-  query(data){
-    if(data !=null){
+
+  query(data) {
+    if (data != null) {
       this.jsondata = data;
-      if(data.robot != null) {
+      if (data.robot != null) {
         const robotid = data.robot.id;
-        this.benchService.getDataByRobotId(robotid).then((res:any)=>{
+        this.benchService.getDataByRobotId(robotid).then((res: any) => {
           this.benchs = res.data;
         })
       } else {

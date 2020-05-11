@@ -5,6 +5,13 @@
   <div><label>模台编号:&nbsp;</label> <input nz-input  [(ngModel)]="number" /></div>
   <div style="margin-top: 8px"><label>说明信息:&nbsp;</label> <input nz-input  [(ngModel)]="des" /></div>
   <div style="margin-top: 8px"><label>工作车间:&nbsp;</label> <input nz-input  [(ngModel)]="workshop" /></div>
+  <div>
+    <label>所属机器人:&nbsp;</label>
+    <select [(ngModel)]="robot" [compareWith]="compareFn">
+      <option value="" selected = "selected">--请选择--</option>
+      <!--ngValue支持对象，value仅支持字符串-->
+      <option *ngFor="let robot of robots" [ngValue]="robot">{{robot.name}}</option>
+    </select></div>
 </nz-modal>
 
 <nz-table #basicTable [nzData]="benchs" nzBordered>

@@ -49,7 +49,7 @@ export class DhbslComponent implements OnInit {
         for (const benchCount of this.benchCounts) {
           countNum.push(benchCount.count);
           // tslint:disable-next-line:variable-name
-          const time_str = this.datePipe.transform(benchCount.time, 'yyyy年MM月-dd日');
+          const time_str = this.datePipe.transform(benchCount.time, 'yyyy年MM月dd日');
           time.push(time_str);
         }
         // @ts-ignore
