@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import {QuerylistService} from "./querylist.service";
+import {QuerylistService} from './querylist.service';
 
 @Component({
   selector: 'app-querylist',

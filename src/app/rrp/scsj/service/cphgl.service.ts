@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Response} from '../../../core/entity/entity';
+import {Response, Robot} from '../../../core/entity/entity';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {UrlService} from '../../../core/service/url.service';
 import {Observable, of} from 'rxjs';
@@ -20,8 +20,9 @@ export class CphglService {
 
   /** GET productRatios from the server */
   // tslint:disable-next-line:variable-name
-  getProductRatios(date_begin: string, date_end: string): Observable<Response> {
-    return this.http.get<Response>(this.productRatioListUrl + '?date_begin=' + date_begin + '&date_end=' + date_end)
+  getProductRatios(date_begin: string, date_end: string, robot_id: string): Observable<Response> {
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<Response>(this.productRatioListUrl + '?date_begin=' + date_begin + '&date_end=' + date_end + '&robot_id=' + robot_id)
       .pipe(
         catchError(this.handleError<Response>('getProductRatios'))
       );

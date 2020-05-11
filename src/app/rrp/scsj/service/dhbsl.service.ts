@@ -20,8 +20,8 @@ export class DhbslService {
 
   /** GET boardCounts from the server */
   // tslint:disable-next-line:variable-name
-  getBoardCounts(date_begin: string, date_end: string): Observable<Response> {
-    return this.http.get<Response>(this.boardCountListUrl + '?date_begin=' + date_begin + '&date_end=' + date_end)
+  getBoardCounts(date_begin: string, date_end: string, robot_id: string): Observable<Response> {
+    return this.http.get<Response>(this.boardCountListUrl + '?date_begin=' + date_begin + '&date_end=' + date_end + '&robot_id=' + robot_id)
       .pipe(
         catchError(this.handleError<Response>('getBoardCounts'))
       );

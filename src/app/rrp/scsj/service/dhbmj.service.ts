@@ -20,8 +20,8 @@ export class DhbmjService {
 
   /** GET boardAreas from the server */
   // tslint:disable-next-line:variable-name
-  getBoardAreas(date_begin: string, date_end: string): Observable<Response> {
-    return this.http.get<Response>(this.boardAreaListUrl + '?date_begin=' + date_begin + '&date_end=' + date_end)
+  getBoardAreas(date_begin: string, date_end: string, robot_id: string): Observable<Response> {
+    return this.http.get<Response>(this.boardAreaListUrl + '?date_begin=' + date_begin + '&date_end=' + date_end + '&robot_id=' + robot_id)
       .pipe(
         catchError(this.handleError<Response>('getBoardAreas'))
       );

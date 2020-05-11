@@ -63,6 +63,7 @@ export class Warning {
   machine_signal23: boolean;
   // tslint:disable-next-line:variable-name
   machine_signal24: boolean;
+  robot: Robot;
 }
 
 export class BenchData {
@@ -255,36 +256,42 @@ export class BenchCount {
   id: number;
   count: number;
   time: Date;
+  robot: Robot;
 }
 
 export class BenchRatio {
   id: number;
   ratio: number;
   time: Date;
+  robot: Robot;
 }
 
 export class BoardArea {
   id: number;
   area: number;
   time: Date;
+  robot: Robot;
 }
 
 export class BoardCount {
   id: number;
   count: number;
   time: Date;
+  robot: Robot;
 }
 
 export class ConcreteCount {
   id: number;
   count: number;
   time: Date;
+  robot: Robot;
 }
 
 export class ProductRatio {
   id: number;
   ratio: number;
   time: Date;
+  robot: Robot;
 }
 
 export class Run {

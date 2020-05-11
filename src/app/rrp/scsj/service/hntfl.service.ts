@@ -20,8 +20,8 @@ export class HntflService {
 
   /** GET concreteCounts from the server */
   // tslint:disable-next-line:variable-name
-  getConcreteCounts(date_begin: string, date_end: string): Observable<Response> {
-    return this.http.get<Response>(this.concreteCountListUrl + '?date_begin=' + date_begin + '&date_end=' + date_end)
+  getConcreteCounts(date_begin: string, date_end: string, robot_id: string): Observable<Response> {
+    return this.http.get<Response>(this.concreteCountListUrl + '?date_begin=' + date_begin + '&date_end=' + date_end + '&robot_id=' + robot_id)
       .pipe(
         catchError(this.handleError<Response>('getConcreteCounts'))
       );
