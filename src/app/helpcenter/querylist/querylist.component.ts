@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {QuerylistService} from './querylist.service';
-
+// @ts-ignore
+import j from 'src/assets/json/city.json';
 @Component({
   selector: 'app-querylist',
   templateUrl: './querylist.component.html',
@@ -16,9 +17,21 @@ export class QuerylistComponent implements OnInit {
   selectedCompany;
   CompanyData;
   selectedRobot;
+  selectedProvince;
+  selectedCity;
   RobotData;
+  ProvinceData;
+  CityData;
+  companyId;
   ngOnInit() {
-    this.getCompany();
+    this.companyId = JSON.parse(localStorage.getItem('userinfo')).company.id;
+    if (this.companyId!=1){
+      this.getRobot(this.companyId);
+    } else {
+      this.ProvinceData = j;
+    }
+    // this.getCompany();
+
   }
   query() {
     const data ={
@@ -29,7 +42,7 @@ export class QuerylistComponent implements OnInit {
     data.robot = this.selectedRobot;
     this.onQuery.emit(data);
   }
-  getCompany(){
+  getCompany() {
     this.querylistService.getCompany().then((res:any) => {
       this.CompanyData = res.data;
     })
@@ -46,12 +59,34 @@ export class QuerylistComponent implements OnInit {
   }
   CompanyChange(data) {
     this.selectedCompany = data;
-    this.getRobot(data.id);
+    if(data != undefined){
+      this.getRobot(data.id);
+    } else {
+      this.selectedRobot = undefined;
+    }
   }
   RobotChange(data) {
     this.selectedRobot = data
   }
+  provinceChange(value: string): void {
+    this.CityData = this.ProvinceData.find(t => t.name === value).children;
+    if(this.CityData) {
+      this.selectedCity = this.CityData[0].name;
+      this.cityChange(this.selectedCity);
+    }
+  }
+  cityChange(value: string){
+    this.querylistService.getCompany().then((res:any) => {
+      this.CompanyData = res.data.filter(t=> t.city === value && t.province === this.selectedProvince);
+      if(this.CompanyData.length === 0){
+        this.selectedCompany =undefined;
+        this.CompanyChange(this.selectedCompany);
+      }
+    })
+  }
   reset(){
+    this.selectedProvince = undefined;
+    this.selectedCity = undefined;
     this.selectedCompany = undefined;
     this.selectedRobot = undefined;
   }
