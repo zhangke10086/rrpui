@@ -22,11 +22,12 @@ export class QuerylistComponent implements OnInit {
   RobotData;
   ProvinceData;
   CityData;
-  companyId;
+  company;
   ngOnInit() {
-    this.companyId = JSON.parse(localStorage.getItem('userinfo')).company.id;
-    if (this.companyId!=1){
-      this.getRobot(this.companyId);
+    this.company = JSON.parse(localStorage.getItem('userinfo')).company;
+    if (this.company.id!=1){
+      this.getRobot(this.company.id);
+
     } else {
       this.ProvinceData = j;
     }

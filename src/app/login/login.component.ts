@@ -31,15 +31,13 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('userinfo', JSON.stringify(res.data));
         setTimeout(() => {
           this.router.navigate(['/index']);
-          this.loginService.remind(res.data.company.id).then((obj: any) => {
-            if (obj.state === 200) {
-              if(obj.data != null) {
-                this.modalService.confirm({
-                  nzTitle: null,
-                  nzContent: obj.data.robot.name + '已被管理员进行缴费提醒！，' ,
-                  nzOkText: '确定',
-                });
-              }
+          this.loginService.findremind(res.data.company.id).then((obj: any) => {
+            if(obj.state === 200 && obj.data){
+              this.modalService.confirm({
+                nzTitle: null,
+                nzContent: obj.data.msg,
+                nzOkText: '确定',
+              });
             }
           });
         });

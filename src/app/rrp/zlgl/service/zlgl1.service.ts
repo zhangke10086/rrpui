@@ -65,14 +65,10 @@ export class Zlgl1Service {
       return of(result as T);
     };
   }
-  remind(id1, id2) {
-    const body = {
-      robotid: id1,
-      companyid: id2
-    };
-    const url = this.url.hostname + '/remind/addRemind';
+  remind(id) {
+    const url = this.url.hostname + '/lease/setRemind?id=';
     return new Promise(((resolve, reject) =>
-      this.http.post(url, body)
+      this.http.get(url + id)
         .toPromise().then(res => {
         resolve(res);
       }, error => {
@@ -80,9 +76,9 @@ export class Zlgl1Service {
       })));
   }
   cancleremind(id) {
-    const url = this.url.hostname + '/lease/cancleRemind';
+    const url = this.url.hostname + '/lease/cancleRemind?id=';
     return new Promise(((resolve, reject) =>
-      this.http.post(url, id)
+      this.http.get(url + id)
         .toPromise().then(res => {
         resolve(res);
       }, error => {

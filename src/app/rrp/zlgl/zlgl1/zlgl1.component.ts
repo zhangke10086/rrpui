@@ -154,14 +154,14 @@ export class Zlgl1Component implements OnInit {
       contract: this.contract, connector: this.connector};
     this.zlgl1Service.addLease(add)
       .subscribe((res: any) => {
-        this.query(this.jsondata);
+        this.onquery(this.jsondata);
         alert(res.msg);
       });
   }
   delete(data: Lease | number): void {
     this.zlgl1Service.deleteLease(data)
       .subscribe((res: any) => {
-        this.query(this.jsondata);
+        this.onquery(this.jsondata);
         alert(res.msg);
       });
   }
@@ -172,7 +172,7 @@ export class Zlgl1Component implements OnInit {
       contract: this.contract, connector: this.connector};
     this.zlgl1Service.updateLease(update)
       .subscribe((res: any) => {
-        this.query(this.jsondata);
+        this.onquery(this.jsondata);
         alert(res.msg);
       });
   }
@@ -211,19 +211,14 @@ export class Zlgl1Component implements OnInit {
     });
   }
   remindOk(data){
-    console.log(data);
-    const robotid = data.robot.id;
-    const companyid = data.companyId.id;
-    this.zlgl1Service.remind(robotid, companyid).then(res => {
-      this.query(this.jsondata);
+    this.zlgl1Service.remind(data.id).then(res => {
+      this.onquery(this.jsondata);
 
     });
   }
   remindCancle(data) {
-    console.log(data);
-    const robotid = data.robot.id;
-    this.zlgl1Service.cancleremind(robotid).then(res => {
-      this.query(this.jsondata);
+    this.zlgl1Service.cancleremind(data.id).then(res => {
+      this.onquery(this.jsondata);
     });
   }
   start() {
@@ -248,7 +243,7 @@ export class Zlgl1Component implements OnInit {
         nzOkText: '确定',
         nzOnOk: () => this.zlgl1Service.start(data).then((res: any) => {
           if (res.state === 200) {
-            this.query(this.jsondata);
+            this.onquery(this.jsondata);
             this.message.success('启用成功！')
           }
         }),
@@ -264,7 +259,7 @@ export class Zlgl1Component implements OnInit {
         nzOkText: '确定',
         nzOnOk: () => this.zlgl1Service.stop(data).then((res: any) => {
           if (res.state === 200) {
-            this.query(this.jsondata);
+            this.onquery(this.jsondata);
             this.message.success('停用成功！')
           }
         }),
@@ -279,21 +274,28 @@ export class Zlgl1Component implements OnInit {
     this.query(data);
   }
   query(data){
-    this.jsondata={
-      companyid:'',
-      robotid:''
-    };
-    if(data!=undefined){
-      if(data.robot){
-        this.jsondata.robotid = data.robot.id;
-      }
-      if(data.company){
-        this.jsondata.companyid = data.company.id;
-      }
+    if(data === this.jsondata){
       this.zlgl1Service.queryLease(this.jsondata).then((res:any)=>{
         this.leases = res.data;
       })
+    } else {
+      if(data!=undefined){
+        this.jsondata={
+          companyid:'',
+          robotid:''
+        };
+        if(data.robot){
+          this.jsondata.robotid = data.robot.id;
+        }
+        if(data.company){
+          this.jsondata.companyid = data.company.id;
+        }
+        this.zlgl1Service.queryLease(this.jsondata).then((res:any)=>{
+          this.leases = res.data;
+        })
+      }
     }
+
   }
   onchange(data){
 

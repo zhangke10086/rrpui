@@ -25,10 +25,10 @@ export class LoginService {
       })
     ));
   }
-  remind(companyid) {
-    const Url = this.url.hostname + '/remind/findByCompanyid';
+  findremind(companyid) {
+    const Url = this.url.hostname + '/lease/findRemind?id=';
     return new Promise(((resolve, reject) =>
-        this.http.post(Url, companyid).toPromise().then(res => {
+        this.http.get(Url + companyid).toPromise().then(res => {
           resolve(res);
         }, error => {
           reject(error);
