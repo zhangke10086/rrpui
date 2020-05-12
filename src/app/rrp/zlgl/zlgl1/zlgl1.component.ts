@@ -44,8 +44,13 @@ export class Zlgl1Component implements OnInit {
   radioValue = '已缴费';
   inputValue;
   operation;
+  jsondata={
+    companyid:'',
+    robotid:''
+  }
+  dateRange = [];
   ngOnInit() {
-    this.getLeases();
+    this.query(this.jsondata);
     this.getCompanysWithRobot();
     this.getCompanys();
   }
@@ -95,27 +100,35 @@ export class Zlgl1Component implements OnInit {
         this.companys1 = res.data;
       });
   }
-  getRobotsByBelongingComapnyId(id: number): void {
-    this.qyglService.getRobotByBelongingCompanyId(id)
+  getRobotsByBelongingComapnyId(data): void {
+    console.log(data);
+    this.qyglService.getRobotByBelongingCompanyId(data.id)
       .subscribe((res: any) => {
         this.robots = res.data;
       });
   }
   showModa2(data: Lease): void {
-    this.getCompanysWithRobot();
-    this.getCompanys();
     this.lease = data;
     this.contractId = data.contractId;
     this.costMonth = data.costMonth;
     this.costWay = data.costWay;
     this.contract = data.contract;
     this.connector = data.connector;
+    this.company1= data.companyId;
     this.id = data.id;
+    this.dateRange = [data.startTime,data.endTime];
     this.robot = data.robot;
     this.isVisible2 = true;
   }
   showModal1(): void {
     this.isVisible1 = true;
+    this.dateRange =[];
+    this.contractId = undefined;
+    this.costMonth = undefined;
+    this.costWay = undefined;
+    this.contract = undefined;
+    this.company1 = undefined;
+    this.connector = undefined;
   }
   showModal(data: Lease): void {
     this.getCompanysWithRobot();
@@ -125,28 +138,30 @@ export class Zlgl1Component implements OnInit {
     this.costMonth = data.costMonth;
     this.costWay = data.costWay;
     this.contract = data.contract;
-    this.company1 = data.company;
+    this.company1 = data.companyId;
     this.connector = data.connector;
     this.id = data.id;
+    this.dateRange =[data.startTime,data.endTime];
     this.robot = data.robot;
     this.isVisible = true;
   }
   add(): void {
+    console.log(this.robots);
     this.isVisible1 = false;
     const add = { robot: this.robot, contractId: this.contractId, companyId: this.company1,
-      costWay: this.costWay, costMonth: this.costMonth, startTime: new Date().getTime() + '',
+      costWay: this.costWay, costMonth: this.costMonth, startTime: this.dateRange[0], endTime: this.dateRange[1],
       paymentSituation: this.paymentSituation, workshopId: this.workshopId, internalId: this.internalId,
       contract: this.contract, connector: this.connector};
     this.zlgl1Service.addLease(add)
       .subscribe((res: any) => {
-        this.getLeases();
+        this.query(this.jsondata);
         alert(res.msg);
       });
   }
   delete(data: Lease | number): void {
     this.zlgl1Service.deleteLease(data)
       .subscribe((res: any) => {
-        this.getLeases();
+        this.query(this.jsondata);
         alert(res.msg);
       });
   }
@@ -157,7 +172,7 @@ export class Zlgl1Component implements OnInit {
       contract: this.contract, connector: this.connector};
     this.zlgl1Service.updateLease(update)
       .subscribe((res: any) => {
-        this.getLeases();
+        this.query(this.jsondata);
         alert(res.msg);
       });
   }
@@ -165,6 +180,7 @@ export class Zlgl1Component implements OnInit {
     this.isVisible = false;
   }
   handleCancel1(): void {
+    console.log(this.companys)
     this.isVisible1 = false;
   }
   handleCancel2(): void {
@@ -199,7 +215,7 @@ export class Zlgl1Component implements OnInit {
     const robotid = data.robot.id;
     const companyid = data.companyId.id;
     this.zlgl1Service.remind(robotid, companyid).then(res => {
-      this.getLeases();
+      this.query(this.jsondata);
 
     });
   }
@@ -207,7 +223,7 @@ export class Zlgl1Component implements OnInit {
     console.log(data);
     const robotid = data.robot.id;
     this.zlgl1Service.cancleremind(robotid).then(res => {
-      this.getLeases();
+      this.query(this.jsondata);
     });
   }
   start() {
@@ -230,9 +246,9 @@ export class Zlgl1Component implements OnInit {
         nzTitle: null,
         nzContent: '<b style="color: red;">您确定要启用该布料机器人吗？</b>',
         nzOkText: '确定',
-        nzOnOk: () =>  this.zlgl1Service.start(data).then((res:any)=>{
-          if (res.state ===200){
-            this.getLeases();
+        nzOnOk: () => this.zlgl1Service.start(data).then((res: any) => {
+          if (res.state === 200) {
+            this.query(this.jsondata);
             this.message.success('启用成功！')
           }
         }),
@@ -246,9 +262,9 @@ export class Zlgl1Component implements OnInit {
         nzTitle: null,
         nzContent: '<b style="color: red;">您确定要停用该布料机器人吗？</b>',
         nzOkText: '确定',
-        nzOnOk: () =>    this.zlgl1Service.stop(data).then((res:any)=>{
-          if (res.state ===200){
-            this.getLeases();
+        nzOnOk: () => this.zlgl1Service.stop(data).then((res: any) => {
+          if (res.state === 200) {
+            this.query(this.jsondata);
             this.message.success('停用成功！')
           }
         }),
@@ -257,6 +273,29 @@ export class Zlgl1Component implements OnInit {
       });
 
     }
+  }
+  onquery(data){
+    console.log(data);
+    this.query(data);
+  }
+  query(data){
+    this.jsondata={
+      companyid:'',
+      robotid:''
+    };
+    if(data!=undefined){
+      if(data.robot){
+        this.jsondata.robotid = data.robot.id;
+      }
+      if(data.company){
+        this.jsondata.companyid = data.company.id;
+      }
+      this.zlgl1Service.queryLease(this.jsondata).then((res:any)=>{
+        this.leases = res.data;
+      })
+    }
+  }
+  onchange(data){
 
   }
 }

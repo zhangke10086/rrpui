@@ -58,11 +58,10 @@ export class QuerylistComponent implements OnInit {
 
   }
   CompanyChange(data) {
+    this.selectedRobot = undefined;
     this.selectedCompany = data;
     if(data != undefined){
       this.getRobot(data.id);
-    } else {
-      this.selectedRobot = undefined;
     }
   }
   RobotChange(data) {

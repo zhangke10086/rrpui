@@ -112,4 +112,15 @@ export class Zlgl1Service {
         reject(error);
       })));
   }
+  //动态查询
+  queryLease(data) {
+    const url = this.url.hostname + '/lease/QueryLease';
+    return new Promise(((resolve, reject) =>
+      this.http.post(url, data)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      })));
+  }
 }

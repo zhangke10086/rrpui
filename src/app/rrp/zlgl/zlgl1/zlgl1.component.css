@@ -1,3 +1,10 @@
 nz-date-picker{
   width: 150px;
 }
+nz-select {
+  margin-right: 8px;
+  width: 200px;
+}
+.ant-input {
+  width: 200px;
+}

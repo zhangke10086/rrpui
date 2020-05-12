@@ -109,10 +109,11 @@ export class Lease {
   id: number;
   robot: Robot;
   contractId: string;
-  company: Company;
+  companyId: Company;
   costWay: string;
   costMonth: string;
   startTime: string;
+  endTime: string;
   paymentSituation: string;
   workshopId: string;
   internalId: string;

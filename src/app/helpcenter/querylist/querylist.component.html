@@ -15,16 +15,20 @@
     style="padding: 0 16px 8px 16px !important;">
     <div nz-row style="margin-top: 8px">
       <div>
-        <nz-select *ngIf="companyId===1" [(ngModel)]="selectedProvince" (ngModelChange)="provinceChange($event)" nzPlaceHolder="请选择省份">
+        <nz-select *ngIf="companyId===1" [(ngModel)]="selectedProvince" (ngModelChange)="provinceChange($event)"
+                   [nzAllowClear]="true" [nzShowSearch]="true" nzPlaceHolder="请选择省份">
           <nz-option *ngFor="let p of ProvinceData" [nzValue]="p.name" [nzLabel]="p.name"></nz-option>
         </nz-select>
-        <nz-select *ngIf="companyId===1" [(ngModel)]="selectedCity" (ngModelChange)="cityChange($event)"  nzPlaceHolder="请选择市">
+        <nz-select *ngIf="companyId===1" [(ngModel)]="selectedCity" (ngModelChange)="cityChange($event)"
+                   [nzAllowClear]="true" [nzShowSearch]="true" nzPlaceHolder="请选择市">
           <nz-option *ngFor="let c of CityData" [nzValue]="c.name" [nzLabel]="c.name"></nz-option>
         </nz-select>
-        <nz-select *ngIf="companyId===1" [(ngModel)]="selectedCompany" (ngModelChange)="CompanyChange($event)" nzPlaceHolder="请选择企业">
+        <nz-select *ngIf="companyId===1" [(ngModel)]="selectedCompany" (ngModelChange)="CompanyChange($event)"
+                   [nzAllowClear]="true" [nzShowSearch]="true" nzPlaceHolder="请选择企业">
           <nz-option *ngFor="let p of CompanyData" [nzValue]="p" [nzLabel]="p.name"></nz-option>
         </nz-select>
-        <nz-select [(ngModel)]="selectedRobot" (ngModelChange)="RobotChange($event)" nzPlaceHolder="请选择机器人">
+        <nz-select [(ngModel)]="selectedRobot" (ngModelChange)="RobotChange($event)"
+                   [nzAllowClear]="true"  [nzShowSearch]="true"  nzPlaceHolder="请选择机器人">
           <nz-option *ngFor="let p of RobotData" [nzValue]="p" [nzLabel]="p.name"></nz-option>
         </nz-select>
       </div>
