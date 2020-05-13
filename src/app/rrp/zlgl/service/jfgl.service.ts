@@ -85,5 +85,18 @@ export class JfglService {
       return of(result as T);
     };
   }
-
+  post(url, data) {
+    return new Promise(((resolve, reject) =>
+      this.http.post(url, data)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      })));
+  }
+  // 动态查询
+  query(data) {
+    const url = this.url.hostname + '/lease/QueryPay';
+    return this.post(url, data);
+  }
 }

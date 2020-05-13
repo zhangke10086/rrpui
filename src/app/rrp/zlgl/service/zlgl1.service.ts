@@ -65,69 +65,51 @@ export class Zlgl1Service {
       return of(result as T);
     };
   }
-  remind(id) {
-    const url = this.url.hostname + '/lease/setRemind?id=';
+  post(url, data) {
     return new Promise(((resolve, reject) =>
-      this.http.get(url + id)
+      this.http.post(url, data)
         .toPromise().then(res => {
         resolve(res);
       }, error => {
         reject(error);
       })));
+  }
+  get(url) {
+    return new Promise(((resolve, reject) =>
+      this.http.get(url)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      })));
+  }
+  remind(id) {
+    const url = this.url.hostname + '/lease/setRemind?id=';
+    return this.get(url + id);
   }
   cancleremind(id) {
     const url = this.url.hostname + '/lease/cancleRemind?id=';
-    return new Promise(((resolve, reject) =>
-      this.http.get(url + id)
-        .toPromise().then(res => {
-        resolve(res);
-      }, error => {
-        reject(error);
-      })));
+    return this.get(url + id);
   }
-  //启用
+  // 启用
   start(data) {
     const url = this.url.hostname + '/lease/start';
-    return new Promise(((resolve, reject) =>
-      this.http.post(url, data)
-        .toPromise().then(res => {
-        resolve(res);
-      }, error => {
-        reject(error);
-      })));
+    return this.post(url, data);
   }
 
-  //停用
+  // 停用
   stop(data) {
     const url = this.url.hostname + '/lease/stop';
-    return new Promise(((resolve, reject) =>
-      this.http.post(url, data)
-        .toPromise().then(res => {
-        resolve(res);
-      }, error => {
-        reject(error);
-      })));
+    return this.post(url, data);
   }
-  //动态查询
+  // 动态查询
   queryLease(data) {
     const url = this.url.hostname + '/lease/QueryLease';
-    return new Promise(((resolve, reject) =>
-      this.http.post(url, data)
-        .toPromise().then(res => {
-        resolve(res);
-      }, error => {
-        reject(error);
-      })));
+    return this.post(url, data);
   }
-  //续费
-  pay(data){
+  // 续费
+  pay(data) {
     const url = this.url.hostname + '/lease/pay';
-    return new Promise(((resolve, reject) =>
-      this.http.post(url, data)
-        .toPromise().then(res => {
-        resolve(res);
-      }, error => {
-        reject(error);
-      })));
+    return this.post(url, data);
   }
 }

@@ -25,7 +25,7 @@ export class Zlgl1Component implements OnInit {
   private costWay;
   private contract;
   private connector;
-  private paymentSituation = '已欠费';
+  private paymentSituation = '1';
   private workshopId = '';
   private internalId = '';
   private leases: Lease[];
@@ -46,6 +46,8 @@ export class Zlgl1Component implements OnInit {
   inputValue;
   operation;
   jsondata={
+    province:'',
+    city:'',
     companyid:'',
     robotid:''
   };
@@ -163,7 +165,7 @@ export class Zlgl1Component implements OnInit {
     this.isVisible1 = false;
     const add = { robot: this.robot, contractId: this.contractId, companyId: this.company1,
       costWay: this.costWay, costMonth: this.costMonth, startTime: this.dateRange[0], endTime: this.dateRange[1],
-      paymentSituation: this.paymentSituation, workshopId: this.workshopId, internalId: this.internalId,
+      paymentSituation: '0', workshopId: this.workshopId, internalId: this.internalId,
       contract: this.contract, connector: this.connector};
     this.zlgl1Service.addLease(add)
       .subscribe((res: any) => {
@@ -294,9 +296,17 @@ export class Zlgl1Component implements OnInit {
     } else {
       if(data!=undefined){
         this.jsondata={
+          province:'',
+          city:'',
           companyid:'',
           robotid:''
         };
+        if (data.province){
+          this.jsondata.province=data.province;
+        }
+        if (data.city){
+          this.jsondata.city=data.city;
+        }
         if(data.robot){
           this.jsondata.robotid = data.robot.id;
         }
@@ -323,6 +333,7 @@ export class Zlgl1Component implements OnInit {
     this.zlgl1Service.pay(pay).then((res:any)=>{
       if(res.state === 200){
         this.message.success('已发出审批请求，等待客服经理审批！');
+        this.isVisible3 = false;
       }
     })
 

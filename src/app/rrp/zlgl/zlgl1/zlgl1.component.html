@@ -27,7 +27,7 @@
     <td>{{ data.costMonth}}</td>
     <td>{{ data.startTime | date:'yyyy-MM-dd'}}</td>
     <td>{{ data.paymentSituation==='0'?"已缴费":(data.paymentSituation==='1'?"已欠费":"审核中")}}</td>
-    <td>{{ data.robot.use_situation}}</td>
+    <td>{{ data.state}}</td>
     <td>
       <button nz-button [nzType]="'primary'" (click)="showModa2(data)"><span>详情</span></button>
       <nz-divider nzType="vertical"></nz-divider>
@@ -36,8 +36,8 @@
       <nz-divider nzType="vertical"></nz-divider>
       <button nz-button (click)="showModa3(data)">续费</button>
       <nz-divider nzType="vertical"></nz-divider>
-      <button *ngIf="data.robot.use_situation=='未启用'" nz-button (click)="showModalVisible(data,1)">启用</button>
-      <button *ngIf="data.robot.use_situation=='启用'" nz-button (click)="showModalVisible(data,2)">停用</button>
+      <button *ngIf="data.state!='已启用'" nz-button (click)="showModalVisible(data,1)">启用</button>
+      <button *ngIf="data.state=='已启用'" nz-button (click)="showModalVisible(data,2)">停用</button>
       <nz-divider nzType="vertical"></nz-divider>
       <button *ngIf="operation.indexOf(3)!=-1" nz-button [nzType]="'primary'" (click)="showModal(data)" ><span>修改</span></button>
       <nz-divider nzType="vertical"></nz-divider>
@@ -106,7 +106,7 @@
   </div>
   <div nz-row>
     <nz-form-item>
-      <nz-form-label [nzSpan]="6">缴费方式</nz-form-label>
+      <nz-form-label [nzSpan]="6">缴费金额及方式</nz-form-label>
       <nz-form-control>
         <input nz-input name="costWay" [(ngModel)]="costWay" />
       </nz-form-control>

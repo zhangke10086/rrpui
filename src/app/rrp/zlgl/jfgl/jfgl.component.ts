@@ -39,8 +39,14 @@ export class JfglComponent implements OnInit {
   private pays: Pay[];
   pay: Pay;
   operation;
+  jsondata = {
+    province:'',
+    city:"",
+    robotid:'',
+    companyid:''
+  }
   ngOnInit() {
-    this.getPays();
+    this.onquery(this.jsondata);
     this.getCompanys();
     this.getLeases();
     this.getCompanysWithRobot();
@@ -135,23 +141,29 @@ export class JfglComponent implements OnInit {
       paymentDuration: this.paymentDuration, paymentVoucher: this.paymentVoucher, lease: this.lease };
     this.jfglService.addPay(add)
       .subscribe((res: any) => {
-        this.getPays();
-        alert(res.msg);
+        if(res.state===200){
+          this.onquery(this.jsondata);
+          this.message.success('增加成功！')
+        }
       });
   }
   delete(data: Pay | number): void {
     this.jfglService.deletePay(data)
       .subscribe((res: any) => {
-        this.getPays();
-        alert(res.msg);
+        if(res.state===200) {
+          this.onquery(this.jsondata);
+          this.message.success('删除成功！')
+        }
       });
   }
   update(): void {
     this.isVisible = false;
     this.jfglService.updatePay(this.pay)
       .subscribe((res: any) => {
-        this.getPays();
-        alert(res.msg);
+        if(res.state===200) {
+          this.onquery(this.jsondata);
+          this.message.success('修改成功！')
+        }
       });
   }
   handleCancel(): void {
@@ -165,5 +177,43 @@ export class JfglComponent implements OnInit {
   }
   fresh(): void {
     window.location.reload();
+  }
+  onquery(data) {
+    this.query(data);
+  }
+  query(data) {
+    if(data == this.jsondata){
+      this.jfglService.query(this.jsondata).then((res:any)=>{
+        if(res.state===200){
+          this.pays = res.data;
+        }
+      })
+    } else {
+      this.jsondata ={
+        province:'',
+        city:"",
+        robotid:'',
+        companyid:''
+      }
+      if(data !=undefined){
+        if (data.province){
+          this.jsondata.province=data.province;
+        }
+        if (data.city){
+          this.jsondata.city=data.city;
+        }
+        if (data.robot){
+          this.jsondata.robotid=data.robot.id;
+        }
+        if (data.company){
+          this.jsondata.companyid=data.company.id;
+        }
+        this.jfglService.query(this.jsondata).then((res:any)=>{
+          if(res.state===200){
+            this.pays = res.data;
+          }
+        })
+      }
+    }
   }
 }

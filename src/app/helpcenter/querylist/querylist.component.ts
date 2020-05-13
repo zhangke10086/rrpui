@@ -36,9 +36,13 @@ export class QuerylistComponent implements OnInit {
   }
   query() {
     const data ={
+      province:'',
+      city:'',
       company:'',
       robot:''
     };
+    data.province = this.selectedProvince;
+    data.city = this.selectedCity;
     data.company = this.selectedCompany;
     data.robot = this.selectedRobot;
     this.onQuery.emit(data);

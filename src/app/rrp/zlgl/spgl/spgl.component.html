@@ -18,9 +18,9 @@
     <td>{{ data.lease.companyId.name}}</td>
     <td>{{ data.request}}</td>
     <td>
-      <button nz-button [nzType]="'primary'" ><span>确认</span></button>
+      <button nz-button [nzType]="'primary'" (click)="confirm(data)"><span>确认</span></button>
       <nz-divider nzType="vertical"></nz-divider>
-      <button nz-button >驳回</button>
+      <button nz-button (click)="reject(data)">驳回</button>
       <nz-divider *ngIf="data.request==='续费审核'" nzType="vertical"></nz-divider>
       <button *ngIf="data.request==='续费审核'" nz-button >详情</button>
     </td>
