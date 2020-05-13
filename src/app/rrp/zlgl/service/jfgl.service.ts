@@ -85,4 +85,5 @@ export class JfglService {
       return of(result as T);
     };
   }
+
 }

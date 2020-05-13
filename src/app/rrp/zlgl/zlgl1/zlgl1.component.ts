@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {JfglService} from '../service/jfgl.service';
 import {QyglService} from '../../xtpz/service/qygl.service';
 import {ActivatedRoute} from '@angular/router';
-import {Company, Lease, Robot} from '../../../core/entity/entity';
+import {Company, Lease, Pay, Robot} from '../../../core/entity/entity';
 import {Zlgl1Service} from '../service/zlgl1.service';
 import { NzModalService, NzMessageService } from 'ng-zorro-antd';
-
+import {formatDate} from "@angular/common";
 @Component({
   selector: 'app-zlgl1',
   templateUrl: './zlgl1.component.html',
@@ -18,7 +18,8 @@ export class Zlgl1Component implements OnInit {
   isVisible1 = false;
   // 查看详情弹框
   isVisible2 = false;
-
+  //续费
+  isVisible3 = false;
   private contractId;
   private costMonth;
   private costWay;
@@ -47,7 +48,11 @@ export class Zlgl1Component implements OnInit {
   jsondata={
     companyid:'',
     robotid:''
-  }
+  };
+  pay={
+    money:undefined,
+    date:undefined
+  };
   dateRange = [];
   ngOnInit() {
     this.query(this.jsondata);
@@ -129,6 +134,14 @@ export class Zlgl1Component implements OnInit {
     this.contract = undefined;
     this.company1 = undefined;
     this.connector = undefined;
+  }
+  showModa3(data){
+    this.isVisible3 = true;
+    this.lease = data;
+    this.pay ={
+      date: '',
+      money: ''
+    }
   }
   showModal(data: Lease): void {
     this.getCompanysWithRobot();
@@ -297,7 +310,22 @@ export class Zlgl1Component implements OnInit {
     }
 
   }
-  onchange(data){
+  Pay(){
+    const pay =new Pay();
+    pay.lease = this.lease;
+    pay.company = this.lease.companyId;
+    pay.robot = this.lease.robot;
+    pay.examineSituation = '待审核';
+    pay.paymentTime =  formatDate(new Date().getTime(), 'yyyy-MM-dd', 'zh-Hans')
+    pay.paymentDeadline = this.pay.date;
+    pay.paymentAmount =  parseInt(this.pay.money);
+    console.log(pay);
+    this.zlgl1Service.pay(pay).then((res:any)=>{
+      if(res.state === 200){
+        this.message.success('已发出审批请求，等待客服经理审批！');
+      }
+    })
+
 
   }
 }

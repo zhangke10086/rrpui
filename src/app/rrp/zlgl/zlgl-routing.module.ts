@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {Zlgl1Component} from './zlgl1/zlgl1.component';
 import {JfglComponent} from './jfgl/jfgl.component';
+import {SpglComponent} from './spgl/spgl.component';
 
 
 const routes: Routes = [
@@ -10,6 +11,9 @@ const routes: Routes = [
   },
   {
     path: 'jfgl', component: JfglComponent, data: { title: '缴费管理' },
+  },
+  {
+    path: 'spgl', component: SpglComponent, data: { title: '审批管理' },
   }
 ];
 @NgModule({

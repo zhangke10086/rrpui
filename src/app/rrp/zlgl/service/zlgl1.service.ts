@@ -119,4 +119,15 @@ export class Zlgl1Service {
         reject(error);
       })));
   }
+  //续费
+  pay(data){
+    const url = this.url.hostname + '/lease/pay';
+    return new Promise(((resolve, reject) =>
+      this.http.post(url, data)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      })));
+  }
 }

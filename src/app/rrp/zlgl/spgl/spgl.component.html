@@ -1,0 +1,29 @@
+<app-querylist (onQuery)="onquery($event)"></app-querylist>
+<nz-table #Table [nzData]="approvals">
+  <thead>
+  <tr>
+    <th>序号</th>
+    <th>布料机器人名称</th>
+    <th>唯一标识</th>
+    <th>租赁企业</th>
+    <th>审批请求</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of Table.data">
+    <td>{{ Table.data.indexOf(data) + 1 }}</td>
+    <td>{{ data.robot.name }}</td>
+    <td>{{ data.robot.id}}</td>
+    <td>{{ data.lease.companyId.name}}</td>
+    <td>{{ data.request}}</td>
+    <td>
+      <button nz-button [nzType]="'primary'" ><span>确认</span></button>
+      <nz-divider nzType="vertical"></nz-divider>
+      <button nz-button >驳回</button>
+      <nz-divider *ngIf="data.request==='续费审核'" nzType="vertical"></nz-divider>
+      <button *ngIf="data.request==='续费审核'" nz-button >详情</button>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
