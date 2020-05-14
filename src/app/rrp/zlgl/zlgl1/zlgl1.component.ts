@@ -5,8 +5,8 @@ import {ActivatedRoute} from '@angular/router';
 import {Company, Lease, Pay, Robot} from '../../../core/entity/entity';
 import {Zlgl1Service} from '../service/zlgl1.service';
 import { NzModalService, NzMessageService } from 'ng-zorro-antd';
-import {formatDate} from "@angular/common";
-import {UrlService} from "../../../core/service/url.service";
+import {formatDate} from '@angular/common';
+import {UrlService} from '../../../core/service/url.service';
 @Component({
   selector: 'app-zlgl1',
   templateUrl: './zlgl1.component.html',
@@ -19,7 +19,7 @@ export class Zlgl1Component implements OnInit {
   isVisible1 = false;
   // 查看详情弹框
   isVisible2 = false;
-  //续费
+  // 续费
   isVisible3 = false;
    contractId;
    costMonth;
@@ -35,11 +35,11 @@ export class Zlgl1Component implements OnInit {
    robot: Robot;
    robots: Robot[];
   // 查找到的机器人的所属公司
-   company: Company;
-   company1: Company;
-   companys1: Company[];
-   companys: Company[];
-  uploadUrl = this.url.hostname + '/lease/upload'
+  company: Company;
+  company1: Company;
+  companys1: Company[];
+  companys: Company[];
+  uploadUrl = this.url.hostname + '/lease/upload';
   responseurl;
   startVisible = false;
   endVisible = false;
@@ -48,15 +48,15 @@ export class Zlgl1Component implements OnInit {
   radioValue = '已缴费';
   inputValue;
   operation;
-  jsondata={
-    province:'',
-    city:'',
-    companyid:'',
-    robotid:''
+  jsondata = {
+    province: '',
+    city: '',
+    companyid: '',
+    robotid: ''
   };
-  pay={
-    money:undefined,
-    date:undefined
+  pay = {
+    money: undefined,
+    date: undefined
   };
   dateRange = [];
   ngOnInit() {
@@ -74,9 +74,9 @@ export class Zlgl1Component implements OnInit {
     private url: UrlService
   ) {
     this.route.queryParams.subscribe(params => {
-      if(params!=null){
-        let operation=JSON.parse(localStorage.getItem("Authority")).filter(t=>{
-          if(t.menu.toString() === params['menuid']){
+      if (params != null) {
+        const operation = JSON.parse(localStorage.getItem('Authority')).filter(t => {
+          if (t.menu.toString() === params.menuid) {
             return t.operations;
           }
         });
@@ -125,15 +125,15 @@ export class Zlgl1Component implements OnInit {
     this.costWay = data.costWay;
     this.contract = data.contract;
     this.connector = data.connector;
-    this.company1= data.companyId;
+    this.company1 = data.companyId;
     this.id = data.id;
-    this.dateRange = [data.startTime,data.endTime];
+    this.dateRange = [data.startTime, data.endTime];
     this.robot = data.robot;
     this.isVisible2 = true;
   }
   showModal1(): void {
     this.isVisible1 = true;
-    this.dateRange =[];
+    this.dateRange = [];
     this.contractId = undefined;
     this.costMonth = undefined;
     this.costWay = undefined;
@@ -141,13 +141,13 @@ export class Zlgl1Component implements OnInit {
     this.company1 = undefined;
     this.connector = undefined;
   }
-  showModa3(data){
+  showModa3(data) {
     this.isVisible3 = true;
     this.lease = data;
-    this.pay ={
+    this.pay = {
       date: '',
       money: ''
-    }
+    };
   }
   showModal(data: Lease): void {
     this.getCompanysWithRobot();
@@ -160,7 +160,7 @@ export class Zlgl1Component implements OnInit {
     this.company1 = data.companyId;
     this.connector = data.connector;
     this.id = data.id;
-    this.dateRange =[data.startTime,data.endTime];
+    this.dateRange = [data.startTime, data.endTime];
     this.robot = data.robot;
     this.isVisible = true;
   }
@@ -174,14 +174,14 @@ export class Zlgl1Component implements OnInit {
     this.zlgl1Service.addLease(add)
       .subscribe((res: any) => {
         this.onquery(this.jsondata);
-        this.message.success('增加成功！')
+        this.message.success('增加成功！');
       });
   }
   delete(data: Lease | number): void {
     this.zlgl1Service.deleteLease(data)
       .subscribe((res: any) => {
         this.onquery(this.jsondata);
-        this.message.success('删除成功！')
+        this.message.success('删除成功！');
       });
   }
   update(): void {
@@ -192,14 +192,14 @@ export class Zlgl1Component implements OnInit {
     this.zlgl1Service.updateLease(update)
       .subscribe((res: any) => {
         this.onquery(this.jsondata);
-        this.message.success('修改成功！')
+        this.message.success('修改成功！');
       });
   }
   handleCancel(): void {
     this.isVisible = false;
   }
   handleCancel1(): void {
-    console.log(this.companys)
+    console.log(this.companys);
     this.isVisible1 = false;
   }
   handleCancel2(): void {
@@ -208,7 +208,7 @@ export class Zlgl1Component implements OnInit {
   fresh(): void {
     window.location.reload();
   }
-  remind(data){
+  remind(data) {
     console.log(data);
     this.modalService.confirm({
       nzTitle: null,
@@ -219,7 +219,7 @@ export class Zlgl1Component implements OnInit {
       nzOnCancel: () => console.log('Cancel')
     });
   }
-  cancleremind(data){
+  cancleremind(data) {
     this.modalService.confirm({
       nzTitle: null,
       nzContent: '<b style="color: red;">您确定要对该布料机器人取消提醒吗？</b>',
@@ -229,7 +229,7 @@ export class Zlgl1Component implements OnInit {
       nzOnCancel: () => console.log('Cancel')
     });
   }
-  remindOk(data){
+  remindOk(data) {
     this.zlgl1Service.remind(data.id).then(res => {
       this.onquery(this.jsondata);
 
@@ -251,7 +251,7 @@ export class Zlgl1Component implements OnInit {
         nzOnOk: () => this.zlgl1Service.start(data).then((res: any) => {
           if (res.state === 200) {
             this.onquery(this.jsondata);
-            this.message.success(res.data.msg)
+            this.message.success(res.data.msg);
           }
         }),
         nzCancelText: '取消',
@@ -267,7 +267,7 @@ export class Zlgl1Component implements OnInit {
         nzOnOk: () => this.zlgl1Service.stop(data).then((res: any) => {
           if (res.state === 200) {
             this.onquery(this.jsondata);
-            this.message.success(res.data.msg)
+            this.message.success(res.data.msg);
           }
         }),
         nzCancelText: '取消',
@@ -276,69 +276,69 @@ export class Zlgl1Component implements OnInit {
 
     }
   }
-  onquery(data){
+  onquery(data) {
     console.log(data);
     this.query(data);
   }
-  query(data){
-    if(data === this.jsondata){
-      this.zlgl1Service.queryLease(this.jsondata).then((res:any)=>{
+  query(data) {
+    if (data === this.jsondata) {
+      this.zlgl1Service.queryLease(this.jsondata).then((res: any) => {
         this.leases = res.data;
-      })
+      });
     } else {
-      if(data!=undefined){
-        this.jsondata={
-          province:'',
-          city:'',
-          companyid:'',
-          robotid:''
+      if (data !== undefined) {
+        this.jsondata = {
+          province: '',
+          city: '',
+          companyid: '',
+          robotid: ''
         };
-        if (data.province){
-          this.jsondata.province=data.province;
+        if (data.province) {
+          this.jsondata.province = data.province;
         }
-        if (data.city){
-          this.jsondata.city=data.city;
+        if (data.city) {
+          this.jsondata.city = data.city;
         }
-        if(data.robot){
+        if (data.robot) {
           this.jsondata.robotid = data.robot.id;
         }
-        if(data.company){
+        if (data.company) {
           this.jsondata.companyid = data.company.id;
         }
-        this.zlgl1Service.queryLease(this.jsondata).then((res:any)=>{
+        this.zlgl1Service.queryLease(this.jsondata).then((res: any) => {
           this.leases = res.data;
-        })
+        });
       }
     }
 
   }
-  Pay(){
-    const pay =new Pay();
+  Pay() {
+    const pay = new Pay();
     pay.lease = this.lease;
     pay.company = this.lease.companyId;
     pay.robot = this.lease.robot;
     pay.examineSituation = '待审核';
-    pay.paymentTime =  formatDate(new Date().getTime(), 'yyyy-MM-dd', 'zh-Hans')
+    pay.paymentTime =  formatDate(new Date().getTime(), 'yyyy-MM-dd', 'zh-Hans');
     pay.paymentDeadline = this.pay.date;
     pay.paymentAmount =  parseInt(this.pay.money);
     console.log(pay);
-    this.zlgl1Service.pay(pay).then((res:any)=>{
-      if(res.state === 200){
+    this.zlgl1Service.pay(pay).then((res: any) => {
+      if (res.state === 200) {
         this.message.success('已发出审批请求，等待客服经理审批！');
         this.isVisible3 = false;
       }
-    })
+    });
 
 
   }
   // 获得response信息
   handleChange(info: any): void {
     if (info) {
-      if(info.type === 'success'){
-        if(info.file){
-          if(info.file.response){
-            if(info.file.response.data != undefined){
-              let data = info.file.response.data;
+      if (info.type === 'success') {
+        if (info.file) {
+          if (info.file.response) {
+            if (info.file.response.data !== undefined) {
+              const data = info.file.response.data;
               this.responseurl = data;
             }
           }
