@@ -15,7 +15,7 @@ export class SoftwareUpdateComponent implements OnInit {
   isVisible = false;
   isVisible1 = false;
   des = '';
-  private softwareUpgrades: SoftwareUpgrade[];
+   softwareUpgrades: SoftwareUpgrade[];
   softwareUpgrade: SoftwareUpgrade;
   operation;
   constructor(

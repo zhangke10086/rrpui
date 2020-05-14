@@ -6,6 +6,7 @@ import {Company, Lease, Pay, Robot} from '../../../core/entity/entity';
 import {Zlgl1Service} from '../service/zlgl1.service';
 import { NzModalService, NzMessageService } from 'ng-zorro-antd';
 import {formatDate} from "@angular/common";
+import {UrlService} from "../../../core/service/url.service";
 @Component({
   selector: 'app-zlgl1',
   templateUrl: './zlgl1.component.html',
@@ -20,24 +21,26 @@ export class Zlgl1Component implements OnInit {
   isVisible2 = false;
   //续费
   isVisible3 = false;
-  private contractId;
-  private costMonth;
-  private costWay;
-  private contract;
-  private connector;
-  private paymentSituation = '1';
-  private workshopId = '';
-  private internalId = '';
-  private leases: Lease[];
-  private lease: Lease;
-  private id;
-  private robot: Robot;
-  private robots: Robot[];
+   contractId;
+   costMonth;
+   costWay;
+   contract;
+   connector;
+   paymentSituation = '1';
+   workshopId = '';
+   internalId = '';
+   leases: Lease[];
+   lease: Lease;
+   id;
+   robot: Robot;
+   robots: Robot[];
   // 查找到的机器人的所属公司
-  private company: Company;
-  private company1: Company;
-  private companys1: Company[];
-  private companys: Company[];
+   company: Company;
+   company1: Company;
+   companys1: Company[];
+   companys: Company[];
+  uploadUrl = this.url.hostname + '/lease/upload'
+  responseurl;
   startVisible = false;
   endVisible = false;
   startdate;
@@ -67,7 +70,8 @@ export class Zlgl1Component implements OnInit {
     private qyglService: QyglService,
     private route: ActivatedRoute,
     private modalService: NzModalService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private url: UrlService
   ) {
     this.route.queryParams.subscribe(params => {
       if(params!=null){
@@ -166,18 +170,18 @@ export class Zlgl1Component implements OnInit {
     const add = { robot: this.robot, contractId: this.contractId, companyId: this.company1,
       costWay: this.costWay, costMonth: this.costMonth, startTime: this.dateRange[0], endTime: this.dateRange[1],
       paymentSituation: '0', workshopId: this.workshopId, internalId: this.internalId,
-      contract: this.contract, connector: this.connector};
+      contract: this.contract, connector: this.connector, uploadurl: this.responseurl, state: '未启用'};
     this.zlgl1Service.addLease(add)
       .subscribe((res: any) => {
         this.onquery(this.jsondata);
-        alert(res.msg);
+        this.message.success('增加成功！')
       });
   }
   delete(data: Lease | number): void {
     this.zlgl1Service.deleteLease(data)
       .subscribe((res: any) => {
         this.onquery(this.jsondata);
-        alert(res.msg);
+        this.message.success('删除成功！')
       });
   }
   update(): void {
@@ -188,7 +192,7 @@ export class Zlgl1Component implements OnInit {
     this.zlgl1Service.updateLease(update)
       .subscribe((res: any) => {
         this.onquery(this.jsondata);
-        alert(res.msg);
+        this.message.success('修改成功！')
       });
   }
   handleCancel(): void {
@@ -236,18 +240,6 @@ export class Zlgl1Component implements OnInit {
       this.onquery(this.jsondata);
     });
   }
-  start() {
-
-  }
-  end() {
-
-  }
-  onChangeStart(data) {
-
-  }
-  onChangeEnd(data) {
-
-  }
   showModalVisible(data, state) {
     console.log(data);
     // 启用
@@ -259,7 +251,7 @@ export class Zlgl1Component implements OnInit {
         nzOnOk: () => this.zlgl1Service.start(data).then((res: any) => {
           if (res.state === 200) {
             this.onquery(this.jsondata);
-            this.message.success('启用成功！')
+            this.message.success(res.data.msg)
           }
         }),
         nzCancelText: '取消',
@@ -275,7 +267,7 @@ export class Zlgl1Component implements OnInit {
         nzOnOk: () => this.zlgl1Service.stop(data).then((res: any) => {
           if (res.state === 200) {
             this.onquery(this.jsondata);
-            this.message.success('停用成功！')
+            this.message.success(res.data.msg)
           }
         }),
         nzCancelText: '取消',
@@ -338,5 +330,20 @@ export class Zlgl1Component implements OnInit {
     })
 
 
+  }
+  // 获得response信息
+  handleChange(info: any): void {
+    if (info) {
+      if(info.type === 'success'){
+        if(info.file){
+          if(info.file.response){
+            if(info.file.response.data != undefined){
+              let data = info.file.response.data;
+              this.responseurl = data;
+            }
+          }
+        }
+      }
+    }
   }
 }

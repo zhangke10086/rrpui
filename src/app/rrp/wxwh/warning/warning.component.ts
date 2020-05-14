@@ -13,7 +13,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 export class WarningComponent implements OnInit {
   isVisible = false;
   // isVisible1 = false;
-  private warnings: Warning[];
+  warnings: Warning[];
   warning: Warning;
   // warning1: Warning;
   operation;

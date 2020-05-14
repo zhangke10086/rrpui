@@ -116,7 +116,9 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="6">上传合同</nz-form-label>
       <nz-form-control>
-        <input nz-input name="contract" [(ngModel)]="contract" />
+        <nz-upload [nzShowUploadList]="true" [nzAction]="uploadUrl" [nzAccept]="'.pdf'" (nzChange)="handleChange($event)">
+          <button style="width: 200px" nz-button><i nz-icon nzType="upload"></i><span>点击上传</span></button>
+        </nz-upload>
       </nz-form-control>
     </nz-form-item>
   </div>

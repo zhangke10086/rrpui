@@ -15,20 +15,20 @@ export class JsglComponent implements OnInit {
   isVisible = false;
   deleteVisible = false;
   updateVisible = false;
-  private role: any;
-  private toAddRole: any;
-  private roles: [];
-  private operation: any;
-  private operations: [];
-  private dynamicMenus: [];
-  private menus: [];
+   role: any;
+   toAddRole: any;
+   roles: [];
+   operation: any;
+   operations: [];
+   dynamicMenus: [];
+   menus: [];
   // add
-  private toAddRolesMenus: any[] = [];
-  private menuOperations: any[] = [];
-  private authorityArray: any[] = [];
+   toAddRolesMenus: any[] = [];
+   menuOperations: any[] = [];
+   authorityArray: any[] = [];
 
-  private updateRoleMenuOperation: any[] = [];
-  private checkDic: { [key: string]: boolean; } = {};
+   updateRoleMenuOperation: any[] = [];
+   checkDic: { [key: string]: boolean; } = {};
   operation_Au;
   constructor(
     private jsglService: JsglService,

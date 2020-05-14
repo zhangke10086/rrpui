@@ -14,14 +14,14 @@ export class BljqrglComponent implements OnInit {
   // 更新用
   isVisible = false;
   isVisible1 = false;
-  private id = '';
-  private name = '';
-  private way = '';
-  private useSituation = '未启用';
-  private ways: string[] = ['租赁', '购买', '制造'];
-  private company: Company;
-  private robots: Robot[];
-  private companys: Company[];
+   id = '';
+   name = '';
+   way = '';
+   useSituation = '未启用';
+   ways: string[] = ['租赁', '购买', '制造'];
+   company: Company;
+   robots: Robot[];
+   companys: Company[];
   robot: Robot;
   operation;
   constructor(

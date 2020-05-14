@@ -23,9 +23,9 @@ export class QyglComponent implements OnInit {
   address = '';
   legalPerson = '';
   phone = '';
-  private companyTypes: CompanyType[];
-  private robots: Robot[];
-  private companys: Company[];
+   companyTypes: CompanyType[];
+   robots: Robot[];
+   companys: Company[];
   company: Company;
   operation;
   ngOnInit() {

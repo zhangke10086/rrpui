@@ -16,7 +16,7 @@ export class MtcsComponent implements OnInit {
   number = '';
   des = '';
   workshop = '';
-  private benchDatas: BenchData[];
+  benchDatas: BenchData[];
   benchData: BenchData;
   benchid;
   operation;

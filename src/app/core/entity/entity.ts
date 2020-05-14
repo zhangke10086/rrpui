@@ -120,6 +120,9 @@ export class Lease {
   contract: string;
   // 联系人
   connector: string;
+  state: any;
+  uploadurl: any;
+  remind: any;
 }
 
 export class Pay {

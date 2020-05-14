@@ -11,7 +11,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 })
 export class CssdComponent implements OnInit {
   isVisible = false;
-  private robotDatas: RobotData[];
+  robotDatas: RobotData[];
   robotData: RobotData;
   operation;
   constructor(

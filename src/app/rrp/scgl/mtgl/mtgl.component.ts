@@ -18,8 +18,8 @@ export class MtglComponent implements OnInit {
   des = '';
   workshop = '';
   robot;
-  private robots: Robot[];
-  private benchs: Bench[];
+  robots: Robot[];
+  benchs: Bench[];
   bench: Bench;
   jsondata;
   operation;

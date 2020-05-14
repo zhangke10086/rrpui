@@ -16,12 +16,12 @@ export class YhglComponent implements OnInit {
   deleteVisible = false;
   resetVisible = false;
   // des = '';
-  private user: any;
-  private users: [];
-  private companies: [];
-  private company: any;
-  private role: any;
-  private roles: [];
+   user: any;
+   users: [];
+   companies: [];
+   company: any;
+   role: any;
+   roles: [];
   operation;
   ngOnInit() {
     this.getUsers();

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {SpglService} from "../service/spgl.service";
 import { NzMessageService } from 'ng-zorro-antd';
+import {Lease, Pay} from "../../../core/entity/entity";
 
 @Component({
   selector: 'app-spgl',
@@ -20,6 +21,9 @@ export class SpglComponent implements OnInit {
     robotid:'',
     companyid:''
   }
+  pay:Pay;
+  approval;
+  isVisible = false;
   ngOnInit() {
     this.onquery(this.jsondata);
   }
@@ -80,6 +84,31 @@ export class SpglComponent implements OnInit {
   }
 
   //驳回
-  reject(data){}
+  reject(data){
+    const json ={
+      id: data.id,
+      request: data.request,
+      leaseid: data.lease.id
+    }
+    this.spglService.reject(json).then((res:any)=>{
+      if (res.state === 200){
+        this.onquery(this.jsondata);
+        this.message.success('已驳回！')
 
+      }
+    })
+  }
+  //详情
+  showModa(data): void {
+    this.approval = data;
+    this.spglService.getPay(data.lease.id).then((res:any)=>{
+      if(res.state === 200){
+        this.pay = res.data;
+        this.isVisible = true;
+      }
+    })
+  }
+  handleCancel(){
+    this.isVisible = false;
+  }
 }

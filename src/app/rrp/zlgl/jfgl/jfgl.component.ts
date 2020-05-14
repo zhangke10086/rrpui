@@ -18,25 +18,25 @@ export class JfglComponent implements OnInit {
   isVisible1 = false;
   // 查看详情弹框
   isVisible2 = false;
-  private id;
-  private paymentAmount: number;
-  private paymentTime: string;
-  private paymentDeadline: string;
-  private examineSituation = '未审核';
-  private paymentDuration: string;
-  private paymentVoucher: string;
-  private contractId: string;
-  private company: Company;
-  private company1: Company;
-  private robot: Robot;
-  private lease: Lease;
-  private leases: Lease[];
-  private robots: Robot[];
+   id;
+   paymentAmount: number;
+   paymentTime: string;
+   paymentDeadline: string;
+   examineSituation = '未审核';
+   paymentDuration: string;
+   paymentVoucher: string;
+   contractId: string;
+   company: Company;
+   company1: Company;
+   robot: Robot;
+   lease: Lease;
+   leases: Lease[];
+   robots: Robot[];
   // 所有公司
-  private companys: Company[];
+   companys: Company[];
   // 拥有机器人的公司
-  private companys1: Company[];
-  private pays: Pay[];
+   companys1: Company[];
+   pays: Pay[];
   pay: Pay;
   operation;
   jsondata = {
