@@ -32,16 +32,16 @@ export class MtglComponent implements OnInit {
   ) {
     this.route.queryParams.subscribe(params => {
       if (params != null) {
-        let operation = JSON.parse(localStorage.getItem("Authority")).filter(t => {
-          if (t.menu.toString() === params['menuid']) {
+        const operation = JSON.parse(localStorage.getItem('Authority')).filter(t => {
+          if (t.menu.toString() === params.menuid) {
             return t.operations;
           }
         });
         this.operation = operation[0].operations;
       }
     });
-    if (this.operation.indexOf(4) == -1) {
-      this.message.info('您没有打开此页面的权限')
+    if (this.operation.indexOf(4) === -1) {
+      this.message.info('您没有打开此页面的权限');
     }
   }
 
@@ -130,7 +130,7 @@ export class MtglComponent implements OnInit {
         const robotid = data.robot.id;
         this.benchService.getDataByRobotId(robotid).then((res: any) => {
           this.benchs = res.data;
-        })
+        });
       } else {
         this.getBenchs();
       }

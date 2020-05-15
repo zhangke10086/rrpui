@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {RobotData} from '../../../core/entity/entity';
+import {Lease, RobotData} from '../../../core/entity/entity';
 import {CssdService} from '../service/cssd.service';
 import {ActivatedRoute} from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
+import {Zlgl1Service} from '../../zlgl/service/zlgl1.service';
 
 @Component({
   selector: 'app-cssd',
@@ -10,11 +11,15 @@ import { NzMessageService } from 'ng-zorro-antd';
   styleUrls: ['./cssd.component.css']
 })
 export class CssdComponent implements OnInit {
+  jsondata;
+  leases: Lease[];
+  lease: Lease;
   isVisible = false;
   robotDatas: RobotData[];
   robotData: RobotData;
   operation;
   constructor(
+    private zlgl1Service: Zlgl1Service,
     private cssdService: CssdService,
     private route: ActivatedRoute,
     private message: NzMessageService
@@ -44,16 +49,19 @@ export class CssdComponent implements OnInit {
     this.cssdService.updateRobotData(this.robotData)
       .subscribe((res) => {
         this.getRobotDatas();
+        this.onquery(this.jsondata);
         alert(res.msg);
       });
   }
 
   handleCancel(): void {
     this.getRobotDatas();
+    this.onquery(this.jsondata);
     this.isVisible = false;
   }
 
   ngOnInit() {
+    this.onquery(this.jsondata);
     this.getRobotDatas();
   }
 
@@ -68,7 +76,28 @@ export class CssdComponent implements OnInit {
     this.cssdService.deleteRobotData(data)
       .subscribe(res => {
         this.getRobotDatas();
+        this.onquery(this.jsondata);
         alert(res.msg);
       });
+  }
+  onquery(data) {
+    console.log(data);
+    this.query(data);
+  }
+  query(data) {
+    if (data != null) {
+      this.jsondata = data;
+      if (data.robot != null) {
+        const robotid = data.robot.id;
+        this.cssdService.getDataByRobotId(robotid).then((res: any) => {
+          this.robotDatas = res.data;
+        });
+      } else {
+        this.getRobotDatas();
+      }
+    } else {
+      this.getRobotDatas();
+    }
+
   }
 }

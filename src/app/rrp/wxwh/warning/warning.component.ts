@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {WarningService} from '../service/warning.service';
 import {Warning} from '../../../core/entity/entity';
 import { NzMessageService } from 'ng-zorro-antd';
+import {Zlgl1Service} from '../../zlgl/service/zlgl1.service';
 
 @Component({
   selector: 'app-warning',
@@ -17,7 +18,9 @@ export class WarningComponent implements OnInit {
   warning: Warning;
   // warning1: Warning;
   operation;
+  jsondata;
   constructor(
+    private zlgl1Service: Zlgl1Service,
     private warningService: WarningService,
     private route: ActivatedRoute,
     private message: NzMessageService
@@ -67,16 +70,19 @@ export class WarningComponent implements OnInit {
     this.warningService.updateWarning(this.warning)
         .subscribe((res) => {
           this.getWarnings();
+          this.onquery(this.jsondata);
           alert(res.msg);
         });
   }
 
   handleCancel(): void {
     this.getWarnings();
+    this.onquery(this.jsondata);
     this.isVisible = false;
   }
 
   ngOnInit() {
+    this.onquery(this.jsondata);
     this.getWarnings();
   }
 
@@ -91,7 +97,29 @@ export class WarningComponent implements OnInit {
     this.warningService.deleteWarning(data)
       .subscribe(res => {
         this.getWarnings();
+        this.onquery(this.jsondata);
         alert(res.msg);
       });
+  }
+
+  onquery(data) {
+    console.log(data);
+    this.query(data);
+  }
+  query(data) {
+    if (data != null) {
+      this.jsondata = data;
+      if (data.robot != null) {
+        const robotid = data.robot.id;
+        this.warningService.getDataByRobotId(robotid).then((res: any) => {
+          this.warnings = res.data;
+        });
+      } else {
+        this.getWarnings();
+      }
+    } else {
+      this.getWarnings();
+    }
+
   }
 }
