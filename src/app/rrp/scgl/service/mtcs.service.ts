@@ -67,4 +67,16 @@ export class MtcsService {
       return of(result as T);
     };
   }
+
+  // 动态查询
+  query(data) {
+    const url = this.url.hostname + '/benchData/QueryBenchData';
+    return new Promise(((resolve, reject) =>
+      this.http.post(url, data)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      })));
+  }
 }
