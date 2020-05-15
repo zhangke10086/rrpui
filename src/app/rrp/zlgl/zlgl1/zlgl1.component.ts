@@ -41,17 +41,11 @@ export class Zlgl1Component implements OnInit {
   companys: Company[];
   uploadUrl = this.url.hostname + '/lease/upload';
   responseurl;
-  startVisible = false;
-  endVisible = false;
-  startdate;
-  enddate;
-  radioValue = '已缴费';
-  inputValue;
   operation;
   jsondata = {
     province: '',
     city: '',
-    companyid: '',
+    companyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
     robotid: ''
   };
   pay = {
@@ -281,16 +275,11 @@ export class Zlgl1Component implements OnInit {
     this.query(data);
   }
   query(data) {
-    if (data === this.jsondata) {
-      this.zlgl1Service.queryLease(this.jsondata).then((res: any) => {
-        this.leases = res.data;
-      });
-    } else {
       if (data !== undefined) {
         this.jsondata = {
           province: '',
           city: '',
-          companyid: '',
+          companyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
           robotid: ''
         };
         if (data.province) {
@@ -302,15 +291,17 @@ export class Zlgl1Component implements OnInit {
         if (data.robot) {
           this.jsondata.robotid = data.robot.id;
         }
-        if (data.company) {
-          this.jsondata.companyid = data.company.id;
+        if (JSON.parse(localStorage.getItem('userinfo')).company.id === 1) {
+          if (data.company) {
+            this.jsondata.companyid = data.company.id;
+          } else {
+            this.jsondata.companyid = '';
+          }
         }
         this.zlgl1Service.queryLease(this.jsondata).then((res: any) => {
           this.leases = res.data;
         });
       }
-    }
-
   }
   Pay() {
     const pay = new Pay();
