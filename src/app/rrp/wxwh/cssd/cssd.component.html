@@ -1,3 +1,4 @@
+<app-querylist (onQuery)="onquery($event)"></app-querylist>
 <div *ngIf="operation.indexOf(4)!=-1">
 <nz-table #basicTable [nzData]="robotDatas">
   <thead>

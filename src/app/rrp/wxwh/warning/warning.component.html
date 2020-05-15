@@ -1,9 +1,11 @@
+<app-querylist (onQuery)="onquery($event)"></app-querylist>
 <div *ngIf="operation.indexOf(4)!=-1">
 <nz-table #basicTable [nzData]="warnings" [nzScroll]="{x:'4000px'}" nzBordered>
   <thead>
   <tr>
     <th nzwidth="40px">序号</th>
     <th nzwidth="200px">时间</th>
+    <th nzwidth="200px">机器人</th>
     <th nzwidth="100px">大车（X轴）进限位开关</th>
     <th nzwidth="100px">大车（X轴）退限位开关</th>
     <th nzwidth="100px">小车（Y轴）进限位开关</th>
@@ -37,6 +39,7 @@
   <tr *ngFor="let data of basicTable.data">
     <td>{{ data.id }}</td>
     <td>{{ data.time | date:'yyyy-MM-dd' }}</td>
+    <td>{{ data.robot.name}}</td>
     <td>{{ data.machine_signal0 }}</td>
     <td>{{ data.machine_signal1 }}</td>
     <td>{{ data.machine_signal2 }}</td>
