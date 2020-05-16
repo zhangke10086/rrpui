@@ -35,6 +35,18 @@ export class YhglService {
   //     catchError(this.handleError<Response>('deleteSoftwareUpgrade'))
   //   );
   // }
+
+  // 动态查询
+  query(data) {
+    const url = this.url.hostname + '/user/queryUser';
+    return new Promise(((resolve, reject) =>
+      this.http.post(url, data)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      })));
+  }
   /** DELETE: detail the user from the server */
   deleteUser(id: number): Observable<Response> {
     const url = this.deleteUserUrl + '?id=' + id;
@@ -75,13 +87,13 @@ export class YhglService {
     );
   }
 
-  /** GET softwareUpgrades from the server */
-  getUsers(): Observable<Response> {
-    return this.http.get<Response>(this.getUsersUrl)
-      .pipe(
-        catchError(this.handleError<Response>('getUsers'))
-      );
-  }
+  // /** GET softwareUpgrades from the server 由query代替完成*/
+  // getUsers(): Observable<Response> {
+  //   return this.http.get<Response>(this.getUsersUrl)
+  //     .pipe(
+  //       catchError(this.handleError<Response>('getUsers'))
+  //     );
+  // }
 
   getCompanies(): Observable<Response> {
     return this.http.get<Response>(this.getCompaniesUrl)

@@ -45,7 +45,9 @@ export class Zlgl1Component implements OnInit {
   jsondata = {
     province: '',
     city: '',
-    companyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+    companyid: '',
+    owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+    companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
     robotid: ''
   };
   pay = {
@@ -80,18 +82,6 @@ export class Zlgl1Component implements OnInit {
     if (this.operation.indexOf(4) === -1) {
       this.message.info('您没有打开此页面的权限');
     }
-  }
-  getLeases(): void {
-    this.zlgl1Service.getLeases()
-      .subscribe((res: any) => {
-        this.leases = res.data;
-      });
-  }
-  getLease(id: number): void {
-    this.zlgl1Service.getLease(id)
-      .subscribe((res: any) => {
-        this.lease = res.data;
-      });
   }
   getCompanysWithRobot(): void {
     this.qyglService.getCompanysWithRobot()
@@ -279,7 +269,9 @@ export class Zlgl1Component implements OnInit {
         this.jsondata = {
           province: '',
           city: '',
-          companyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+          companyid: '',
+          owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+          companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
           robotid: ''
         };
         if (data.province) {
@@ -291,12 +283,8 @@ export class Zlgl1Component implements OnInit {
         if (data.robot) {
           this.jsondata.robotid = data.robot.id;
         }
-        if (JSON.parse(localStorage.getItem('userinfo')).company.id === 1) {
-          if (data.company) {
-            this.jsondata.companyid = data.company.id;
-          } else {
-            this.jsondata.companyid = '';
-          }
+        if (data.company) {
+          this.jsondata.companyid = data.company.id;
         }
         this.zlgl1Service.queryLease(this.jsondata).then((res: any) => {
           this.leases = res.data;

@@ -1,9 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {BenchData} from '../../../core/entity/entity';
 import {ActivatedRoute} from '@angular/router';
 import {MtcsService} from '../service/mtcs.service';
-import {SccsComponent} from "../sccs/sccs.component";
-import {NzMessageService} from 'ng-zorro-antd';
+import {SccsComponent} from '../sccs/sccs.component';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-mtcs',
@@ -22,29 +22,30 @@ export class MtcsComponent implements OnInit {
   operation;
   // 前端传参
   jsondata = {
-    province: '',
-    city: '',
+    province:'',
+    city:'',
     companyid: '',
-    robotid: ''
+    owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+    companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
+    robotid:''
   }
   @ViewChild(SccsComponent, {static: false}) sccsComponent: SccsComponent;
-
   constructor(
     private benchDataService: MtcsService,
     private route: ActivatedRoute,
     private message: NzMessageService
   ) {
     this.route.queryParams.subscribe(params => {
-      if (params != null) {
-        let operation = JSON.parse(localStorage.getItem("Authority")).filter(t => {
-          if (t.menu.toString() === params['menuid']) {
+      if(params!=null){
+        let operation=JSON.parse(localStorage.getItem("Authority")).filter(t=>{
+          if(t.menu.toString() === params['menuid']){
             return t.operations;
           }
         });
         this.operation = operation[0].operations;
       }
     });
-    if (this.operation.indexOf(4) == -1) {
+    if (this.operation.indexOf(4)==-1){
       this.message.info('您没有打开此页面的权限')
     }
   }
@@ -110,15 +111,14 @@ export class MtcsComponent implements OnInit {
   fresh(): void {
     window.location.reload();
   }
-
-  onquery(data) {
+  onquery(data){
     // 保留上次查询
-    if (this.jsondata === data) {
-      this.benchDataService.query(this.jsondata).then((res: any) => {
-        if (res.state === 200) {
+    if(this.jsondata === data){
+      this.benchDataService.query(this.jsondata).then((res:any)=>{
+        if (res.state === 200){
           this.benchDatas = res.data;
         }
-      });
+      })
     } else {
       // data为查询组件所选值
       console.log(data);
@@ -127,34 +127,29 @@ export class MtcsComponent implements OnInit {
         province: '',
         city: '',
         companyid: '',
+        owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+        companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
         robotid: ''
       };
       // 传参赋值
       // 若不选条件 则向后端传空值
-      if (data.province) {
+      if (data.province){
         this.jsondata.province = data.province;
       }
-      if (data.city) {
+      if (data.city){
         this.jsondata.city = data.city;
       }
-      if (data.robot) {
+      if (data.robot){
         this.jsondata.robotid = data.robot.id;
       }
-      // 该用户企业id
-      const companyid = JSON.parse(localStorage.getItem('userinfo')).company.id;
-      // 如果是 骊久
-      if (companyid === 1) {
-        if (data.company) {
-          this.jsondata.companyid = data.company.id;
-        }
-      } else {   // 不是骊久
-        this.jsondata.companyid = companyid;
+      if (data.company) {
+        this.jsondata.companyid = data.company.id;
       }
-      this.benchDataService.query(this.jsondata).then((res: any) => {
-        if (res.state === 200) {
+      this.benchDataService.query(this.jsondata).then((res:any)=>{
+        if (res.state === 200){
           this.benchDatas = res.data;
         }
-      });
+      })
     }
   }
 

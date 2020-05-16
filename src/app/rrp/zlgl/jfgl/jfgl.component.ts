@@ -43,7 +43,9 @@ export class JfglComponent implements OnInit {
     province:'',
     city:"",
     robotid:'',
-    companyid:''
+    companyid:'',
+    owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+    companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
   }
   ngOnInit() {
     this.onquery(this.jsondata);
@@ -193,7 +195,9 @@ export class JfglComponent implements OnInit {
         province:'',
         city:"",
         robotid:'',
-        companyid:''
+        companyid: '',
+        owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+        companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
       }
       if(data !=undefined){
         if (data.province){
@@ -205,8 +209,8 @@ export class JfglComponent implements OnInit {
         if (data.robot){
           this.jsondata.robotid=data.robot.id;
         }
-        if (data.company){
-          this.jsondata.companyid=data.company.id;
+        if (data.company) {
+          this.jsondata.companyid = data.company.id;
         }
         this.jfglService.query(this.jsondata).then((res:any)=>{
           if(res.state===200){

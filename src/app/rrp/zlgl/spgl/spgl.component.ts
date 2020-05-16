@@ -19,7 +19,9 @@ export class SpglComponent implements OnInit {
     province:'',
     city:"",
     robotid:'',
-    companyid:''
+    companyid:'',
+    owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+    companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
   }
   pay:Pay;
   approval;
@@ -43,7 +45,9 @@ export class SpglComponent implements OnInit {
         province:'',
         city:'',
         robotid:'',
-        companyid:''
+        companyid: '',
+        owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+        companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
       }
       if(data !=undefined){
         if (data.province){
@@ -55,8 +59,8 @@ export class SpglComponent implements OnInit {
         if (data.robot){
           this.jsondata.robotid=data.robot.id;
         }
-        if (data.company){
-          this.jsondata.companyid=data.company.id;
+        if (data.company) {
+          this.jsondata.companyid = data.company.id;
         }
         this.spglService.query(this.jsondata).then((res:any)=>{
           if(res.state===200){
