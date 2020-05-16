@@ -1,3 +1,4 @@
+<app-querylist [robotVisible]="false" (onQuery)="onquery($event)"></app-querylist>
 <div *ngIf="operation.indexOf(4)!=-1">
 <button *ngIf="operation.indexOf(1)!=-1" nz-button [nzType]="'primary'" (click)="showModal1()"><span>增加</span></button>
 <nz-modal [(nzVisible)]="isVisible1" nzTitle="add" (nzOnCancel)="handleCancel()" (nzOnOk)="add(name,username,password,contact,company,role)">
@@ -25,7 +26,7 @@
 </nz-modal>
 
 <!--<p> <br> 筛选： <input id="filterName" name="filterName"> <span (click)="search()">搜索</span> <br> </p>-->
-<app-querylist [robotVisible]="false" (onQuery)="onquery($event)"></app-querylist>
+
 
 <nz-table #basicTable [nzData]="users">
   <thead>
