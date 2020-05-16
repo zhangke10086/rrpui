@@ -121,16 +121,6 @@ export class CssdComponent implements OnInit {
       if (data.company) {
         this.jsondata.companyid = data.company.id;
       }
-      // 该用户企业id
-      const companyid = JSON.parse(localStorage.getItem('userinfo')).company.id;
-      // 如果是 骊久
-      if (companyid === 1) {
-        if (data.company) {
-          this.jsondata.companyid = data.company.id;
-        }
-      } else {   // 不是骊久
-        this.jsondata.companyid = companyid;
-      }
       this.cssdService.query(this.jsondata).then((res: any) => {
         if (res.state === 200) {
           this.robotDatas = res.data;
