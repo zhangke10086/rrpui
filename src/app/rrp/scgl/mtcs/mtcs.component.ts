@@ -24,7 +24,9 @@ export class MtcsComponent implements OnInit {
   jsondata = {
     province:'',
     city:'',
-    companyid:'',
+    companyid: '',
+    owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+    companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
     robotid:''
   }
   @ViewChild(SccsComponent, {static: false}) sccsComponent: SccsComponent;
@@ -125,6 +127,8 @@ export class MtcsComponent implements OnInit {
         province: '',
         city: '',
         companyid: '',
+        owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+        companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
         robotid: ''
       };
       // 传参赋值
@@ -138,15 +142,8 @@ export class MtcsComponent implements OnInit {
       if (data.robot){
         this.jsondata.robotid = data.robot.id;
       }
-      // 该用户企业id
-      const companyid = JSON.parse(localStorage.getItem('userinfo')).company.id;
-      // 如果是 骊久
-      if(companyid === 1){
-        if (data.company) {
-          this.jsondata.companyid = data.company.id;
-        }
-      } else {   // 不是骊久
-        this.jsondata.companyid = companyid;
+      if (data.company) {
+        this.jsondata.companyid = data.company.id;
       }
       this.benchDataService.query(this.jsondata).then((res:any)=>{
         if (res.state === 200){

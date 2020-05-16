@@ -30,10 +30,17 @@ export class QuerylistComponent implements OnInit {
   enddate;
   ngOnInit() {
     this.company = JSON.parse(localStorage.getItem('userinfo')).company;
+    // 非骊久
     if (this.company.id!=1){
-      this.getRobot(this.company.id);
-
+      // 购买 或 租用 企业
+      if(this.company.companyType.id === 3 || this.company.companyType.id === 4 ){
+        this.getRobot(this.company.id);
+      } else {
+        //出租企业
+        this.ProvinceData = j;
+      }
     } else {
+      // 骊久
       this.ProvinceData = j;
     }
     // this.getCompany();
@@ -59,9 +66,25 @@ export class QuerylistComponent implements OnInit {
     })
   }
   getRobot(id){
-    this.querylistService.getRobot(id).then((res:any) => {
-      this.RobotData = res.data;
-    })
+    //出租企业或制造企业
+    if(this.company.companyType.id === 2|| this.company.companyType.id === 1) {
+      if(this.company.id != 1){
+        this.querylistService.getRobotByCompany(this.selectedCompany.id,this.company.id).then((res:any)=>{
+          this.RobotData = res.data;
+        })
+      } else {
+        this.querylistService.getRobotByCompanyid(this.selectedCompany.id).then((res:any)=>{
+          this.RobotData = res.data;
+        })
+      }
+
+    } else {
+      //购买或租用企业 只能看自己企业下的机器人
+      this.querylistService.getRobot(id).then((res:any) => {
+        this.RobotData = res.data;
+      })
+    }
+
   }
   //展开/关闭
   toggleCollapse(): void {
@@ -74,6 +97,7 @@ export class QuerylistComponent implements OnInit {
     if(data != undefined){
       this.getRobot(data.id);
     }
+
   }
   RobotChange(data) {
     this.selectedRobot = data
@@ -86,13 +110,27 @@ export class QuerylistComponent implements OnInit {
     }
   }
   cityChange(value: string){
-    this.querylistService.getCompany().then((res:any) => {
-      this.CompanyData = res.data.filter(t=> t.city === value && t.province === this.selectedProvince);
-      if(this.CompanyData.length === 0){
-        this.selectedCompany =undefined;
-        this.CompanyChange(this.selectedCompany);
+    // 骊久
+    if (this.company.id==1) {
+      this.querylistService.getCompany().then((res: any) => {
+        this.CompanyData = res.data.filter(t => t.city === value && t.province === this.selectedProvince);
+        if (this.CompanyData.length === 0) {
+          this.selectedCompany = undefined;
+          this.CompanyChange(this.selectedCompany);
+        }
+      })
+    } else {
+      // 出租企业
+      if(this.company.companyType.id === 2){
+        this.querylistService.getCompanyByRobot(this.company.id).then((res:any)=>{
+          this.CompanyData = res.data.filter(t => t.city === value && t.province === this.selectedProvince);
+          if (this.CompanyData.length === 0) {
+            this.selectedCompany = undefined;
+            this.CompanyChange(this.selectedCompany);
+          }
+        })
       }
-    })
+    }
   }
   reset(){
     this.selectedProvince = undefined;
