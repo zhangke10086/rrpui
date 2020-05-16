@@ -79,6 +79,7 @@ export class Bench {
   description: string;
   workshop: string;
   robot: Robot;
+  company: Company;
 }
 
 export class CompanyType {

@@ -58,7 +58,7 @@ export class MtglComponent implements OnInit {
 
   add(): void {
     this.isVisible1 = false;
-    const add = {number: this.number, description: this.des, workshop: this.workshop, robot: this.robot};
+    const add = {number: this.number, description: this.des, workshop: this.workshop, robot: this.robot, company: JSON.parse(localStorage.getItem('userinfo')).company};
     this.benchService.addBench(add)
       .subscribe((res: any) => {
         this.onquery(this.jsondata);
