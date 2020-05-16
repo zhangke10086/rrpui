@@ -22,11 +22,13 @@ export class MtglComponent implements OnInit {
   benchs: Bench[];
   bench: Bench;
   jsondata = {
-    province: '',
-    city: '',
-    companyid: '',
-    robotid: ''
-  };
+        province: '',
+        city: '',
+        companyid: '',
+        owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+        companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
+        robotid: ''
+      };
   operation;
 
   constructor(
@@ -140,6 +142,8 @@ export class MtglComponent implements OnInit {
         province: '',
         city: '',
         companyid: '',
+        owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+        companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
         robotid: ''
       };
       // 传参赋值
@@ -152,6 +156,9 @@ export class MtglComponent implements OnInit {
       }
       if (data.robot) {
         this.jsondata.robotid = data.robot.id;
+      }
+      if (data.company) {
+        this.jsondata.companyid = data.company.id;
       }
       // 该用户企业id
       const companyid = JSON.parse(localStorage.getItem('userinfo')).company.id;

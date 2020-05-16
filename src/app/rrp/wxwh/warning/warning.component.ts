@@ -19,11 +19,13 @@ export class WarningComponent implements OnInit {
   // warning1: Warning;
   operation;
   jsondata = {
-    province: '',
-    city: '',
-    companyid: '',
-    robotid: ''
-  };
+        province: '',
+        city: '',
+        companyid: '',
+        owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+        companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
+        robotid: ''
+      };
   constructor(
     private zlgl1Service: Zlgl1Service,
     private warningService: WarningService,
@@ -123,6 +125,8 @@ export class WarningComponent implements OnInit {
         province: '',
         city: '',
         companyid: '',
+        owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+        companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
         robotid: ''
       };
       // 传参赋值
@@ -135,6 +139,9 @@ export class WarningComponent implements OnInit {
       }
       if (data.robot) {
         this.jsondata.robotid = data.robot.id;
+      }
+      if (data.company) {
+        this.jsondata.companyid = data.company.id;
       }
       // 该用户企业id
       const companyid = JSON.parse(localStorage.getItem('userinfo')).company.id;

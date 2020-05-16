@@ -12,11 +12,13 @@ import {Zlgl1Service} from '../../zlgl/service/zlgl1.service';
 })
 export class CssdComponent implements OnInit {
   jsondata = {
-    province: '',
-    city: '',
-    companyid: '',
-    robotid: ''
-  };
+        province: '',
+        city: '',
+        companyid: '',
+        owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+        companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
+        robotid: ''
+      };
   leases: Lease[];
   lease: Lease;
   isVisible = false;
@@ -101,6 +103,8 @@ export class CssdComponent implements OnInit {
         province: '',
         city: '',
         companyid: '',
+        owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+        companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
         robotid: ''
       };
       // 传参赋值
@@ -113,6 +117,9 @@ export class CssdComponent implements OnInit {
       }
       if (data.robot) {
         this.jsondata.robotid = data.robot.id;
+      }
+      if (data.company) {
+        this.jsondata.companyid = data.company.id;
       }
       // 该用户企业id
       const companyid = JSON.parse(localStorage.getItem('userinfo')).company.id;
