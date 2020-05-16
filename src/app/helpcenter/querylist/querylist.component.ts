@@ -15,6 +15,7 @@ export class QuerylistComponent implements OnInit {
   ) { }
   @Output() onQuery: EventEmitter<any> = new EventEmitter<any>();
   @Input() dateVisible = false;
+  @Input() robotVisible = true;
   isCollapse = false;
   selectedCompany;
   CompanyData;

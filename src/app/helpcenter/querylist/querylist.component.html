@@ -33,7 +33,7 @@
           <nz-option *ngFor="let p of CompanyData" [nzValue]="p" [nzLabel]="p.name"></nz-option>
         </nz-select>
         <label *ngIf="company.id!==1" style="font-weight: bold;font-size: 16px;margin-right: 16px">{{company.name}}</label>
-        <nz-select [(ngModel)]="selectedRobot" (ngModelChange)="RobotChange($event)"
+        <nz-select *ngIf="robotVisible" [(ngModel)]="selectedRobot" (ngModelChange)="RobotChange($event)"
                    [nzAllowClear]="true"  [nzShowSearch]="true"  nzPlaceHolder="请选择机器人">
           <nz-option *ngFor="let p of RobotData" [nzValue]="p" [nzLabel]="p.name"></nz-option>
         </nz-select>
