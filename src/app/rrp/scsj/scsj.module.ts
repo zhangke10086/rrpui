@@ -9,6 +9,7 @@ import { HntflComponent } from './hntfl/hntfl.component';
 import { DhbslComponent } from './dhbsl/dhbsl.component';
 import { DhbmjComponent } from './dhbmj/dhbmj.component';
 import { CphglComponent } from './cphgl/cphgl.component';
+import {QuerylistModule} from "../../helpcenter/querylist/querylist.module";
 
 @NgModule({
   declarations: [
@@ -18,11 +19,12 @@ import { CphglComponent } from './cphgl/cphgl.component';
   DhbslComponent,
   DhbmjComponent,
   CphglComponent],
-  imports: [
-    CommonModule,
-    ScsjRoutingModule,
-    NgZorroAntdModule,
-    FormsModule
-  ]
+    imports: [
+        CommonModule,
+        ScsjRoutingModule,
+        NgZorroAntdModule,
+        FormsModule,
+        QuerylistModule
+    ]
 })
 export class ScsjModule { }

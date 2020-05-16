@@ -23,6 +23,11 @@ export class MtgsComponent implements OnInit {
   CompanyData;
   selectedRobot;
   RobotData;
+  jsondata={
+    robotid:'',
+    startdate:'',
+    enddate:''
+  };
   constructor(
     private route: ActivatedRoute,
     private datePipe: DatePipe,
@@ -33,7 +38,6 @@ export class MtgsComponent implements OnInit {
 
   ngOnInit() {
     this.getMtgs();
-    this.getCompany();
   }
 
   getMtgs(): void {
@@ -110,47 +114,19 @@ export class MtgsComponent implements OnInit {
     }
 
   }
-  @Output() onQuery: EventEmitter<any> = new EventEmitter<any>();
+  onquery(data){
+    console.log(data);
 
-  query() {
-    const data = {
-      company: '',
-      robot: ''
-    };
-    data.company = this.selectedCompany;
-    data.robot = this.selectedRobot;
-    this.onQuery.emit(data);
-  }
-
-  getCompany() {
-    this.querylistService.getCompany().then((res: any) => {
-      this.CompanyData = res.data;
-    });
-  }
-
-  getRobot(id) {
-    this.querylistService.getRobot(id).then((res: any) => {
-      this.RobotData = res.data;
-    });
-  }
-
-  // 展开/关闭
-  toggleCollapse(): void {
-    this.isCollapse = !this.isCollapse;
-
-  }
-
-  CompanyChange(data) {
-    this.selectedCompany = data;
-    this.getRobot(data.id);
-  }
-
-  RobotChange(data) {
-    this.selectedRobot = data;
-  }
-
-  reset() {
-    this.selectedCompany = undefined;
-    this.selectedRobot = undefined;
+    //参数赋值
+    if(data.startdate){
+      this.begin = data.startdate;
+    }
+    if(data.enddate){
+      this.end = data.enddate;
+    }
+    if(data.robot){
+      this.selectedRobot = data.robot;
+    }
+    this.getMtgs();
   }
 }

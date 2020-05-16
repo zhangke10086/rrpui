@@ -1,7 +1,8 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import {QuerylistService} from './querylist.service';
 // @ts-ignore
 import j from 'src/assets/json/city.json';
+import { formatDate } from '@angular/common';
 @Component({
   selector: 'app-querylist',
   templateUrl: './querylist.component.html',
@@ -13,6 +14,7 @@ export class QuerylistComponent implements OnInit {
     private querylistService: QuerylistService
   ) { }
   @Output() onQuery: EventEmitter<any> = new EventEmitter<any>();
+  @Input() dateVisible = false;
   isCollapse = false;
   selectedCompany;
   CompanyData;
@@ -23,6 +25,8 @@ export class QuerylistComponent implements OnInit {
   ProvinceData;
   CityData;
   company;
+  startdate;
+  enddate;
   ngOnInit() {
     this.company = JSON.parse(localStorage.getItem('userinfo')).company;
     if (this.company.id!=1){
@@ -35,16 +39,17 @@ export class QuerylistComponent implements OnInit {
 
   }
   query() {
-    const data ={
-      province:'',
-      city:'',
-      company:'',
-      robot:''
-    };
-    data.province = this.selectedProvince;
-    data.city = this.selectedCity;
-    data.company = this.selectedCompany;
-    data.robot = this.selectedRobot;
+    const data ={};
+    data['province'] = this.selectedProvince;
+    data['city'] = this.selectedCity;
+    data['company'] = this.selectedCompany;
+    data['robot'] = this.selectedRobot;
+    if(this.startdate){
+      data['startdate'] = formatDate(this.startdate.getTime(), 'yyyy-MM-dd', 'zh-Hans');
+    }
+    if(this.enddate){
+      data['enddate'] =  formatDate(this.enddate.getTime(), 'yyyy-MM-dd', 'zh-Hans');
+    }
     this.onQuery.emit(data);
   }
   getCompany() {
@@ -93,5 +98,13 @@ export class QuerylistComponent implements OnInit {
     this.selectedCity = undefined;
     this.selectedCompany = undefined;
     this.selectedRobot = undefined;
+    this.startdate = undefined;
+    this.enddate =undefined;
   }
+  // onStartChange(data){
+  //   this.startdate
+  // }
+  // onEndChange(data){
+  //
+  // }
 }
