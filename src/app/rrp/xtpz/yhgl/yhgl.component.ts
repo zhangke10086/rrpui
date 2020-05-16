@@ -23,13 +23,15 @@ export class YhglComponent implements OnInit {
    role: any;
    roles: [];
   operation;
-  jsondata: { companyid: string; province: string; city: string } = {
+  jsondata = {
     province: '',
     city: '',
-    companyid: ''
-  }
+    companyid: '',
+    owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+    companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
+  };
   ngOnInit() {
-    this.getUsers();
+    this.onquery(this.jsondata);
     this.getCompanies();
     this.getRoles();
   }
@@ -60,8 +62,6 @@ export class YhglComponent implements OnInit {
     if (this.jsondata === data) {
       this.yhglService.query(this.jsondata).then((res: any) => {
         if (res.state === 200) {
-          console.log('1res.data:');
-          console.log(res.data);
           this.users = res.data;
         }
       });
@@ -72,7 +72,9 @@ export class YhglComponent implements OnInit {
       this.jsondata = {
         province: '',
         city: '',
-        companyid: ''
+        companyid: '',
+        owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+        companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
       };
       // 传参赋值
       // 若不选条件 则向后端传空值
@@ -82,15 +84,8 @@ export class YhglComponent implements OnInit {
       if (data.city) {
         this.jsondata.city = data.city;
       }
-      // 该用户企业id
-      const companyid = JSON.parse(localStorage.getItem('userinfo')).company.id;
-      // 如果是 骊久
-      if (companyid === 1) {
-        if (data.company) {
-          this.jsondata.companyid = data.company.id;
-        }
-      } else {   // 不是骊久
-        this.jsondata.companyid = companyid;
+      if (data.company) {
+        this.jsondata.companyid = data.company.id;
       }
       this.yhglService.query(this.jsondata).then((res: any) => {
         if (res.state === 200) {

@@ -7,7 +7,8 @@ import {JsglComponent} from './jsgl/jsgl.component';
 import {YhglComponent} from './yhgl/yhgl.component';
 import {QyglComponent} from './qygl/qygl.component';
 import {BljqrglComponent} from './bljqrgl/bljqrgl.component';
-import {QuerylistModule} from '../../helpcenter/querylist/querylist.module';
+import {QuerylistModule} from "../../helpcenter/querylist/querylist.module";
+
 
 @NgModule({
   declarations: [JsglComponent, YhglComponent, QyglComponent, BljqrglComponent],
