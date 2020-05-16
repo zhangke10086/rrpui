@@ -11,7 +11,12 @@ import {Zlgl1Service} from '../../zlgl/service/zlgl1.service';
   styleUrls: ['./cssd.component.css']
 })
 export class CssdComponent implements OnInit {
-  jsondata;
+  jsondata = {
+    province: '',
+    city: '',
+    companyid: '',
+    robotid: ''
+  };
   leases: Lease[];
   lease: Lease;
   isVisible = false;
@@ -48,56 +53,98 @@ export class CssdComponent implements OnInit {
     this.isVisible = false;
     this.cssdService.updateRobotData(this.robotData)
       .subscribe((res) => {
-        this.getRobotDatas();
+
         this.onquery(this.jsondata);
         alert(res.msg);
       });
   }
 
   handleCancel(): void {
-    this.getRobotDatas();
+
     this.onquery(this.jsondata);
     this.isVisible = false;
   }
 
   ngOnInit() {
     this.onquery(this.jsondata);
-    this.getRobotDatas();
+
   }
 
-  getRobotDatas(): void {
-    this.cssdService.getRobotDatas()
-      .subscribe(res => {
-        this.robotDatas = res.data;
-      });
-  }
+  // getRobotDatas(): void {
+  //   this.cssdService.getRobotDatas()
+  //     .subscribe(res => {
+  //       this.robotDatas = res.data;
+  //     });
+  // }
 
   delete(data: RobotData | number): void {
     this.cssdService.deleteRobotData(data)
       .subscribe(res => {
-        this.getRobotDatas();
+
         this.onquery(this.jsondata);
         alert(res.msg);
       });
   }
   onquery(data) {
-    console.log(data);
-    this.query(data);
-  }
-  query(data) {
-    if (data != null) {
-      this.jsondata = data;
-      if (data.robot != null) {
-        const robotid = data.robot.id;
-        this.cssdService.getDataByRobotId(robotid).then((res: any) => {
+    // 保留上次查询
+    if (this.jsondata === data) {
+      this.cssdService.query(this.jsondata).then((res: any) => {
+        if (res.state === 200) {
           this.robotDatas = res.data;
-        });
-      } else {
-        this.getRobotDatas();
-      }
+        }
+      });
     } else {
-      this.getRobotDatas();
+      // data为查询组件所选值
+      console.log(data);
+      // 初始化 传参jsondata
+      this.jsondata = {
+        province: '',
+        city: '',
+        companyid: '',
+        robotid: ''
+      };
+      // 传参赋值
+      // 若不选条件 则向后端传空值
+      if (data.province) {
+        this.jsondata.province = data.province;
+      }
+      if (data.city) {
+        this.jsondata.city = data.city;
+      }
+      if (data.robot) {
+        this.jsondata.robotid = data.robot.id;
+      }
+      // 该用户企业id
+      const companyid = JSON.parse(localStorage.getItem('userinfo')).company.id;
+      // 如果是 骊久
+      if (companyid === 1) {
+        if (data.company) {
+          this.jsondata.companyid = data.company.id;
+        }
+      } else {   // 不是骊久
+        this.jsondata.companyid = companyid;
+      }
+      this.cssdService.query(this.jsondata).then((res: any) => {
+        if (res.state === 200) {
+          this.robotDatas = res.data;
+        }
+      });
     }
-
   }
+  // query(data) {
+  //   if (data != null) {
+  //     this.jsondata = data;
+  //     if (data.robot != null) {
+  //       const robotid = data.robot.id;
+  //       this.cssdService.getDataByRobotId(robotid).then((res: any) => {
+  //         this.robotDatas = res.data;
+  //       });
+  //     } else {
+  //
+  //     }
+  //   } else {
+  //
+  //   }
+  //
+  // }
 }

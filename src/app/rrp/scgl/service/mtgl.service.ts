@@ -67,10 +67,10 @@ export class MtglService {
       return of(result as T);
     };
   }
-  getDataByRobotId(id) {
-    const url = this.url.hostname + '/bench/getBenchByRobot?robot_id=';
+  query(data) {
+    const url = this.url.hostname + '/bench/QueryBench';
     return new Promise(((resolve, reject) =>
-      this.http.get(url + id)
+      this.http.post(url, data)
         .toPromise().then(res => {
         resolve(res);
       }, error => {

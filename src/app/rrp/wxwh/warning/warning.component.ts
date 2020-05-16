@@ -18,7 +18,12 @@ export class WarningComponent implements OnInit {
   warning: Warning;
   // warning1: Warning;
   operation;
-  jsondata;
+  jsondata = {
+    province: '',
+    city: '',
+    companyid: '',
+    robotid: ''
+  };
   constructor(
     private zlgl1Service: Zlgl1Service,
     private warningService: WarningService,
@@ -50,13 +55,13 @@ export class WarningComponent implements OnInit {
   //   this.isVisible1 = false;
   //   this.warningService.addWarning(this.warning1)
   //     .subscribe((res) => {
-  //       this.getWarnings();
+  //
   //       alert(res.msg);
   //     });
   // }
   //
   // handleCancel1(): void {
-  // this.getWarnings();
+  //
   //   this.isVisible1 = false;
   // }
 
@@ -69,57 +74,99 @@ export class WarningComponent implements OnInit {
     this.isVisible = false;
     this.warningService.updateWarning(this.warning)
         .subscribe((res) => {
-          this.getWarnings();
+
           this.onquery(this.jsondata);
           alert(res.msg);
         });
   }
 
   handleCancel(): void {
-    this.getWarnings();
+
     this.onquery(this.jsondata);
     this.isVisible = false;
   }
 
   ngOnInit() {
     this.onquery(this.jsondata);
-    this.getWarnings();
+
   }
 
-  getWarnings(): void {
-    this.warningService.getWarnings()
-      .subscribe(res => {
-        this.warnings = res.data;
-      });
-  }
+  // getWarnings(): void {
+  //   this.warningService.getWarnings()
+  //     .subscribe(res => {
+  //       this.warnings = res.data;
+  //     });
+  // }
 
   delete(data: Warning | number): void {
     this.warningService.deleteWarning(data)
       .subscribe(res => {
-        this.getWarnings();
+
         this.onquery(this.jsondata);
         alert(res.msg);
       });
   }
 
   onquery(data) {
-    console.log(data);
-    this.query(data);
-  }
-  query(data) {
-    if (data != null) {
-      this.jsondata = data;
-      if (data.robot != null) {
-        const robotid = data.robot.id;
-        this.warningService.getDataByRobotId(robotid).then((res: any) => {
+    // 保留上次查询
+    if (this.jsondata === data) {
+      this.warningService.query(this.jsondata).then((res: any) => {
+        if (res.state === 200) {
           this.warnings = res.data;
-        });
-      } else {
-        this.getWarnings();
-      }
+        }
+      });
     } else {
-      this.getWarnings();
+      // data为查询组件所选值
+      console.log(data);
+      // 初始化 传参jsondata
+      this.jsondata = {
+        province: '',
+        city: '',
+        companyid: '',
+        robotid: ''
+      };
+      // 传参赋值
+      // 若不选条件 则向后端传空值
+      if (data.province) {
+        this.jsondata.province = data.province;
+      }
+      if (data.city) {
+        this.jsondata.city = data.city;
+      }
+      if (data.robot) {
+        this.jsondata.robotid = data.robot.id;
+      }
+      // 该用户企业id
+      const companyid = JSON.parse(localStorage.getItem('userinfo')).company.id;
+      // 如果是 骊久
+      if (companyid === 1) {
+        if (data.company) {
+          this.jsondata.companyid = data.company.id;
+        }
+      } else {   // 不是骊久
+        this.jsondata.companyid = companyid;
+      }
+      this.warningService.query(this.jsondata).then((res: any) => {
+        if (res.state === 200) {
+          this.warnings = res.data;
+        }
+      });
     }
-
   }
+  // query(data) {
+  //   if (data != null) {
+  //     this.jsondata = data;
+  //     if (data.robot != null) {
+  //       const robotid = data.robot.id;
+  //       this.warningService.getDataByRobotId(robotid).then((res: any) => {
+  //         this.warnings = res.data;
+  //       });
+  //     } else {
+  //
+  //     }
+  //   } else {
+  //
+  //   }
+  //
+  // }
 }

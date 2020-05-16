@@ -21,7 +21,12 @@ export class MtglComponent implements OnInit {
   robots: Robot[];
   benchs: Bench[];
   bench: Bench;
-  jsondata;
+  jsondata = {
+    province: '',
+    city: '',
+    companyid: '',
+    robotid: ''
+  };
   operation;
 
   constructor(
@@ -54,7 +59,7 @@ export class MtglComponent implements OnInit {
     const add = {number: this.number, description: this.des, workshop: this.workshop, robot: this.robot};
     this.benchService.addBench(add)
       .subscribe((res: any) => {
-        this.getBenchs();
+        this.onquery(this.jsondata);
         alert(res.msg);
       });
   }
@@ -100,12 +105,12 @@ export class MtglComponent implements OnInit {
       });
   }
 
-  getBenchs(): void {
-    this.benchService.getBenchs()
-      .subscribe((res: any) => {
-        this.benchs = res.data;
-      });
-  }
+  // getBenchs(): void {
+  //   this.benchService.getBenchs()
+  //     .subscribe((res: any) => {
+  //       this.benchs = res.data;
+  //     });
+  // }
 
   delete(data: Bench | number): void {
     this.benchService.deleteBench(data)
@@ -120,23 +125,65 @@ export class MtglComponent implements OnInit {
   }
 
   onquery(data) {
-    this.query(data);
-  }
-
-  query(data) {
-    if (data != null) {
-      this.jsondata = data;
-      if (data.robot != null) {
-        const robotid = data.robot.id;
-        this.benchService.getDataByRobotId(robotid).then((res: any) => {
+    // 保留上次查询
+    if (this.jsondata === data) {
+      this.benchService.query(this.jsondata).then((res: any) => {
+        if (res.state === 200) {
           this.benchs = res.data;
-        });
-      } else {
-        this.getBenchs();
-      }
+        }
+      });
     } else {
-      this.getBenchs();
+      // data为查询组件所选值
+      console.log(data);
+      // 初始化 传参jsondata
+      this.jsondata = {
+        province: '',
+        city: '',
+        companyid: '',
+        robotid: ''
+      };
+      // 传参赋值
+      // 若不选条件 则向后端传空值
+      if (data.province) {
+        this.jsondata.province = data.province;
+      }
+      if (data.city) {
+        this.jsondata.city = data.city;
+      }
+      if (data.robot) {
+        this.jsondata.robotid = data.robot.id;
+      }
+      // 该用户企业id
+      const companyid = JSON.parse(localStorage.getItem('userinfo')).company.id;
+      // 如果是 骊久
+      if (companyid === 1) {
+        if (data.company) {
+          this.jsondata.companyid = data.company.id;
+        }
+      } else {   // 不是骊久
+        this.jsondata.companyid = companyid;
+      }
+      this.benchService.query(this.jsondata).then((res: any) => {
+        if (res.state === 200) {
+          this.benchs = res.data;
+        }
+      });
     }
-
   }
+  // query(data) {
+  //   if (data != null) {
+  //     this.jsondata = data;
+  //     if (data.robot != null) {
+  //       const robotid = data.robot.id;
+  //       this.benchService.getDataByRobotId(robotid).then((res: any) => {
+  //         this.benchs = res.data;
+  //       });
+  //     } else {
+  //       this.getBenchs();
+  //     }
+  //   } else {
+  //     this.getBenchs();
+  //   }
+  //
+  // }
 }
