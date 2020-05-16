@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {BenchData} from '../../../core/entity/entity';
 import {ActivatedRoute} from '@angular/router';
 import {MtcsService} from '../service/mtcs.service';
-import {SccsComponent} from "../sccs/sccs.component";
+import {SccsComponent} from '../sccs/sccs.component';
 import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({

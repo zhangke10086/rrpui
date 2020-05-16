@@ -5,6 +5,7 @@ import {Location} from '@angular/common';
 import {NzMessageService} from 'ng-zorro-antd';
 declare var $: any;
 
+// 记得清理死代码
 @Component({
   selector: 'app-yhgl',
   templateUrl: './yhgl.component.html',
@@ -15,7 +16,6 @@ export class YhglComponent implements OnInit {
   isVisible1 = false;
   deleteVisible = false;
   resetVisible = false;
-  // des = '';
    user: any;
    users: [];
    companies: [];
@@ -23,6 +23,11 @@ export class YhglComponent implements OnInit {
    role: any;
    roles: [];
   operation;
+  jsondata: { companyid: string; province: string; city: string } = {
+    province: '',
+    city: '',
+    companyid: ''
+  }
   ngOnInit() {
     this.getUsers();
     this.getCompanies();
@@ -50,7 +55,70 @@ export class YhglComponent implements OnInit {
     }
   }
 
-   // $(function(){
+  onquery(data) {
+    // 保留上次查询
+    if (this.jsondata === data) {
+      this.yhglService.query(this.jsondata).then((res: any) => {
+        if (res.state === 200) {
+          console.log('1res.data:');
+          console.log(res.data);
+          this.users = res.data;
+        }
+      });
+    } else {
+      // data为查询组件所选值
+      console.log(data);
+      // 初始化 传参jsondata
+      this.jsondata = {
+        province: '',
+        city: '',
+        companyid: ''
+      };
+      // 传参赋值
+      // 若不选条件 则向后端传空值
+      if (data.province) {
+        this.jsondata.province = data.province;
+      }
+      if (data.city) {
+        this.jsondata.city = data.city;
+      }
+      // 该用户企业id
+      const companyid = JSON.parse(localStorage.getItem('userinfo')).company.id;
+      // 如果是 骊久
+      if (companyid === 1) {
+        if (data.company) {
+          this.jsondata.companyid = data.company.id;
+        }
+      } else {   // 不是骊久
+        this.jsondata.companyid = companyid;
+      }
+      this.yhglService.query(this.jsondata).then((res: any) => {
+        if (res.state === 200) {
+          this.users = res.data;
+        }
+      });
+    }
+  }
+
+
+  getUsers(): void {
+    // this.yhglService.getUsers()
+    //   .subscribe((res: any) => {
+    //     this.users = res.data;
+    //     // @ts-ignore
+    //     this.user = res.data[0];
+    //   });
+
+    // @ts-ignore
+    // if (this.users[0] != null) {this.users = this.users[0]; console.log(this.users[0]); }
+    // this.getInfo();
+    const queryDate = {
+      companyid: JSON.parse(localStorage.getItem('userinfo')).company.id
+    };
+    this.onquery(queryDate);
+  }
+
+  // $(function(){
    //      $('#ss').click(function(){
    //           var sstxt=$('#filtertxt').val();
    //           $("table tbody tr").hide().filter(":contains('"+sstxt+"')").show();
@@ -101,18 +169,6 @@ export class YhglComponent implements OnInit {
       });
   }
 
-  getUsers(): void {
-    this.yhglService.getUsers()
-      .subscribe((res: any) => {
-        this.users = res.data;
-        // @ts-ignore
-        this.user = res.data[0];
-      });
-    // @ts-ignore
-    // if (this.users[0] != null) {this.users = this.users[0]; console.log(this.users[0]); }
-    // this.getInfo();
-  }
-
   getCompanies(): void {
     this.yhglService.getCompanies()
       .subscribe((res: any) => {
@@ -140,12 +196,12 @@ export class YhglComponent implements OnInit {
       });
   }
 
-  getUser(id: number): void {
-    this.yhglService.getUser(id)
-      .subscribe((res: any) => {
-        this.user = res.data;
-      });
-  }
+  // getUser(id: number): void {
+  //   this.yhglService.getUser(id)
+  //     .subscribe((res: any) => {
+  //       this.user = res.data;
+  //     });
+  // }
 
   resetPassword(id: number): void {
     this.resetVisible = false;
@@ -156,13 +212,13 @@ export class YhglComponent implements OnInit {
       });
   }
 
-  getRole(id: number): void {
-    this.yhglService.getUser(id)
-      .subscribe((res: any) => {
-        this.role = res.data;
-        // console.log(res.data);
-      });
-  }
+  // getRole(id: number): void {
+  //   this.yhglService.getUser(id)
+  //     .subscribe((res: any) => {
+  //       this.role = res.data;
+  //       // console.log(res.data);
+  //     });
+  // }
 
   add(name: any, username: any,
       password: any, contact: any, company: any, role: any): void {
@@ -176,5 +232,6 @@ export class YhglComponent implements OnInit {
       if (res.state === 200) { this.message.success(res.msg); } else { this.message.error(res.msg); }
     });
   }
+
 
 }

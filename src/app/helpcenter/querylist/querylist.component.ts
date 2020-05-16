@@ -47,7 +47,7 @@ export class QuerylistComponent implements OnInit {
 
   }
   query() {
-    const data ={};
+    const data = {};
     data['province'] = this.selectedProvince;
     data['city'] = this.selectedCity;
     data['company'] = this.selectedCompany;
@@ -55,7 +55,8 @@ export class QuerylistComponent implements OnInit {
     if(this.startdate){
       data['startdate'] = formatDate(this.startdate.getTime(), 'yyyy-MM-dd', 'zh-Hans');
     }
-    if(this.enddate){
+
+    if(this.enddate) {
       data['enddate'] =  formatDate(this.enddate.getTime(), 'yyyy-MM-dd', 'zh-Hans');
     }
     this.onQuery.emit(data);
@@ -66,6 +67,7 @@ export class QuerylistComponent implements OnInit {
     })
   }
   getRobot(id){
+
     //出租企业或制造企业
     if(this.company.companyType.id === 2|| this.company.companyType.id === 1) {
       if(this.company.id != 1){
@@ -86,7 +88,8 @@ export class QuerylistComponent implements OnInit {
     }
 
   }
-  //展开/关闭
+
+  // 展开/关闭
   toggleCollapse(): void {
     this.isCollapse = !this.isCollapse;
 
@@ -100,7 +103,8 @@ export class QuerylistComponent implements OnInit {
 
   }
   RobotChange(data) {
-    this.selectedRobot = data
+
+    this.selectedRobot = data;
   }
   provinceChange(value: string): void {
     this.CityData = this.ProvinceData.find(t => t.name === value).children;
