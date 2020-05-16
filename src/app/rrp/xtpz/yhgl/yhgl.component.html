@@ -23,7 +23,10 @@
     <option *ngFor="let role of roles" [ngValue]="role" >{{role.description}}</option>
   </select> <br>
 </nz-modal>
-<p> <br> 筛选： <input id="filterName" name="filterName"> <span (click)="search()">搜索</span> <br> </p>
+
+<!--<p> <br> 筛选： <input id="filterName" name="filterName"> <span (click)="search()">搜索</span> <br> </p>-->
+<app-querylist [robotVisible]="false" (onQuery)="onquery($event)"></app-querylist>
+
 <nz-table #basicTable [nzData]="users">
   <thead>
   <tr id="show">

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {BenchData} from '../../../core/entity/entity';
 import {ActivatedRoute} from '@angular/router';
 import {MtcsService} from '../service/mtcs.service';
-import {SccsComponent} from "../sccs/sccs.component";
+import {SccsComponent} from '../sccs/sccs.component';
 import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
@@ -22,10 +22,10 @@ export class MtcsComponent implements OnInit {
   operation;
   // 前端传参
   jsondata = {
-    province:'',
-    city:'',
-    companyid:'',
-    robotid:''
+    province: '',
+    city: '',
+    companyid: '',
+    robotid: ''
   }
   @ViewChild(SccsComponent, {static: false}) sccsComponent: SccsComponent;
   constructor(
@@ -148,8 +148,8 @@ export class MtcsComponent implements OnInit {
       } else {   // 不是骊久
         this.jsondata.companyid = companyid;
       }
-      this.benchDataService.query(this.jsondata).then((res:any)=>{
-        if (res.state === 200){
+      this.benchDataService.query(this.jsondata).then((res: any) => {
+        if (res.state === 200) {
           this.benchDatas = res.data;
         }
       })
