@@ -37,7 +37,7 @@
 <nz-table #basicTable [nzData]="roles">
   <thead>
   <tr id="show">
-    <th>id</th>
+    <th>序号</th>
     <th>权限</th>
 
     <th>操作</th>
@@ -45,7 +45,7 @@
   </thead>
   <tbody>
   <tr *ngFor="let role of basicTable.data">
-    <td>{{ role.id }}</td>
+    <td>{{basicTable.data.indexOf(role) +1 }}</td>
     <td>{{ role.description }}</td>
     <td>
       <button *ngIf="operation_Au.indexOf(2)!=-1" nz-button [nzType]="'primary'" (click)="delete(role.id)"><span>删除</span></button>

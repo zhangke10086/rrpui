@@ -82,7 +82,7 @@ export class QuerylistComponent implements OnInit {
 
     } else {
       //购买或租用企业 只能看自己企业下的机器人
-      this.querylistService.getRobot(id).then((res:any) => {
+      this.querylistService.getRobotByCompanyid(id).then((res:any) => {
         this.RobotData = res.data;
       })
     }
