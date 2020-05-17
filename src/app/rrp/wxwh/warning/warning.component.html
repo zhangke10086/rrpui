@@ -31,7 +31,7 @@
     <th nzwidth="100px">振动过载</th>
     <th nzwidth="100px">润滑泵过载</th>
     <th nzwidth="100px">实际下料与理论下料不匹配</th>
-    <th nzRight="0px"  nzWidth="120px">操作</th>
+    <th nzRight="0px"  nzWidth="140px">操作</th>
 
   </tr>
   </thead>
@@ -68,13 +68,9 @@
 
     <td nzRight="0px">
       <div style="display: inline-block">
-        <a (click)="showModal(data)" class="primary-color">
-         编辑
-        </a>
+        <button  nz-button [nzType]="'primary'" (click)="showModal(data)"><span>编辑</span></button>
         <nz-divider nzType="vertical"></nz-divider>
-        <a (click)="delete(data)" class="primary-color">
-          删除
-        </a>
+        <button  nz-button [nzType]="'primary'" (click)="delete(data)" ><span>删除</span></button>
       </div>
     </td>
   </tr>
