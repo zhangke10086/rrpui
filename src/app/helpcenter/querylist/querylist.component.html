@@ -21,15 +21,15 @@
     <div nz-row style="margin-top: 8px">
       <div>
         <label  style="font-weight: bold;font-size: 16px;margin-right: 16px">{{company.name}}</label>
-        <nz-select *ngIf="company.companyType.id!==3 ||company.companyType.id!==4 " [(ngModel)]="selectedProvince" (ngModelChange)="provinceChange($event)"
+        <nz-select *ngIf="company.companyType.id!==3 && company.companyType.id!==4 " [(ngModel)]="selectedProvince" (ngModelChange)="provinceChange($event)"
                    [nzAllowClear]="true" [nzShowSearch]="true" nzPlaceHolder="请选择省份">
           <nz-option *ngFor="let p of ProvinceData" [nzValue]="p.name" [nzLabel]="p.name"></nz-option>
         </nz-select>
-        <nz-select *ngIf="company.companyType.id!==3 ||company.companyType.id!==4 " [(ngModel)]="selectedCity" (ngModelChange)="cityChange($event)"
+        <nz-select *ngIf="company.companyType.id!==3 &&company.companyType.id!==4 " [(ngModel)]="selectedCity" (ngModelChange)="cityChange($event)"
                    [nzAllowClear]="true" [nzShowSearch]="true" nzPlaceHolder="请选择市">
           <nz-option *ngFor="let c of CityData" [nzValue]="c.name" [nzLabel]="c.name"></nz-option>
         </nz-select>
-        <nz-select *ngIf="company.companyType.id!==3 ||company.companyType.id!==4 " [(ngModel)]="selectedCompany" (ngModelChange)="CompanyChange($event)"
+        <nz-select *ngIf="company.companyType.id!==3 &&company.companyType.id!==4 " [(ngModel)]="selectedCompany" (ngModelChange)="CompanyChange($event)"
                    [nzAllowClear]="true" [nzShowSearch]="true" nzPlaceHolder="请选择企业">
           <nz-option *ngFor="let p of CompanyData" [nzValue]="p" [nzLabel]="p.name"></nz-option>
         </nz-select>
