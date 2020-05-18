@@ -72,12 +72,12 @@ export class CssdComponent implements OnInit {
 
   }
 
-  // getRobotDatas(): void {
-  //   this.cssdService.getRobotDatas()
-  //     .subscribe(res => {
-  //       this.robotDatas = res.data;
-  //     });
-  // }
+  getRobotDatas(): void {
+    this.cssdService.getRobotDatas()
+      .subscribe(res => {
+        this.robotDatas = res.data;
+      });
+  }
 
   delete(data: RobotData | number): void {
     this.cssdService.deleteRobotData(data)

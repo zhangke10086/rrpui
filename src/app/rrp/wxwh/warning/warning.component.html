@@ -75,7 +75,7 @@
     </td>
   </tr>
   </tbody>
-  <nz-modal  class="modal-help" *ngIf="warning" (nzAfterClose)="getWarnings()" [(nzVisible)]="isVisible" nzTitle="update" (nzOnCancel)="handleCancel()" (nzOnOk)="update()">
+  <nz-modal  class="modal-help" *ngIf="warning"  [(nzVisible)]="isVisible" nzTitle="update" (nzOnCancel)="handleCancel()" (nzOnOk)="update()">
     <label>序号</label><input [(ngModel)]="this.warning.id"/>
     <label>大车（X轴）进限位开关</label><input [(ngModel)]="this.warning.machine_signal0"/>
     <label>大车（X轴）退限位开关</label><input [(ngModel)]="this.warning.machine_signal1"/>
