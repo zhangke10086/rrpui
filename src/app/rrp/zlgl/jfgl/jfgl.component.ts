@@ -5,6 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import {JfglService} from '../service/jfgl.service';
 import {Zlgl1Service} from '../service/zlgl1.service';
 import { NzMessageService } from 'ng-zorro-antd';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-jfgl',
@@ -19,19 +20,20 @@ export class JfglComponent implements OnInit {
   // 查看详情弹框
   isVisible2 = false;
    id;
+  belongcompany;
    paymentAmount: number;
-   paymentTime: string;
-   paymentDeadline: string;
+   paymentTime;
+   paymentDeadline;
    examineSituation = '未审核';
    paymentDuration: string;
    paymentVoucher: string;
-   contractId: string;
+   contractId;
    company: Company;
    company1: Company;
    robot: Robot;
    lease: Lease;
-   leases: Lease[];
-   robots: Robot[];
+   leases: Lease[] =[];
+   robots: Robot[] =[];
   // 所有公司
    companys: Company[];
   // 拥有机器人的公司
@@ -50,8 +52,8 @@ export class JfglComponent implements OnInit {
   ngOnInit() {
     this.onquery(this.jsondata);
     this.getCompanys();
-    this.getLeases();
     this.getCompanysWithRobot();
+    this.getLeases();
   }
   constructor(
     private jfglService: JfglService,
@@ -86,8 +88,13 @@ export class JfglComponent implements OnInit {
         this.pay = res.data;
       });
   }
-  getRobotsByBelongingComapnyId(id: number): void {
-    this.qyglService.getRobotByBelongingCompanyId(id)
+  getLeases(){
+    this.zlgl1Service.getLeases().subscribe((res:any)=>{
+      this.leases =res.data;
+    })
+  }
+  getRobotsByBelongingComapnyId(data): void {
+    this.qyglService.getRobotByBelongingCompanyId(data.id)
       .subscribe((res: any) => {
         this.robots = res.data;
       });
@@ -102,12 +109,6 @@ export class JfglComponent implements OnInit {
     this.qyglService.getCompanys()
       .subscribe((res: any) => {
         this.companys = res.data;
-      });
-  }
-  getLeases(): void {
-    this.zlgl1Service.getLeases()
-      .subscribe((res: any) => {
-        this.leases = res.data;
       });
   }
   showModa2(data: Pay): void {
@@ -126,20 +127,37 @@ export class JfglComponent implements OnInit {
     this.lease = data.lease;
   }
   showModal1(): void {
-    this.getCompanysWithRobot();
-    this.getCompanys();
+    // this.getCompanysWithRobot();
+    // this.getCompanys();
     this.isVisible1 = true;
   }
   showModal(data: Pay): void {
-    this.getCompanysWithRobot();
-    this.getCompanys();
+    console.log(data)
+    if (!this.leases || this.leases.indexOf(data.lease) ==-1){
+      this.leases.push(data.lease)
+    }
+    if(!this.robots || this.robots.indexOf(data.robot) ==-1){
+      this.robots.push(data.robot)
+    }
+
     this.pay = data;
+    this.paymentAmount = data.paymentAmount;
+    this.paymentTime = data.paymentTime;
+    this.examineSituation = data.examineSituation;
+    this.paymentDuration = data.paymentDuration;
+    this.paymentDeadline = data.paymentDeadline;
+    this.paymentVoucher = data.paymentVouncher;
+    this.company = this.companys.filter(t=>t.id===data.company.id)[0];
+    this.belongcompany = this.companys1.filter(t=>t.id === data.robot.belongingCompany.id)[0];
+
+    this.robot = this.robots.filter(t=>t.id === data.robot.id)[0];
+    this.lease = this.leases.filter(t=>t.id===data.lease.id)[0];
     this.isVisible = true;
   }
   add(): void {
     this.isVisible1 = false;
     const add = {robot: this.robot, paymentAmount: this.paymentAmount, company: this.company,
-      paymentTime: this.paymentTime, paymentDeadline: this.paymentDeadline, examineSituation: this.examineSituation,
+      paymentTime: this.lease.paymentdeadline, paymentDeadline: formatDate(this.paymentDeadline.getTime(), 'yyyy-MM-dd', 'zh-Hans'), examineSituation: this.examineSituation,
       paymentDuration: this.paymentDuration, paymentVoucher: this.paymentVoucher, lease: this.lease };
     this.jfglService.addPay(add)
       .subscribe((res: any) => {
@@ -179,6 +197,47 @@ export class JfglComponent implements OnInit {
   }
   fresh(): void {
     window.location.reload();
+  }
+  leasechange(data){
+    this.lease = data;
+  }
+  robotChange(data){
+    this.lease = null;
+    this.contractId =null;
+    const jsondata ={
+      companyid: data.id===undefined?'':data.id,
+      belongingCompanyid: this.belongcompany.id===undefined?'':this.belongcompany.id,
+      robotid: this.robot.id===undefined?'':this.robot.id,
+    }
+    this.jfglService.findLeaseByRobotAndCompany(jsondata).then((res:any)=>{
+      if(res.state ===200){
+        this.leases = res.data;
+        if(res.data.length === 1){
+          this.lease = res.data[0];
+          this.contractId = this.lease.contractId;
+        }
+      }
+    })
+  }
+  companychange(data){
+    this.lease =null;
+    this.contractId =null;
+    const jsondata ={
+      companyid: data.id===undefined?'':data.id,
+      belongingCompanyid: this.belongcompany.id===undefined?'':this.belongcompany.id,
+      robotid: this.robot.id===undefined?'':this.robot.id,
+    }
+    console.log(jsondata);
+    this.jfglService.findLeaseByRobotAndCompany(jsondata).then((res:any)=>{
+      if(res.state ===200){
+        this.leases = res.data;
+        if(res.data.length === 1){
+          this.lease = res.data[0];
+          this.contractId = this.lease.contractId;
+        }
+      }
+    })
+
   }
   onquery(data) {
     this.query(data);

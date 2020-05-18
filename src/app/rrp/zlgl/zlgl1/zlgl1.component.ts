@@ -126,12 +126,16 @@ export class Zlgl1Component implements OnInit {
     this.connector = undefined;
   }
   showModa3(data) {
-    this.isVisible3 = true;
-    this.lease = data;
-    this.pay = {
-      date: '',
-      money: ''
-    };
+    if (data.paymentSituation === '2'){
+      this.message.info('已发起续费请求，请耐心等待客服经理审批！');
+    } else {
+      this.isVisible3 = true;
+      this.lease = data;
+      this.pay = {
+        date: '',
+        money: ''
+      };
+    }
   }
   showModal(data: Lease): void {
     this.getCompanysWithRobot();

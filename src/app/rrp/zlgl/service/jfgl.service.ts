@@ -99,4 +99,9 @@ export class JfglService {
     const url = this.url.hostname + '/lease/QueryPay';
     return this.post(url, data);
   }
+
+  findLeaseByRobotAndCompany(data) {
+    const url = this.url.hostname + '/lease/findLeaseByRobotAndCompany';
+    return this.post(url, data);
+  }
 }

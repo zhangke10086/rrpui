@@ -124,6 +124,7 @@ export class Lease {
   state: any;
   uploadurl: any;
   remind: any;
+  paymentdeadline: any;
 }
 
 export class Pay {

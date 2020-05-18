@@ -14,3 +14,7 @@ nz-select {
 nz-upload{
   width: 200px;
 }
+.ant-calendar-picker-input.ant-input {
+  line-height: 1.5;
+  width: 200px!important;
+}

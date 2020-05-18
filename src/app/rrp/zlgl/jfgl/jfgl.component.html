@@ -1,32 +1,6 @@
 <app-querylist (onQuery)="onquery($event)"></app-querylist>
 <div *ngIf="operation.indexOf(4)!=-1">
 <button *ngIf="operation.indexOf(1)!=-1" nz-button [nzType]="'primary'" (click)="showModal1()"><span>添加缴费记录</span></button>
-<nz-modal [(nzVisible)]="isVisible1" nzTitle="add" (nzOnCancel)="handleCancel1()" (nzOnOk)="add()">
-  <label>选择机器人所属公司:&nbsp;</label>
-  <select [(ngModel)]="this.company1" (change)="getRobotsByBelongingComapnyId(this.company1.id)">
-    <option *ngFor="let obj of companys1" [ngValue]="obj">{{obj.name}}</option>
-  </select><br>
-  <label>选择机器人：</label>
-  <!--  <input nz-input [(ngModel)]="this.robot" />-->
-  <select [(ngModel)]="this.robot">
-    <option *ngFor="let obj of robots" [ngValue]="obj">{{obj.name}}</option>
-  </select><br>
-
-  <label>租用公司:&nbsp;</label>
-  <select [(ngModel)]="this.company">
-    <option *ngFor="let obj of companys" [ngValue]="obj">{{obj.name}}</option>
-  </select><br>
-
-  <label>合同编号:&nbsp;</label>
-  <select [(ngModel)]="this.lease">
-    <option *ngFor="let obj of leases" [ngValue]="obj">{{obj.contractId}}</option>
-  </select><br>
-  <label>缴费金额:&nbsp;</label> <input οninput="value=value.replace(/[^\d]/g,'')" nz-input  [(ngModel)]="this.paymentAmount" />
-  <label>缴费时长:&nbsp;</label> <input nz-input  [(ngModel)]="this.paymentDuration" />
-  <label>缴费截止日期:&nbsp;</label> <input nz-input  [(ngModel)]="this.paymentDeadline" />
-  <label>上传缴费凭证:&nbsp;</label> <input nz-input  [(ngModel)]="this.paymentVoucher" />
-<!--  <label>联系人:&nbsp;</label> <input nz-input  [(ngModel)]="this.connector" />-->
-</nz-modal>
 
 <nz-table #basicTable [nzData]="pays">
   <thead>
@@ -52,50 +26,15 @@
     <td *ngIf="data.company">{{ data.company.name}}</td>
     <td *ngIf="data.lease">{{ data.lease.contractId}}</td>
     <td *ngIf="data.lease">{{ data.lease.costMonth}}</td>
-    <td>{{ data.paymentTime}}</td>
+    <td>{{ data.paymentTime | date:'yyyy-MM-dd'}}</td>
     <td>{{ data.paymentAmount}}</td>
     <td>{{ data.paymentDeadline}}</td>
     <td>{{data.examineSituation}}</td>
     <td>
       <button nz-button [nzType]="'primary'" (click)="showModa2(data)"><span>详情</span></button>
-      <nz-modal [(nzVisible)]="isVisible2" nzTitle="详情" (nzOnCancel)="handleCancel2()" (nzOnOk)="handleCancel2()">
-        <label>机器人名称:&nbsp;</label> <input nz-input *ngIf="this.robot" [(ngModel)]="this.robot.name" />
-        <label>唯一标识：</label> <input nz-input *ngIf="this.robot" [(ngModel)]="this.robot.id" />
-        <label>归属企业:&nbsp;</label> <input nz-input *ngIf="this.robot" [(ngModel)]="this.robot.belongingCompany.name" />
-        <label>租赁企业:&nbsp;</label> <input nz-input *ngIf="this.company" [(ngModel)]="this.company.name" />
-        <label>联系人:&nbsp;</label> <input nz-input *ngIf="this.company" [(ngModel)]="this.lease.connector" />
-        <label>合同编号:&nbsp;</label> <input nz-input *ngIf="this.company" [(ngModel)]="this.lease.contractId" />
-        <label>月费用:&nbsp;</label> <input nz-input *ngIf="this.company" [(ngModel)]="this.lease.costMonth" />
-        <label>缴费方式:&nbsp;</label> <input nz-input *ngIf="this.company" [(ngModel)]="this.lease.costWay" />
-        <label>合同内容:&nbsp;</label> <input nz-input *ngIf="this.company" [(ngModel)]="this.lease.contract" />
-      </nz-modal>
       <nz-divider nzType="vertical"></nz-divider>
       <button *ngIf="operation.indexOf(3)!=-1" nz-button [nzType]="'primary'" (click)="showModal(data)" ><span>修改</span></button>
-      <nz-modal [(nzVisible)]="isVisible" nzTitle="update" (nzOnCancel)="handleCancel()" (nzOnOk)="update()">
-        <label>选择机器人所属公司:&nbsp;</label>
-        <select [(ngModel)]="this.company1" (change)="getRobotsByBelongingComapnyId(this.company1.id)">
-          <option *ngFor="let obj of companys1" [ngValue]="obj">{{obj.name}}</option>
-        </select><br>
-        <label>选择机器人：</label>
-        <!--  <input nz-input [(ngModel)]="this.robot" />-->
-        <select [(ngModel)]="this.robot">
-          <option *ngFor="let obj of robots" [ngValue]="obj">{{obj.name}}</option>
-        </select><br>
 
-        <label>租用公司:&nbsp;</label>
-        <select [(ngModel)]="this.company">
-          <option *ngFor="let obj of companys" [ngValue]="obj">{{obj.name}}</option>
-        </select><br>
-
-        <label>合同编号:&nbsp;</label>
-        <select [(ngModel)]="this.lease">
-          <option *ngFor="let obj of leases" [ngValue]="obj">{{obj.contractId}}</option>
-        </select><br>
-        <label>缴费金额:&nbsp;</label> <input οninput="value=value.replace(/[^\d]/g,'')" nz-input  [(ngModel)]="this.paymentAmount" />
-        <label>缴费时长:&nbsp;</label> <input nz-input  [(ngModel)]="this.paymentDuration" />
-        <label>缴费截止日期:&nbsp;</label> <input nz-input  [(ngModel)]="this.paymentDeadline" />
-        <label>上传缴费凭证:&nbsp;</label> <input nz-input  [(ngModel)]="this.paymentVoucher" />
-      </nz-modal>
       <nz-divider nzType="vertical"></nz-divider>
       <button *ngIf="operation.indexOf(2)!=-1" nz-button [nzType]="'primary'" (click)="delete(data)"><span>删除</span></button>
     </td>
@@ -103,3 +42,216 @@
   </tbody>
 </nz-table>
 </div>
+<nz-modal  [(nzVisible)]="isVisible2" nzTitle="详情" (nzOnCancel)="handleCancel2()" (nzOnOk)="handleCancel2()">
+  <form nz-form *ngIf="isVisible2">
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">机器人</nz-form-label>
+        <nz-form-control>
+          <input [disabled]="true" nz-input name="robotname" [(ngModel)]="robot.name" />
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">唯一标识</nz-form-label>
+        <nz-form-control>
+          <input [disabled]="true" nz-input name="robotid" [(ngModel)]="robot.id" />
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">归属企业</nz-form-label>
+        <nz-form-control>
+          <input [disabled]="true" nz-input name="robotid" [(ngModel)]="robot.belongingCompany.name" />
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">租赁企业</nz-form-label>
+        <nz-form-control>
+          <input [disabled]="true" nz-input name="companyname" [(ngModel)]="company.name" />
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">联系人</nz-form-label>
+        <nz-form-control>
+          <input [disabled]="true" nz-input name="leaseconnector" [(ngModel)]="lease.connector" />
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">合同编号</nz-form-label>
+        <nz-form-control>
+          <input [disabled]="true" nz-input name="leasecontractId" [(ngModel)]="lease.contractId" />
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">月费用</nz-form-label>
+        <nz-form-control>
+          <input [disabled]="true" nz-input name="leasecostMonth" [(ngModel)]="lease.costMonth" />
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">缴费金额</nz-form-label>
+        <nz-form-control>
+          <input [disabled]="true" nz-input name="paymentAmount" [(ngModel)]="pay.paymentAmount" />
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+  </form>
+  <!--   -->
+  <!--        <label>合同内容:&nbsp;</label> <input nz-input [(ngModel)]="this.lease.contract" />-->
+</nz-modal>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="修改租赁信息" (nzOnCancel)="handleCancel()" (nzOnOk)="update()">
+  <form nz-form *ngIf="isVisible">
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">机器人所属公司</nz-form-label>
+        <nz-form-control>
+          <nz-select name="company1" [(ngModel)]="belongcompany" (ngModelChange)="getRobotsByBelongingComapnyId($event)"  [nzAllowClear]="true"  [nzShowSearch]="true" >
+            <nz-option *ngFor="let obj of companys1" [nzValue]="obj" [nzLabel]="obj.name"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">机器人</nz-form-label>
+        <nz-form-control>
+          <nz-select name="company1" [(ngModel)]="robot" (ngModelChange)="robotChange($event)"  [nzAllowClear]="true"  [nzShowSearch]="true" >
+            <nz-option *ngFor="let obj of robots" [nzValue]="obj" [nzLabel]="obj.name"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">租用企业</nz-form-label>
+        <nz-form-control>
+          <nz-select name="company" [(ngModel)]="company"   [nzAllowClear]="true"  [nzShowSearch]="true" (ngModelChange)="companychange($event)">
+            <nz-option *ngFor="let obj of companys" [nzValue]="obj" [nzLabel]="obj.name"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">合同编号</nz-form-label>
+        <nz-form-control>
+          <nz-select name="contractId" [(ngModel)]="lease"   [nzAllowClear]="true"  [nzShowSearch]="true" (ngModelChange)="leasechange($event)">
+            <nz-option *ngFor="let obj of leases" [nzValue]="obj" [nzLabel]="obj.contractId"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">缴费金额</nz-form-label>
+        <nz-form-control>
+          <input nz-input name="paymentAmount" [(ngModel)]="paymentAmount" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">缴费时长</nz-form-label>
+        <input nz-input name="paymentVoucher" [(ngModel)]="paymentDuration" />
+      </nz-form-item>
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">缴费截止日期</nz-form-label>
+        <nz-form-control>
+          <nz-date-picker [nzFormat]="'yyyy-MM-dd'" name="paymentDeadline" [(ngModel)]="paymentDeadline"></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+  </form>
+
+<!--  <label>上传缴费凭证:&nbsp;</label> <input nz-input  [(ngModel)]="this.paymentVoucher" />-->
+</nz-modal>
+<nz-modal [(nzVisible)]="isVisible1" nzTitle="添加缴费记录" (nzOnCancel)="handleCancel1()" (nzOnOk)="add()">
+  <form nz-form *ngIf="isVisible1">
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">机器人所属公司</nz-form-label>
+        <nz-form-control>
+          <nz-select name="company1" [(ngModel)]="belongcompany" (ngModelChange)="getRobotsByBelongingComapnyId($event)"  [nzAllowClear]="true"  [nzShowSearch]="true" >
+            <nz-option *ngFor="let obj of companys1" [nzValue]="obj" [nzLabel]="obj.name"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">机器人</nz-form-label>
+        <nz-form-control>
+          <nz-select name="robot" [(ngModel)]="robot"   [nzAllowClear]="true"  [nzShowSearch]="true" (ngModelChange)="robotChange($event)">
+            <nz-option *ngFor="let obj of robots" [nzValue]="obj" [nzLabel]="obj.name"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">租用企业</nz-form-label>
+        <nz-form-control>
+          <nz-select name="company" [(ngModel)]="company"   [nzAllowClear]="true"  [nzShowSearch]="true" (ngModelChange)="companychange($event)">
+            <nz-option *ngFor="let obj of companys" [nzValue]="obj" [nzLabel]="obj.name"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">合同编号</nz-form-label>
+        <nz-form-control>
+          <nz-select name="contractId" [(ngModel)]="lease"   [nzAllowClear]="true"  [nzShowSearch]="true" (ngModelChange)="leasechange($event)">
+            <nz-option *ngFor="let obj of leases" [nzValue]="obj" [nzLabel]="obj.contractId"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">缴费金额</nz-form-label>
+        <nz-form-control>
+          <input nz-input name="paymentAmount" [(ngModel)]="paymentAmount" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">缴费时长</nz-form-label>
+        <input nz-input name="paymentVoucher" [(ngModel)]="paymentDuration" />
+      </nz-form-item>
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">缴费截止日期</nz-form-label>
+        <nz-form-control>
+          <nz-date-picker [nzFormat]="'yyyy-MM-dd'" name="paymentDeadline" [(ngModel)]="paymentDeadline"></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">上传缴费凭证</nz-form-label>
+        <nz-form-control>
+          <input nz-input name="paymentVoucher" [(ngModel)]="paymentVoucher" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </form>
+</nz-modal>
