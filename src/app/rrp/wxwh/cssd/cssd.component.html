@@ -20,7 +20,7 @@
     </td>
   </tr>
   </tbody>
-  <nz-modal *ngIf="robotData" (nzAfterClose)="getRobotDatas()" [(nzVisible)]="isVisible" nzTitle="update" (nzOnCancel)="handleCancel()" (nzOnOk)="update()">
+  <nz-modal class="modal-help" *ngIf="robotData" (nzAfterClose)="getRobotDatas()" [(nzVisible)]="isVisible" nzTitle="update" (nzOnCancel)="handleCancel()" (nzOnOk)="update()">
     <label>序号</label><input [(ngModel)]="this.robotData.id"/>
     <label>密度</label><input [(ngModel)]="this.robotData.concrete_density"/>
     <label>塌落度</label><input [(ngModel)]="this.robotData.concrete_angle"/>
