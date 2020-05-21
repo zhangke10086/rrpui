@@ -91,4 +91,14 @@ export class QyglService {
       return of(result as T);
     };
   }
+  query(data) {
+    const url = this.url.hostname + '/company/queryCompany';
+    return new Promise(((resolve, reject) =>
+      this.http.post(url, data)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      })));
+  }
 }

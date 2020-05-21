@@ -68,4 +68,14 @@ export class BljqrglService {
       return of(result as T);
     };
   }
+  query(data) {
+    const url = this.url.hostname + '/robot/QueryRobot';
+    return new Promise(((resolve, reject) =>
+      this.http.post(url, data)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      })));
+  }
 }

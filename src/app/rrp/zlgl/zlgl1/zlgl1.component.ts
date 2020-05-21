@@ -220,7 +220,6 @@ export class Zlgl1Component implements OnInit {
   remindOk(data) {
     this.zlgl1Service.remind(data.id).then(res => {
       this.onquery(this.jsondata);
-
     });
   }
   remindCancle(data) {
