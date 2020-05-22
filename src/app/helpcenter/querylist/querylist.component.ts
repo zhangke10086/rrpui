@@ -16,6 +16,7 @@ export class QuerylistComponent implements OnInit {
   @Output() onQuery: EventEmitter<any> = new EventEmitter<any>();
   @Input() dateVisible = false;
   @Input() robotVisible = true;
+  @Input() robotManagement = false;
   isCollapse = false;
   selectedCompany;
   CompanyData;
@@ -67,26 +68,29 @@ export class QuerylistComponent implements OnInit {
     })
   }
   getRobot(id){
-
-    //出租企业或制造企业
-    if(this.company.companyType.id === 2|| this.company.companyType.id === 1) {
-      if(this.company.id != 1){
-        this.querylistService.getRobotByCompany(this.selectedCompany.id,this.company.id).then((res:any)=>{
-          this.RobotData = res.data;
-        })
+    if (this.robotManagement === true){
+      this.querylistService.getRobot(id).then((res:any)=>{
+        this.RobotData = res.data;
+      })
+    } else {
+      //出租企业或制造企业
+      if(this.company.companyType.id === 2|| this.company.companyType.id === 1) {
+        if(this.company.id != 1){
+          this.querylistService.getRobotByCompany(this.selectedCompany.id,this.company.id).then((res:any)=>{
+            this.RobotData = res.data;
+          })
+        } else {
+          this.querylistService.getRobotByCompanyid(this.selectedCompany.id).then((res:any)=>{
+            this.RobotData = res.data;
+          })
+        }
       } else {
-        this.querylistService.getRobotByCompanyid(this.selectedCompany.id).then((res:any)=>{
+        //购买或租用企业 只能看自己企业下的机器人
+        this.querylistService.getRobotByCompanyid(id).then((res:any) => {
           this.RobotData = res.data;
         })
       }
-
-    } else {
-      //购买或租用企业 只能看自己企业下的机器人
-      this.querylistService.getRobotByCompanyid(id).then((res:any) => {
-        this.RobotData = res.data;
-      })
     }
-
   }
 
   // 展开/关闭
