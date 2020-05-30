@@ -43,28 +43,7 @@
 
 
       <button nz-button [nzType]="'primary'" (click)="showModa2(data)"><span>所属机器人</span></button>
-      <nz-modal [(nzVisible)]="isVisible2" nzTitle="update" (nzOnCancel)="handleCancel2()" (nzAfterOpen)="getRobotsByBelongingComapnyId(this.company.id)" (nzOnOk)="handleCancel2()">
-        <table>
-          <tr>
-            <th>序号</th>
-            <th>布料机器名称</th>
-            <th>唯一标识</th>
-            <th>使用状态</th>
-            <th>操作</th>
-          </tr>
-          <tr *ngFor="let robot of robots">
-            <td>{{robots.indexOf(robot) + 1}}</td>
-            <td>{{robot.name}}</td>
-            <td>{{robot.id}}</td>
-            <td>{{robot.way}}</td>
-            <td>
-              <button nz-button nzType="primary">续费</button>
-              <nz-divider nzType="vertical"></nz-divider>
-              <button nz-button nzType="primary">停用</button>
-            </td>
-          </tr>
-        </table>
-      </nz-modal>
+
 
 
       <nz-divider nzType="vertical"></nz-divider>
@@ -98,3 +77,25 @@
   </tbody>
 </nz-table>
 </div>
+<nz-modal [(nzVisible)]="isVisible2" nzTitle="update" (nzOnCancel)="handleCancel2()" (nzAfterOpen)="getRobotsByBelongingComapnyId(this.company.id)" (nzOnOk)="handleCancel2()">
+  <table>
+    <tr>
+      <th>序号</th>
+      <th>布料机器名称</th>
+      <th>唯一标识</th>
+      <th>使用状态</th>
+      <th>操作</th>
+    </tr>
+    <tr *ngFor="let robot of robots">
+      <td>{{robots.indexOf(robot) + 1}}</td>
+      <td>{{robot.name}}</td>
+      <td>{{robot.id}}</td>
+      <td>{{robot.way}}</td>
+      <td>
+        <button nz-button nzType="primary">续费</button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button nz-button nzType="primary">停用</button>
+      </td>
+    </tr>
+  </table>
+</nz-modal>
