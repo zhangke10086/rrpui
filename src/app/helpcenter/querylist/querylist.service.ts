@@ -19,7 +19,7 @@ export class QuerylistService {
         reject(error);
       })));
   }
-//根据企业id获取机器人
+// 根据企业id获取机器人
   getRobot(id) {
     const url = this.url.hostname + '/robot/findAllByCompany?id=';
     return new Promise(((resolve, reject) =>

@@ -154,4 +154,20 @@ export class DhbmjComponent implements OnInit {
     this.selectedCompany = undefined;
     this.selectedRobot = undefined;
   }
+
+  onquery(data) {
+    console.log(data);
+
+    // 参数赋值
+    if (data.startdate) {
+      this.begin = data.startdate;
+    }
+    if (data.enddate) {
+      this.end = data.enddate;
+    }
+    if (data.robot) {
+      this.selectedRobot = data.robot;
+    }
+    this.getDhbmj();
+  }
 }

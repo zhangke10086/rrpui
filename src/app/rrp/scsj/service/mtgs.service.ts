@@ -26,6 +26,7 @@ export class MtgsService {
         catchError(this.handleError<Response>('getBenchCounts'))
       );
   }
+
 /** GET benchCounts from the server */
   // tslint:disable-next-line:variable-name
   getBenchCount(time: string): Observable<Response> {
