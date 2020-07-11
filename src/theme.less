@@ -36,9 +36,9 @@
 // ---
 
 // Background color for `<body>`
-@body-background: #fff;
+@body-background: #001529;
 // Base background color for most components
-@component-background: #fff;
+@component-background: #eee;//#001529; //组件背景色
 @font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
 'Segoe UI Emoji', 'Segoe UI Symbol';
@@ -55,7 +55,7 @@
 @text-selection-bg: @primary-color;
 @font-variant-base: tabular-nums;
 @font-feature-settings-base: 'tnum';
-@font-size-base: 14px;
+@font-size-base: 12px;
 @font-size-lg: @font-size-base + 2px;
 @font-size-sm: 12px;
 @heading-1-size: ceil(@font-size-base * 2.71);
@@ -119,7 +119,7 @@
 @outline-width: 2px;
 @outline-color: @primary-color;
 
-@background-color-light: hsv(0, 0, 98%); // background of header and selected item
+@background-color-light:hsv(0, 0, 98%); //background of header and selected item
 @background-color-base: hsv(0, 0, 96%); // Default grey background color
 
 // Disabled states
@@ -245,11 +245,11 @@
 @grid-gutter-width: 0;
 
 // Layout
-@layout-body-background: #f0f2f5;
-@layout-header-background: #001529;
+@layout-body-background: #001529;
+@layout-header-background: #1e2340;
 @layout-footer-background: @layout-body-background;
-@layout-header-height: 64px;
-@layout-header-padding: 0 50px;
+@layout-header-height: 48px;
+@layout-header-padding: 0 20px;
 @layout-footer-padding: 24px 50px;
 @layout-sider-background: @layout-header-background;
 @layout-trigger-height: 48px;
@@ -296,7 +296,7 @@
 @label-required-color: @highlight-color;
 @label-color: @heading-color;
 @form-warning-input-bg: @input-bg;
-@form-item-margin-bottom: 24px;
+@form-item-margin-bottom: 10px;
 @form-item-trailing-colon: true;
 @form-vertical-label-padding: 0 0 8px;
 @form-vertical-label-margin: 0;
@@ -429,14 +429,14 @@
 
 // Table
 // --
-@table-header-bg: @background-color-light;
+@table-header-bg:#353f63;// 首行背景色
 @table-header-color: @heading-color;
 @table-header-sort-bg: @background-color-base;
 @table-body-sort-bg: rgba(0, 0, 0, 0.01);
 @table-row-hover-bg: @primary-1;
 @table-selected-row-color: inherit;
-@table-selected-row-bg: #fafafa;
-@table-body-selected-sort-bg: @table-selected-row-bg;
+@table-selected-row-bg: #001529;  //行移上背景色
+@table-body-selected-sort-bg: @table-selected-row-bg; //移上背景色
 @table-selected-row-hover-bg: @table-selected-row-bg;
 @table-expanded-row-bg: #fbfbfb;
 @table-padding-vertical: 16px;
@@ -703,17 +703,47 @@
 
     .ant-btn {
       //width: 120px;
-      margin-left: 0;
+      margin:3px
     }
   }
 }
 
-.ant-table-thead > tr > th, .ant-table-tbody > tr > td {
-  padding: 8px 10px;
+.ant-table-tbody{
+  background: #0f1128;
+}
+.ant-table-thead > tr > th{
+  font-size:12px;
+  color: #bbb;;
+  padding: 2px 2px;
+  border: 1px solid #363b51;
+  background: #353f63;
+  font-weight: bolder;
+}
+.ant-table-tbody > tr > td {
+  font-size:12px;
+  color: #b1b1b1;
+  padding: 2px 2px;
+  border: 1px solid #363b51;
+}
+
+.ant-table-thead > tr, .ant-table-tbody > th{
+  border:1px solid #1e2340;
+  -webkit-box-shadow:inset 0 0 3px #656d78;
+  -moz-box-shadow:inset 0 0 3px #656d78;
+  box-shadow:inset 0 0 3px #656d78;
+}
+ .ant-table-tbody > tr:nth-child(odd){
+  background-color:#1f2136;// #1e2340;
+}
+.ant-table-tbody > tr:hover{
+  background:#1f2136;
+  border:2px solid #1890cc;
+  box-shadow:0 0 6px rgba(255,255,255,.3);
 }
 .ant-btn {
-  height: 32px;
+  height: 20px;
   padding: 0 8px;
+  font-size:12px;
 }
 /*滚动条的宽度*/
 ::-webkit-scrollbar {
@@ -749,3 +779,24 @@
   }
 
 }
+
+.topbutton{
+  height:28px;
+  line-height: 28px;
+  padding:0 20px 0 20px;
+  margin:5px;
+  cursor: pointer;
+  text-align: center;
+  font: 14px bolder;
+  border-radius: .5em;
+  -webkit-box-shadow: 0 1px 2px rgba(255,255,255,.2);
+  -moz-box-shadow: 0 1px 2px rgba(255,255,255,.2);
+  box-shadow: 0 1px 2px rgba(255,255,255,.2);
+  background: linear-gradient(to bottom, #1e2340,#0a0c20);
+  border:1px solid #336;
+
+}
+.topbutton:hover{
+  background: linear-gradient(to bottom,#0a0c20, #1e2340);
+}
+

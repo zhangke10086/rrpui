@@ -1,5 +1,5 @@
 <div *ngIf="operation_Au.indexOf(4)!=-1">
-<button *ngIf="operation_Au.indexOf(1)!=-1" nz-button [nzType]="'primary'" (click)="showModal()"><span>增加</span></button>
+<button *ngIf="operation_Au.indexOf(1)!=-1" class="topbutton" (click)="showModal()"><span>+ 增加</span></button>
 <nz-modal class="modal-help" [(nzVisible)]="isVisible" nzTitle="增加" (nzOnCancel)="handleCancel()"  (nzOnOk)="add(description)">
   <!--  <label>姓名:&nbsp;</label> <input nz-input  [(ngModel)]="des" />-->
 
@@ -39,7 +39,6 @@
   <tr id="show">
     <th>序号</th>
     <th>权限</th>
-
     <th>操作</th>
   </tr>
   </thead>

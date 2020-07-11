@@ -146,7 +146,7 @@ export class QuerylistComponent implements OnInit {
     this.selectedCompany = undefined;
     this.selectedRobot = undefined;
     this.startdate = undefined;
-    this.enddate =undefined;
+    this.enddate = undefined;
   }
   // onStartChange(data){
   //   this.startdate

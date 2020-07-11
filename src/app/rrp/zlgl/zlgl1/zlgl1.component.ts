@@ -7,6 +7,8 @@ import {Zlgl1Service} from '../service/zlgl1.service';
 import { NzModalService, NzMessageService } from 'ng-zorro-antd';
 import {formatDate} from '@angular/common';
 import {UrlService} from '../../../core/service/url.service';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+
 @Component({
   selector: 'app-zlgl1',
   templateUrl: './zlgl1.component.html',

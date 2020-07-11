@@ -1,6 +1,6 @@
 <div *ngIf="operation.indexOf(4)!=-1">
 <app-querylist (onQuery)="onquery($event)"></app-querylist>
-<button *ngIf="operation.indexOf(1)!=-1" nz-button [nzType]="'primary'" (click)="showModal1()"><span>增加</span></button>
+<button *ngIf="operation.indexOf(1)!=-1" class="topbutton" (click)="showModal1()"><span>+ 增加</span></button>
 <nz-modal [(nzVisible)]="isVisible1" nzTitle="add" (nzOnCancel)="handleCancel1()" (nzOnOk)="add()">
   <form nz-form *ngIf="isVisible1">
     <div nz-row>
@@ -44,7 +44,7 @@
   </form>
 </nz-modal>
 
-<nz-table #basicTable [nzData]="benchs" nzBordered>
+<nz-table #basicTable [nzData]="benchs" >
   <thead>
   <tr>
     <th>序号</th>

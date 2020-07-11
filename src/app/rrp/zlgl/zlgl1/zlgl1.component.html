@@ -1,93 +1,93 @@
 <app-querylist (onQuery)="onquery($event)"></app-querylist>
 <div *ngIf="operation.indexOf(4)!=-1">
-<button *ngIf="operation.indexOf(1)!=-1" nz-button [nzType]="'primary'" (click)="showModal1()"><span>增加租赁</span></button>
-<nz-table #basicTable [nzData]="leases">
-  <thead>
-  <tr>
-    <th>序号</th>
-    <th>机器人名称</th>
-    <th>唯一标识</th>
-    <th>租用企业</th>
-    <th>合同编号</th>
-    <th>月费用</th>
-    <th>启用日期</th>
-    <th>缴费状态</th>
-    <th>使用状态</th>
-    <th>操作</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let data of basicTable.data">
-    <td>{{ basicTable.data.indexOf(data) + 1 }}</td>
-    <td>{{ data.robot.name }}</td>
-    <td>{{ data.robot.id}}</td>
+  <button *ngIf="operation.indexOf(1)!=-1" class="topbutton"  (click)="showModal1()"><span>增加租赁</span></button>
+  <nz-table #basicTable [nzData]="leases">
+    <thead>
+    <tr>
+      <th>序号</th>
+      <th>机器人名称</th>
+      <th>唯一标识</th>
+      <th>租用企业</th>
+      <th>合同编号</th>
+      <th>月费用</th>
+      <th>启用日期</th>
+      <th>缴费状态</th>
+      <th>使用状态</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{ basicTable.data.indexOf(data) + 1 }}</td>
+      <td>{{ data.robot.name }}</td>
+      <td>{{ data.robot.id}}</td>
 
-    <td>{{ data.companyId.name}}</td>
-    <td>{{ data.contractId}}</td>
-    <td>{{ data.costMonth}}</td>
-    <td>{{ data.startTime | date:'yyyy-MM-dd'}}</td>
-    <td>{{ data.paymentSituation==='0'?"已缴费":(data.paymentSituation==='1'?"已欠费":"审核中")}}</td>
-    <td>{{ data.state}}</td>
-    <td>
-      <button nz-button [nzType]="'primary'" (click)="showModa2(data)"><span>详情</span></button>
-      <nz-divider nzType="vertical"></nz-divider>
+      <td>{{ data.companyId.name}}</td>
+      <td>{{ data.contractId}}</td>
+      <td>{{ data.costMonth}}</td>
+      <td>{{ data.startTime | date:'yyyy-MM-dd'}}</td>
+      <td>{{ data.paymentSituation==='0'?"已缴费":(data.paymentSituation==='1'?"已欠费":"审核中")}}</td>
+      <td>{{ data.state}}</td>
+      <td>
+        <button nz-button [nzType]="'primary'" (click)="showModa2(data)"><span>详情</span></button>
+        <nz-divider nzType="vertical"></nz-divider>
         <button *ngIf="data.remind!=1" nz-button (click)="remind(data)">提醒</button>
         <button *ngIf="data.remind==1" nz-button (click)="cancleremind(data)">取消提醒</button>
-      <nz-divider nzType="vertical"></nz-divider>
-      <button nz-button (click)="showModa3(data)">续费</button>
-      <nz-divider nzType="vertical"></nz-divider>
-      <button *ngIf="data.state!='已启用'" nz-button (click)="showModalVisible(data,1)">启用</button>
-      <button *ngIf="data.state=='已启用'" nz-button (click)="showModalVisible(data,2)">停用</button>
-      <nz-divider nzType="vertical"></nz-divider>
-      <button *ngIf="operation.indexOf(3)!=-1" nz-button [nzType]="'primary'" (click)="showModal(data)" ><span>修改</span></button>
-      <nz-divider nzType="vertical"></nz-divider>
-      <button *ngIf="operation.indexOf(2)!=-1" nz-button [nzType]="'primary'" (click)="delete(data)"><span>删除</span></button>
-    </td>
-  </tr>
-  </tbody>
-</nz-table>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button nz-button (click)="showModa3(data)">续费</button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button *ngIf="data.state!='已启用'" nz-button (click)="showModalVisible(data,1)">启用</button>
+        <button *ngIf="data.state=='已启用'" nz-button (click)="showModalVisible(data,2)">停用</button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button *ngIf="operation.indexOf(3)!=-1" nz-button [nzType]="'primary'" (click)="showModal(data)" ><span>修改</span></button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button *ngIf="operation.indexOf(2)!=-1" nz-button [nzType]="'primary'" (click)="delete(data)"><span>删除</span></button>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
 </div>
 <nz-modal [(nzVisible)]="isVisible1" nzTitle="增加" (nzOnCancel)="handleCancel1()" (nzOnOk)="add()">
   <form nz-form *ngIf="isVisible1">
-  <div nz-row>
-    <nz-form-item>
-    <nz-form-label [nzSpan]="6">机器人所属公司</nz-form-label>
-      <nz-form-control>
-        <nz-select name="company" [(ngModel)]="company" (ngModelChange)="getRobotsByBelongingComapnyId($event)">
-          <nz-option *ngFor="let obj of companys" [nzValue]="obj" [nzLabel]="obj.name"></nz-option>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item >
-  </div>
-  <div nz-row>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="6">选择机器人</nz-form-label>
-      <nz-form-control>
-    <nz-select name="robot" [(ngModel)]="robot">
-      <nz-option *ngFor="let obj of robots" [nzValue]="obj" [nzLabel]="obj.name"></nz-option>
-    </nz-select >
-      </nz-form-control>
-    </nz-form-item>
-  </div>
-  <div nz-row>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="6">租用公司</nz-form-label>
-      <nz-form-control>
-    <nz-select name="company1" [(ngModel)]="this.company1">
-      <nz-option *ngFor="let obj of companys1" [nzValue]="obj" [nzLabel]="obj.name"></nz-option>
-    </nz-select >
-      </nz-form-control>
-    </nz-form-item>
-  </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">机器人所属公司</nz-form-label>
+        <nz-form-control>
+          <nz-select name="company" [(ngModel)]="company" (ngModelChange)="getRobotsByBelongingComapnyId($event)">
+            <nz-option *ngFor="let obj of companys" [nzValue]="obj" [nzLabel]="obj.name"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">选择机器人</nz-form-label>
+        <nz-form-control>
+          <nz-select name="robot" [(ngModel)]="robot">
+            <nz-option *ngFor="let obj of robots" [nzValue]="obj" [nzLabel]="obj.name"></nz-option>
+          </nz-select >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">租用公司</nz-form-label>
+        <nz-form-control>
+          <nz-select name="company1" [(ngModel)]="this.company1">
+            <nz-option *ngFor="let obj of companys1" [nzValue]="obj" [nzLabel]="obj.name"></nz-option>
+          </nz-select >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
 
-  <div nz-row>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="6">合同编号</nz-form-label>
-      <nz-form-control>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">合同编号</nz-form-label>
+        <nz-form-control>
           <input nz-input name="contractId" [(ngModel)]="contractId" />
-      </nz-form-control>
-    </nz-form-item>
-  </div>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
     <div nz-row>
       <nz-form-item>
         <nz-form-label [nzSpan]="6">合同时间</nz-form-label>
@@ -96,40 +96,40 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-  <div nz-row>
+    <div nz-row>
       <nz-form-item>
         <nz-form-label [nzSpan]="6">月费用</nz-form-label>
         <nz-form-control>
           <input nz-input name="costMonth" [(ngModel)]="costMonth" />
         </nz-form-control>
       </nz-form-item>
-  </div>
-  <div nz-row>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="6">缴费金额及方式</nz-form-label>
-      <nz-form-control>
-        <input nz-input name="costWay" [(ngModel)]="costWay" />
-      </nz-form-control>
-    </nz-form-item>
-  </div>
-  <div nz-row>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="6">上传合同</nz-form-label>
-      <nz-form-control>
-        <nz-upload [nzShowUploadList]="true" [nzAction]="uploadUrl" [nzAccept]="'.pdf'" (nzChange)="handleChange($event)">
-          <button style="width: 200px" nz-button><i nz-icon nzType="upload"></i><span>点击上传</span></button>
-        </nz-upload>
-      </nz-form-control>
-    </nz-form-item>
-  </div>
-  <div nz-row>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="6">联系人</nz-form-label>
-      <nz-form-control>
-        <input nz-input name="connector" [(ngModel)]="connector" />
-      </nz-form-control>
-    </nz-form-item>
-  </div>
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">缴费金额及方式</nz-form-label>
+        <nz-form-control>
+          <input nz-input name="costWay" [(ngModel)]="costWay" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">上传合同</nz-form-label>
+        <nz-form-control>
+          <nz-upload [nzShowUploadList]="true" [nzAction]="uploadUrl" [nzAccept]="'.pdf'" (nzChange)="handleChange($event)">
+            <button style="width: 200px" nz-button><i nz-icon nzType="upload"></i><span>点击上传</span></button>
+          </nz-upload>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">联系人</nz-form-label>
+        <nz-form-control>
+          <input nz-input name="connector" [(ngModel)]="connector" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
 
 
 
@@ -282,10 +282,10 @@
     </div>
     <div nz-row>
       <nz-form-item>
-          <nz-form-label [nzSpan]="6">唯一标识</nz-form-label>
-          <nz-form-control>
-            <input nz-input name="robotid" [(ngModel)]="lease.robot.id" />
-          </nz-form-control>
+        <nz-form-label [nzSpan]="6">唯一标识</nz-form-label>
+        <nz-form-control>
+          <input nz-input name="robotid" [(ngModel)]="lease.robot.id" />
+        </nz-form-control>
       </nz-form-item>
     </div>
     <div nz-row>
@@ -314,14 +314,11 @@
     </div>
     <div nz-row>
       <nz-form-item>
-      <nz-form-label [nzSpan]="6">缴费截止日期</nz-form-label>
-      <nz-form-control>
-        <nz-date-picker [nzFormat]="'yyyy-MM-dd'" name="PayDate" [(ngModel)]="pay.date"></nz-date-picker>
-      </nz-form-control>
+        <nz-form-label [nzSpan]="6">缴费截止日期</nz-form-label>
+        <nz-form-control>
+          <nz-date-picker [nzFormat]="'yyyy-MM-dd'" name="PayDate" [(ngModel)]="pay.date"></nz-date-picker>
+        </nz-form-control>
       </nz-form-item>
     </div>
-
-
-
   </form>
 </nz-modal>

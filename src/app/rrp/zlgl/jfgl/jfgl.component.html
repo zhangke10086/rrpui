@@ -1,6 +1,6 @@
 <app-querylist (onQuery)="onquery($event)"></app-querylist>
 <div *ngIf="operation.indexOf(4)!=-1">
-<button *ngIf="operation.indexOf(1)!=-1" nz-button [nzType]="'primary'" (click)="showModal1()"><span>添加缴费记录</span></button>
+<button *ngIf="operation.indexOf(1)!=-1" class="topbutton"  (click)="showModal1()"><span>添加缴费记录</span></button>
 
 <nz-table #basicTable [nzData]="pays">
   <thead>

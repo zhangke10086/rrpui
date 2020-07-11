@@ -29,7 +29,7 @@
     <td>{{ data.time | date:'yyyy-MM-dd'}}</td>
     <td>{{ data.bench.robot.name}}</td>
     <td>
-      <button *ngIf="operation.indexOf(2)!=-1" nz-button [nzType]="'primary'" (click)="delete(data)"><span>删除</span></button>
+      <button *ngIf="operation.indexOf(2)!=-1" nz-button (click)="delete(data)"><span>删除</span></button>
       <nz-divider nzType="vertical"></nz-divider>
       <a (click)="showModal(data)"><button nz-button>生产参数</button></a>
     </td>

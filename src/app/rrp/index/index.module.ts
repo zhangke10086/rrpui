@@ -13,6 +13,7 @@ import {HlwComponent} from '../hlw/hlw.component';
 import {WxwhComponent} from '../wxwh/wxwh.component';
 import {ScsjComponent} from '../scsj/scsj.component';
 import {ScglComponent} from '../scgl/scgl.component';
+import {QuerylistModule} from "../../helpcenter/querylist/querylist.module";
 
 
 const routes: Routes = [
@@ -75,6 +76,7 @@ const routes: Routes = [
     RouterModule,
     RouterModule.forChild(routes),
     FormsModule,
+    QuerylistModule,
   ]
 })
 export class IndexModule { }
