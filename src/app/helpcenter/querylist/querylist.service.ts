@@ -9,6 +9,26 @@ export class QuerylistService {
 
   constructor(private http: HttpClient,
               private url: UrlService) { }
+  getProvince() {
+    const url = this.url.hostname + '/province/getprovince';
+    return new Promise(((resolve, reject) =>
+      this.http.get(url)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      })));
+  }
+  getCity() {
+    const url = this.url.hostname + '/city/getcity';
+    return new Promise(((resolve, reject) =>
+      this.http.get(url)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      })));
+  }
   getCompany() {
     const url = this.url.hostname + '/company/findAllCompany';
     return new Promise(((resolve, reject) =>

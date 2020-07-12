@@ -11,7 +11,7 @@ export class AppComponent {
     private router: Router
   )  {
     // const token = localStorage.getItem('token');
-    const token = localStorage.getItem('userinfo');
+    const token = sessionStorage.getItem('userinfo');
     if (token != null) {
       this.router.navigate(['/index/welcome']);
     } else {

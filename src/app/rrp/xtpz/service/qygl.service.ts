@@ -101,4 +101,24 @@ export class QyglService {
         reject(error);
       })));
   }
+  getProvince() {
+    const url = this.url.hostname + '/province/getprovince';
+    return new Promise(((resolve, reject) =>
+      this.http.get(url)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      })));
+  }
+  getCity() {
+    const url = this.url.hostname + '/city/getcity';
+    return new Promise(((resolve, reject) =>
+      this.http.get(url)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      })));
+  }
 }

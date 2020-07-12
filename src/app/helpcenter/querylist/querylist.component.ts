@@ -38,18 +38,20 @@ export class QuerylistComponent implements OnInit {
         this.getRobot(this.company.id);
       } else {
         //出租企业
-        this.ProvinceData = j;
+        this.querylistService.getProvince().then((res:any) => this.ProvinceData = res.data);
+        console.log(this.ProvinceData)
       }
     } else {
       // 骊久
-      this.ProvinceData = j;
+      this.querylistService.getProvince().then((res:any) => this.ProvinceData = res.data);
+      console.log(this.ProvinceData)
     }
     // this.getCompany();
 
   }
   query() {
     const data = {};
-    data['province'] = this.selectedProvince;
+    data['province'] = this.selectedProvince.name;
     data['city'] = this.selectedCity;
     data['company'] = this.selectedCompany;
     data['robot'] = this.selectedRobot;
@@ -111,17 +113,19 @@ export class QuerylistComponent implements OnInit {
     this.selectedRobot = data;
   }
   provinceChange(value: string): void {
-    this.CityData = this.ProvinceData.find(t => t.name === value).children;
-    if(this.CityData) {
-      this.selectedCity = this.CityData[0].name;
-      this.cityChange(this.selectedCity);
-    }
+    this.querylistService.getCity().then((res:any)=>{
+      this.CityData = res.data.filter(t=>t.provinceid === this.selectedProvince.provinceid);
+      if(this.CityData) {
+        this.selectedCity = this.CityData[0];
+        this.cityChange(this.selectedCity);
+      }
+    })
   }
   cityChange(value: string){
     // 骊久
     if (this.company.id==1) {
       this.querylistService.getCompany().then((res: any) => {
-        this.CompanyData = res.data.filter(t => t.city === value && t.province === this.selectedProvince);
+        this.CompanyData = res.data.filter(t => t.city === value['name'] && t.province === this.selectedProvince.name);
         if (this.CompanyData.length === 0) {
           this.selectedCompany = undefined;
           this.CompanyChange(this.selectedCompany);

@@ -29,8 +29,9 @@ export class LoginComponent implements OnInit {
         });
         this.message.success( '登陆成功,请稍后...');
         localStorage.setItem('userinfo', JSON.stringify(res.data));
+        sessionStorage.setItem('userinfo', JSON.stringify(res.data));
         setTimeout(() => {
-          this.router.navigate(['/index']);
+          this.router.navigate(['/index/welcome']);
           this.loginService.findremind(res.data.company.id).then((obj: any) => {
             if(obj.state === 200 && obj.data){
               this.modalService.confirm({

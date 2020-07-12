@@ -18,8 +18,8 @@ export class QyglComponent implements OnInit {
   name = '';
   // type;
   companyType: CompanyType;
-  province = '';
-  city = '';
+  province;
+  city;
   address = '';
   legalPerson = '';
   phone = '';
@@ -28,6 +28,8 @@ export class QyglComponent implements OnInit {
    companys: Company[];
   company: Company;
   operation;
+  ProvinceData;
+  CityData;
   jsondata = {
     province: '',
     city: '',
@@ -38,6 +40,7 @@ export class QyglComponent implements OnInit {
   ngOnInit() {
     this.getCompanys();
     this.getCompanyTypes();
+    this.getprovince();
   }
   constructor(
     private qyglService: QyglService,
@@ -63,6 +66,17 @@ export class QyglComponent implements OnInit {
       .subscribe((res: any) => {
         this.companys = res.data;
       });
+  }
+  getprovince() {
+    this.qyglService.getProvince().then((res: any) => this.ProvinceData = res.data);
+  }
+  provinceChange(value: string): void {
+    this.qyglService.getCity().then((res:any)=>{
+      this.CityData = res.data.filter(t=>t.provinceid === this.province['provinceid']);
+      if(this.CityData) {
+        this.city = this.CityData[0];
+      }
+    })
   }
   getCompany(id: number): void {
     this.qyglService.getCompany(id)
@@ -95,7 +109,7 @@ export class QyglComponent implements OnInit {
   }
   add(): void {
     this.isVisible1 = false;
-    const add = {name: this.name, companyType: this.companyType, province: this.province, city: this.city,
+    const add = {name: this.name, companyType: this.companyType, province: this.province.name, city: this.city.name,
       address: this.address, legalPerson: this.legalPerson, phone: this.phone}
     this.qyglService.addCompany(add)
       .subscribe((res: any) => {
