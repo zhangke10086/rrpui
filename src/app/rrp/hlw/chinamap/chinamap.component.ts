@@ -22,6 +22,7 @@ import 'echarts/map/js/province/jiangsu';
 import 'echarts/map/js/province/jiangxi';
 import 'echarts/map/js/province/jilin';
 import 'echarts/map/js/province/liaoning';
+import 'echarts/map/js/province/hubei';
 import 'echarts/map/js/province/neimenggu';
 import 'echarts/map/js/province/ningxia';
 import 'echarts/map/js/province/qinghai';
@@ -51,21 +52,6 @@ export class ChinamapComponent implements OnInit {
   num = 0;
   data;
   selectProvinceData;
-  // data = [
-  //   {province: '山东', name: '济南', percent: '100', num: '120' },
-  //   {province: '山东', name: '淄博', percent: '90', num: '110' },
-  //   {province: '山东', name: '潍坊', percent: '80', num: '90' },
-  //   {province: '山东', name: '威海', percent: '80', num: '90' },
-  //   {province: '山东', name: '青岛', percent: '90', num: '110' },
-  //   {province: '山东', name: '烟台', percent: '100', num: '120' },
-  //   {province: '山东', name: '临沂', percent: '40', num: '40' },
-  //   {province: '四川', name: '广元', percent: '90', num: '110' },
-  //   {province: '江苏', name: '南京', percent: '70', num: '90' },
-  //   {province: '河南', name: '郑州', percent: '90', num: '110' },
-  //   {province: '江苏', name: '徐州', percent: '70', num: '90' },
-  //
-  // ];
-
 
   header; // 测试
   footer = '生产数据汇总图表';

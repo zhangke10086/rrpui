@@ -200,14 +200,6 @@
       </div>
       <div nz-row>
         <nz-form-item>
-          <nz-form-label [nzSpan]="6">上传合同</nz-form-label>
-          <nz-form-control>
-            <input [disabled]="true" nz-input name="contract" [(ngModel)]="lease.contract" />
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-      <div nz-row>
-        <nz-form-item>
           <nz-form-label [nzSpan]="6">联系人</nz-form-label>
           <nz-form-control>
             <input [disabled]="true"  nz-input name="connector" [(ngModel)]="lease.connector" />
@@ -220,7 +212,7 @@
     </form>
     </div>
     <div *ngIf="lease&&lease.uploadurl" style="width: 55%;float: right;display: inline-block;">
-   <iframe id="mainIframe" name="mainIframe" [src]="safeUrl" frameborder="1" width="450px" height="400px" ></iframe>
+   <iframe id="mainIframe" name="mainIframe" [src]="safeUrl" frameborder="1" width="450px" height="340px" ></iframe>
 <!--   <pdf-viewer [src]="safeUrl"-->
 <!--               [zoom]="1"-->
 <!--               [original-size]="true"-->
