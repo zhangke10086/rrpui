@@ -15,6 +15,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class Zlgl1Component implements OnInit {
   safeUrl;
+  pdfSource;
 // 修改弹窗
   isVisible = false;
   // 增加弹框
@@ -109,6 +110,7 @@ export class Zlgl1Component implements OnInit {
     this.lease = data;
     if(data.uploadurl){
       this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(data.uploadurl);
+      // this.pdfSource = this._base64ToArrayBuffer(this.safeUrl);
     }
     this.contractId = data.contractId;
     this.costMonth = data.costMonth;
