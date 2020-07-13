@@ -174,6 +174,9 @@ export class ChinamapComponent implements OnInit {
   returnchina() {
     this.regionOptions = this.chinaOptions;
     this.header = '各省地图|布料机器人分布';
+    this.querylisthelp.getProvince().then((res: any) => {
+      this.data = res.data;
+    });
   }
 
 }

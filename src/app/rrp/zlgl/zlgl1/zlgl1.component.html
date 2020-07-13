@@ -1,6 +1,7 @@
 <app-querylist (onQuery)="onquery($event)"></app-querylist>
 <div *ngIf="operation.indexOf(4)!=-1">
   <button *ngIf="operation.indexOf(1)!=-1" class="topbutton"  (click)="showModal1()"><span>增加租赁</span></button>
+
   <nz-table #basicTable [nzData]="leases">
     <thead>
     <tr>
@@ -135,85 +136,100 @@
 
   </form>
 </nz-modal>
-<nz-modal [(nzVisible)]="isVisible2" nzTitle="详情" (nzOnCancel)="handleCancel2()" (nzOnOk)="handleCancel2()">
-  <form nz-form *ngIf="isVisible2">
-    <div nz-row>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6">机器人所属企业</nz-form-label>
-        <nz-form-control>
-          <input [disabled]="true" nz-input name="company" [(ngModel)]="lease.robot.belongingCompany.name" />
-        </nz-form-control>
-      </nz-form-item >
-    </div>
-    <div nz-row>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6">选择机器人</nz-form-label>
-        <nz-form-control>
-          <input [disabled]="true" nz-input name="robot" [(ngModel)]="lease.robot.name" />
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-    <div nz-row>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6">租用公司</nz-form-label>
-        <nz-form-control>
-          <input [disabled]="true" nz-input name="company1" [(ngModel)]="company1.name" />
-        </nz-form-control>
-      </nz-form-item>
-    </div>
+<nz-modal class="modal-help" [(nzVisible)]="isVisible2" nzTitle="详情" (nzOnCancel)="handleCancel2()" (nzOnOk)="handleCancel2()">
+  <div>
+  <div >
+    <div style="width: 45%;display: inline-block">
+    <form  nz-form *ngIf="isVisible2">
+      <div nz-row>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">机器人所属企业</nz-form-label>
+          <nz-form-control>
+            <input [disabled]="true" nz-input name="company" [(ngModel)]="lease.robot.belongingCompany.name" />
+          </nz-form-control>
+        </nz-form-item >
+      </div>
+      <div nz-row>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">选择机器人</nz-form-label>
+          <nz-form-control>
+            <input [disabled]="true" nz-input name="robot" [(ngModel)]="lease.robot.name" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-row>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">租用公司</nz-form-label>
+          <nz-form-control>
+            <input [disabled]="true" nz-input name="company1" [(ngModel)]="company1.name" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
 
-    <div nz-row>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6">合同编号</nz-form-label>
-        <nz-form-control>
-          <input [disabled]="true" nz-input name="contractId" [(ngModel)]="lease.contractId" />
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-    <div nz-row>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6">合同时间</nz-form-label>
-        <nz-form-control>
-          <nz-range-picker [disabled]="true"  name="dateRange" [(ngModel)]="dateRange" ></nz-range-picker>
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-    <div nz-row>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6">月费用</nz-form-label>
-        <nz-form-control>
-          <input [disabled]="true" nz-input name="costMonth" [(ngModel)]="lease.costMonth" />
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-    <div nz-row>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6">缴费方式</nz-form-label>
-        <nz-form-control>
-          <input [disabled]="true"  nz-input name="costWay" [(ngModel)]="lease.costWay" />
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-    <div nz-row>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6">上传合同</nz-form-label>
-        <nz-form-control>
-          <input [disabled]="true" nz-input name="contract" [(ngModel)]="lease.contract" />
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-    <div nz-row>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6">联系人</nz-form-label>
-        <nz-form-control>
-          <input [disabled]="true"  nz-input name="connector" [(ngModel)]="lease.connector" />
-        </nz-form-control>
-      </nz-form-item>
-    </div>
+      <div nz-row>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">合同编号</nz-form-label>
+          <nz-form-control>
+            <input [disabled]="true" nz-input name="contractId" [(ngModel)]="lease.contractId" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-row>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">合同时间</nz-form-label>
+          <nz-form-control>
+            <nz-range-picker [disabled]="true"  name="dateRange" [(ngModel)]="dateRange" ></nz-range-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-row>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">月费用</nz-form-label>
+          <nz-form-control>
+            <input [disabled]="true" nz-input name="costMonth" [(ngModel)]="lease.costMonth" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-row>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">缴费方式</nz-form-label>
+          <nz-form-control>
+            <input [disabled]="true"  nz-input name="costWay" [(ngModel)]="lease.costWay" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-row>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">上传合同</nz-form-label>
+          <nz-form-control>
+            <input [disabled]="true" nz-input name="contract" [(ngModel)]="lease.contract" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-row>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">联系人</nz-form-label>
+          <nz-form-control>
+            <input [disabled]="true"  nz-input name="connector" [(ngModel)]="lease.connector" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
 
 
 
-  </form>
+    </form>
+    </div>
+    <div *ngIf="lease&&lease.uploadurl" style="width: 55%;float: right;display: inline-block;">
+   <iframe id="mainIframe" name="mainIframe" [src]="safeUrl" frameborder="1" width="450px" height="400px" ></iframe>
+<!--   <pdf-viewer [src]="safeUrl"-->
+<!--               [zoom]="1"-->
+<!--               [original-size]="true"-->
+<!--               [render-text]="true"-->
+<!--               style="display: block;"-->
+<!--   ></pdf-viewer>-->
+    </div>
+ </div>
+  </div>
 </nz-modal>
 <nz-modal [(nzVisible)]="isVisible" nzTitle="修改" (nzOnCancel)="handleCancel()" (nzOnOk)="update()">
   <form nz-form>

@@ -7,14 +7,14 @@ import {Zlgl1Service} from '../service/zlgl1.service';
 import { NzModalService, NzMessageService } from 'ng-zorro-antd';
 import {formatDate} from '@angular/common';
 import {UrlService} from '../../../core/service/url.service';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
-
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-zlgl1',
   templateUrl: './zlgl1.component.html',
   styleUrls: ['./zlgl1.component.css']
 })
 export class Zlgl1Component implements OnInit {
+  safeUrl;
 // 修改弹窗
   isVisible = false;
   // 增加弹框
@@ -69,7 +69,8 @@ export class Zlgl1Component implements OnInit {
     private route: ActivatedRoute,
     private modalService: NzModalService,
     private message: NzMessageService,
-    private url: UrlService
+    private url: UrlService,
+    private sanitizer: DomSanitizer
   ) {
     this.route.queryParams.subscribe(params => {
       if (params != null) {
@@ -106,6 +107,9 @@ export class Zlgl1Component implements OnInit {
   }
   showModa2(data: Lease): void {
     this.lease = data;
+    if(data.uploadurl){
+      this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(data.uploadurl);
+    }
     this.contractId = data.contractId;
     this.costMonth = data.costMonth;
     this.costWay = data.costWay;
@@ -315,6 +319,7 @@ export class Zlgl1Component implements OnInit {
 
 
   }
+
   // 获得response信息
   handleChange(info: any): void {
     if (info) {

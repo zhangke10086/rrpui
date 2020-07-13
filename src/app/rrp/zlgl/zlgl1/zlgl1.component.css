@@ -18,3 +18,11 @@ nz-upload{
   line-height: 1.5;
   width: 200px!important;
 }
+.model-left{
+  width: 40%;
+
+}
+.model-right{
+  width: 50%;
+  float: right;
+}
