@@ -56,6 +56,8 @@ export class Zlgl1Component implements OnInit {
     date: undefined
   };
   dateRange = [];
+  add1 = false;
+  add2 = false;
   ngOnInit() {
     this.query(this.jsondata);
     this.getCompanysWithRobot();
@@ -118,6 +120,7 @@ export class Zlgl1Component implements OnInit {
     this.isVisible2 = true;
   }
   showModal1(): void {
+    this.add1 = true;
     this.isVisible1 = true;
     this.dateRange = [];
     this.contractId = undefined;
@@ -157,14 +160,21 @@ export class Zlgl1Component implements OnInit {
   add(): void {
     console.log(this.robots);
     this.isVisible1 = false;
+    this.add1 = false;
+    this.add2 = false;
     const add = { robot: this.robot, contractId: this.contractId, companyId: this.company1,
       costWay: this.costWay, costMonth: this.costMonth, startTime: this.dateRange[0], endTime: this.dateRange[1],
       paymentSituation: '0', workshopId: this.workshopId, internalId: this.internalId,
       contract: this.contract, connector: this.connector, uploadurl: this.responseurl, state: '未启用'};
     this.zlgl1Service.addLease(add)
       .subscribe((res: any) => {
-        this.onquery(this.jsondata);
-        this.message.success('增加成功！');
+        if(res.state === 200) {
+          this.onquery(this.jsondata);
+          this.message.success('增加成功！');
+        } else {
+          this.onquery(this.jsondata);
+          this.message.error('增加失败！');
+        }
       });
   }
   delete(data: Lease | number): void {
@@ -265,6 +275,11 @@ export class Zlgl1Component implements OnInit {
 
     }
   }
+  modelAdd() {
+    this.add1 = !this.add1;
+    this.add2 = !this.add2;
+  }
+
   onquery(data) {
     console.log(data);
     this.query(data);
