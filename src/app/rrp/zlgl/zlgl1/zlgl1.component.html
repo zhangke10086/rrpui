@@ -212,7 +212,7 @@
     </form>
     </div>
     <div *ngIf="lease&&lease.uploadurl" style="width: 55%;float: right;display: inline-block;">
-   <iframe id="mainIframe" name="mainIframe" [src]="safeUrl" frameborder="1" width="450px" height="340px" ></iframe>
+   <iframe id="pdfView" name="pdfView" [src]="lease.uploadurl | safe" frameborder="0" width="450px" height="340px" ></iframe>
 <!--   <pdf-viewer [src]="lease.uploadurl"-->
 <!--               [zoom]="1"-->
 <!--               [original-size]="true"-->
