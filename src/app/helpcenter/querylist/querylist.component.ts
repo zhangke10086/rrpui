@@ -51,10 +51,18 @@ export class QuerylistComponent implements OnInit {
   }
   query() {
     const data = {};
-    data['province'] = this.selectedProvince.name;
-    data['city'] = this.selectedCity.name;
-    data['company'] = this.selectedCompany;
-    data['robot'] = this.selectedRobot;
+    if(this.selectedProvince && this.selectedProvince.name){
+      data['province'] = this.selectedProvince.name;
+    }
+    if(this.selectedCity && this.selectedCity.name){
+      data['city'] = this.selectedCity.name;
+    }
+    if(this.selectedCompany){
+      data['company'] = this.selectedCompany;
+    }
+    if(this.selectedRobot){
+      data['robot'] = this.selectedRobot;
+    }
     if(this.startdate){
       data['startdate'] = formatDate(this.startdate.getTime(), 'yyyy-MM-dd', 'zh-Hans');
     }
