@@ -52,7 +52,7 @@ export class QuerylistComponent implements OnInit {
   query() {
     const data = {};
     data['province'] = this.selectedProvince.name;
-    data['city'] = this.selectedCity;
+    data['city'] = this.selectedCity.name;
     data['company'] = this.selectedCompany;
     data['robot'] = this.selectedRobot;
     if(this.startdate){

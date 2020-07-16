@@ -56,13 +56,14 @@ export class ChinamapComponent implements OnInit {
   header; // 测试
   footer = '生产数据汇总图表';
   ngOnInit() {
+    this.num = 0;
     this.querylisthelp.getCity().then((res: any) => this.CityData = res.data);
     this.querylisthelp.getProvince().then((res: any) => {
       this.ProvinceData = res.data;
       this.data = res.data;
       for (const obj of res.data) {
         if (obj.value > 0) {
-          this.num  = this.num + obj.value;
+          this.num  += obj.value;
         }
       }
       console.log(this.num);
@@ -158,10 +159,10 @@ export class ChinamapComponent implements OnInit {
     });
   }
   returnchina() {
-    this.regionOptions = this.chinaOptions;
-    this.header = '各省地图|布料机器人分布';
     this.querylisthelp.getProvince().then((res: any) => {
       this.data = res.data;
+      this.regionOptions = this.chinaOptions;
+      this.header = '各省地图|布料机器人分布';
     });
   }
 
