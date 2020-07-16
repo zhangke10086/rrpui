@@ -199,8 +199,9 @@ export class Zlgl1Component implements OnInit {
     this.isVisible = false;
   }
   handleCancel1(): void {
-    console.log(this.companys);
     this.isVisible1 = false;
+    this.add1 = false;
+    this.add2 =  false;
   }
   handleCancel2(): void {
     this.isVisible2 = false;

@@ -142,6 +142,8 @@ export class Pay {
   paymentDuration: string;
   // 缴费凭证
   paymentVouncher: string;
+  // 上传缴费凭证url
+  uploadurl: string;
 }
 
 export class ProcessData {
