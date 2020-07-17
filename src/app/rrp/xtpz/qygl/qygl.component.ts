@@ -3,6 +3,8 @@ import {QyglService} from '../service/qygl.service';
 import {Company, CompanyType, Robot} from '../../../core/entity/entity';
 import {ActivatedRoute} from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
+import {UrlService} from '../../../core/service/url.service';
+import {Zlgl1Service} from '../../zlgl/service/zlgl1.service';
 
 
 @Component({
@@ -14,20 +16,33 @@ export class QyglComponent implements OnInit {
   isVisible = false;
   isVisible1 = false;
   isVisible2 = false;
+  isVisible3 = false;
   id;
+  add1 = false;
+  add2 = false;
   name = '';
-  // type;
   companyType: CompanyType;
   province;
   city;
   address = '';
   legalPerson = '';
   phone = '';
-   companyTypes: CompanyType[];
-   robots: Robot[];
-   companys: Company[];
+  companyTypes: CompanyType[];
+  robot: Robot;
+  robots: Robot[];
+  companys: Company[];
   company: Company;
   operation;
+  contractId;
+  dateRange;
+  costMonth;
+  contract;
+  costWay;
+  responseurl;
+  connector;
+  workshopId = '';
+  internalId = '';
+  uploadUrl = this.url.hostname + '/lease/upload';
   ProvinceData;
   CityData;
   jsondata = {
@@ -44,8 +59,10 @@ export class QyglComponent implements OnInit {
   }
   constructor(
     private qyglService: QyglService,
+    private zlgl1Service: Zlgl1Service,
     private route: ActivatedRoute,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private url: UrlService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params != null) {
@@ -72,8 +89,8 @@ export class QyglComponent implements OnInit {
   }
   provinceChange(value: string): void {
     this.qyglService.getCity().then((res:any)=>{
-      this.CityData = res.data.filter(t=>t.provinceid === this.province['provinceid']);
-      if(this.CityData) {
+      this.CityData = res.data.filter(t =>t.provinceid === this.province['provinceid']);
+      if (this.CityData) {
         this.city = this.CityData[0];
       }
     })
@@ -96,6 +113,11 @@ export class QyglComponent implements OnInit {
         this.robots = res.data;
       });
   }
+  showModal3(data: Company): void {
+    this.company = data;
+    this.isVisible3 = true;
+    this.add1 = true;
+  }
   showModa2(data: Company): void {
     this.company = data;
     this.isVisible2 = true;
@@ -106,6 +128,44 @@ export class QyglComponent implements OnInit {
   showModal(data: Company): void {
     this.company = data;
     this.isVisible = true;
+  }
+  handleChange(info: any): void {
+    if (info) {
+      if (info.type === 'success') {
+        if (info.file) {
+          if (info.file.response) {
+            if (info.file.response.data !== undefined) {
+              const data = info.file.response.data;
+              this.responseurl = data;
+            }
+          }
+        }
+      }
+    }
+  }
+  modelAdd() {
+    this.add1 = !this.add1;
+    this.add2 = !this.add2;
+  }
+  zulin(): void {
+    console.log(this.robots);
+    this.isVisible2 = false;
+    this.add1 = false;
+    this.add2 = false;
+    const add = { robot: this.robot, contractId: this.contractId, companyId: this.company,
+      costWay: this.costWay, costMonth: this.costMonth, startTime: this.dateRange[0], endTime: this.dateRange[1],
+      paymentSituation: '0', workshopId: this.workshopId, internalId: this.internalId,
+      contract: this.contract, connector: this.connector, uploadurl: this.responseurl, state: '未启用'};
+    this.zlgl1Service.addLease(add)
+      .subscribe((res: any) => {
+        if (res.state === 200) {
+          this.onquery(this.jsondata);
+          this.message.success('租赁成功！');
+        } else {
+          this.onquery(this.jsondata);
+          this.message.error('租赁失败！');
+        }
+      });
   }
   add(): void {
     this.isVisible1 = false;
@@ -137,7 +197,9 @@ export class QyglComponent implements OnInit {
   handleCancel2(): void {
     this.isVisible2 = false;
   }
-
+  handleCancel3(): void {
+    this.isVisible3 = false;
+  }
 
 
 

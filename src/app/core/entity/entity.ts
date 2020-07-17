@@ -104,6 +104,7 @@ export class Robot {
   belongingCompany: Company;
   way: string;
   useSituation: string;
+  shengchanxian: string;
 }
 
 export class Lease {
