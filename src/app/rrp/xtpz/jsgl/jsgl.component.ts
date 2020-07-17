@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {JsglService} from '../service/jsgl.service';
 import {NzMessageService} from 'ng-zorro-antd';
+import {stringify} from 'querystring';
 declare var $: any;
 
 @Component({
@@ -15,20 +16,25 @@ export class JsglComponent implements OnInit {
   isVisible = false;
   deleteVisible = false;
   updateVisible = false;
-   role: any;
-   toAddRole: any;
-   roles: [];
-   operation: any;
-   operations: [];
-   dynamicMenus: [];
-   menus: [];
+  role: any;
+  toAddRole: any;
+  roles: [];
+  operation: any;
+  operations: [];
+  dynamicMenus: [];
+  menus: [];
   // add
-   toAddRolesMenus: any[] = [];
-   menuOperations: any[] = [];
-   authorityArray: any[] = [];
+  toAddRolesMenus: any[] = [];
+  menuOperations: any[] = [];
+  authorityArray: any[] = [];
 
-   updateRoleMenuOperation: any[] = [];
-   checkDic: { [key: string]: boolean; } = {};
+  updateRoleMenuOperation: any[] = [];
+  checkDic: { [key: string]: boolean; } = {};
+
+  // menuCorrespondingOperation: any[] = [];
+
+  checkDic2: { [key: string]: boolean; } = {};
+  // tslint:disable-next-line:variable-name
   operation_Au;
   constructor(
     private jsglService: JsglService,
@@ -54,6 +60,7 @@ export class JsglComponent implements OnInit {
   ngOnInit() {
     // 存在并发
     this.getMenus();
+    this.getMenuCorrespondingOperations();
     this.getRoles();
     this.getOperations();
     // @ts-ignore
@@ -173,6 +180,14 @@ export class JsglComponent implements OnInit {
       });
   }
 
+  getMenuCorrespondingOperations(): void {
+    this.jsglService.getMenuCorrespondingOperations()
+      .subscribe((res: any) => {
+        const menuCorrespondingOperation = res.data;
+        this.checkDic2 = {};
+        for (const e of menuCorrespondingOperation) this.checkDic2[e['menu']+'$'+e['operation']] = true;
+      });
+  }
 
   getAllDynamicMenus(): void {
     this.jsglService.getAllDynamicMenus()
