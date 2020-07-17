@@ -87,6 +87,18 @@ export class CompanyType {
   type: string;
 }
 
+export class Province {
+  id: string;
+  name: string;
+  value: any;
+  provinceid: string;
+}
+export class City {
+  id: string;
+  name: string;
+  value: any;
+  provinceid: string;
+}
 export class Company {
   id: number;
   name: string;

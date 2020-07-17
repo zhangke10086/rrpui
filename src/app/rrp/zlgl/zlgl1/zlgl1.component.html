@@ -1,4 +1,4 @@
-<app-querylist (onQuery)="onquery($event)"></app-querylist>
+<app-querylist (onQuery)="onquery($event)" [cache]="false"></app-querylist>
 <div *ngIf="operation.indexOf(4)!=-1">
   <button *ngIf="operation.indexOf(1)!=-1" class="topbutton"  (click)="showModal1()"><span>增加租赁</span></button>
 

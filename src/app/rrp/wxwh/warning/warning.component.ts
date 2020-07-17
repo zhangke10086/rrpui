@@ -131,11 +131,11 @@ export class WarningComponent implements OnInit {
       };
       // 传参赋值
       // 若不选条件 则向后端传空值
-      if (data.province) {
-        this.jsondata.province = data.province;
+      if (data.province && data.province.name){
+        this.jsondata.province=data.province.name;
       }
-      if (data.city) {
-        this.jsondata.city = data.city;
+      if (data.city && data.city.name){
+        this.jsondata.city=data.city.name;
       }
       if (data.robot) {
         this.jsondata.robotid = data.robot.id;
