@@ -14,6 +14,7 @@ export class BljqrglService {
   response: Response;
   private robotListUrl = this.url.hostname + '/robot/findAllRobot';
   private robotListByIdUrl = this.url.hostname + '/robot/findById';
+  private robotListByCompanyIdUrl = this.url.hostname + '/robot/findAllByCompany';
   private robotDeleteUrl = this.url.hostname + '/robot/deleteRobot';
   private robotUpdateUrl = this.url.hostname + '/robot/updateRobot';
   private robotAddteUrl = this.url.hostname + '/robot/addRobot';
@@ -45,7 +46,9 @@ export class BljqrglService {
     );
   }
   /** POST: add a new robot to the server */
-  addRobot(robot: { id: string, name: string, way: string, belongingCompany: Company, use_situation: string }): Observable<Response> {
+  addRobot(robot: {
+    id: string
+    , name: string, way: string, belongingCompany: Company, use_situation: string, shengchanxian: string }): Observable<Response> {
     return this.http.post<Response>(this.robotAddteUrl, robot, httpOptions).pipe(
       catchError(this.handleError<any>('addRobot'))
     );
