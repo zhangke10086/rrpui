@@ -3,7 +3,6 @@ import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {JsglService} from '../service/jsgl.service';
 import {NzMessageService} from 'ng-zorro-antd';
-import {stringify} from 'querystring';
 declare var $: any;
 
 @Component({

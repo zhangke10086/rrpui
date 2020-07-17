@@ -25,7 +25,28 @@
   </select> <br>
 </nz-modal>
 
-<!--<p> <br> 筛选： <input id="filterName" name="filterName"> <span (click)="search()">搜索</span> <br> </p>-->
+
+
+<nz-modal [(nzVisible)]="updateVisible" nzTitle="修改" (nzOnCancel)="updateHandleCancel()" (nzOnOk)="update()">
+
+  <label>姓名：</label><input [(ngModel)]="this.user.name" /><br>
+  <label>用户名：</label><input [(ngModel)]="this.user.username" /><br>
+  <label>密码：</label><input type="password" [(ngModel)]="this.user.password" /><br>
+  <label>联系方式：</label><input [(ngModel)]="this.user.contact" /><br>
+
+  <label>所属公司：</label>
+  <select [(ngModel)]="user.company">
+    <option *ngFor="let company of companies" [ngValue]="company" >{{company.name}}</option>
+  </select> <br>
+
+  <label>身份：</label>
+  <select [(ngModel)]="user.role">
+    <option *ngFor="let role of roles" [ngValue]="role" >{{role.description}}</option>
+  </select> <br>
+</nz-modal>
+
+
+  <!--<p> <br> 筛选： <input id="filterName" name="filterName"> <span (click)="search()">搜索</span> <br> </p>-->
 
 
 <nz-table #basicTable [nzData]="users">
@@ -60,8 +81,9 @@
 <!--      </nz-modal>-->
 
 
-      <button nz-button [nzType]="'primary'" (click)="resetPassword(data.id)"><span>重置密码</span></button>
-<!--      <button nz-button [nzType]="'primary'" (click)="showResetModal()"><span>重置密码</span></button>-->
+      <button *ngIf="operation.indexOf(3)!=-1" nz-button [nzType]="'primary'" (click)="resetPassword(data.id)"><span>重置密码</span></button>
+      <button *ngIf="operation.indexOf(3)!=-1" nz-button [nzType]="'primary'" (click)="showUpdateModal(data.id)"><span>修改身份</span></button>
+      <!--      <button nz-button [nzType]="'primary'" (click)="showResetModal()"><span>重置密码</span></button>-->
 <!--      <nz-modal [(nzVisible)]="resetVisible" nzTitle="add" (nzOnCancel)="resetHandleCancel()" (nzOnOk)="resetPassword(data.id)">-->
 <!--        确认重制该用户的密码？-->
 <!--      </nz-modal>-->
