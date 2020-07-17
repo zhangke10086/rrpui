@@ -20,7 +20,7 @@ export class CphglService {
 
   /** GET productRatios from the server */
   // tslint:disable-next-line:variable-name
-  getProductRatios(date_begin: string, date_end: string, robot_id: string): Observable<Response> {
+  getProductRatios(date_begin: string, date_end: string, robot_id: any): Observable<Response> {
     // tslint:disable-next-line:max-line-length
     return this.http.get<Response>(this.productRatioListUrl + '?date_begin=' + date_begin + '&date_end=' + date_end + '&robot_id=' + robot_id)
       .pipe(

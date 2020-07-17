@@ -82,8 +82,8 @@ export class YhglService {
 
   /** PUT: update the user on the server */
   updateUser(user: any): Observable<Response> {
-    return this.http.put<Response>(this.resetPasswordUrl, user, httpOptions).pipe(
-      catchError(this.handleError<Response>('resetPassword'))
+    return this.http.put<Response>(this.updateUserUrl, user, httpOptions).pipe(
+      catchError(this.handleError<Response>('updateUser'))
     );
   }
 

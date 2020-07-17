@@ -38,9 +38,9 @@ export class DhbmjComponent implements OnInit {
 
   getDhbmj(): void {
     // tslint:disable-next-line:variable-name
-    let date_begin = '2020-04-23';
+    let date_begin = '1020-04-23';
     // tslint:disable-next-line:variable-name
-    let date_end = '2020-04-30';
+    let date_end = '1020-04-30';
     if (this.begin !== undefined) {
       // tslint:disable-next-line:variable-name
       date_begin = this.datePipe.transform(this.begin, 'yyyy-MM-dd');
@@ -48,67 +48,66 @@ export class DhbmjComponent implements OnInit {
       date_end = this.datePipe.transform(this.end, 'yyyy-MM-dd');
     }
 
-    if (this.selectedRobot !== undefined) {
-      this.dhbmjService.getBoardAreas(date_begin, date_end, this.selectedRobot.id)
-        .subscribe((res: any) => {
-          this.benchAreas = res.data;
-          const areaNum = [];
-          const time = [];
-          for (const benchArea of this.benchAreas) {
-            areaNum.push(benchArea.area);
-            // tslint:disable-next-line:variable-name
-            const time_str = this.datePipe.transform(benchArea.time, 'yyyy年MM月dd日');
-            time.push(time_str);
-          }
-          // @ts-ignore
-          const highCharts = require('highCharts');
-          // @ts-ignore
-          require('highcharts/modules/exporting')(highCharts);
-          // 创建图表
-          highCharts.chart('container', {
-            chart: {
-              type: 'column'
-            },
+    this.dhbmjService.getBoardAreas(date_begin, date_end, this.selectedRobot === undefined ? null : this.selectedRobot.id)
+      .subscribe((res: any) => {
+        this.benchAreas = res.data;
+        const areaNum = [];
+        const time = [];
+        for (const benchArea of this.benchAreas) {
+          areaNum.push(benchArea.area);
+          // tslint:disable-next-line:variable-name
+          const time_str = this.datePipe.transform(benchArea.time, 'yyyy年MM月dd日');
+          time.push(time_str);
+        }
+        // @ts-ignore
+        const highCharts = require('highCharts');
+        // @ts-ignore
+        require('highcharts/modules/exporting')(highCharts);
+        // 创建图表
+        highCharts.chart('container', {
+          chart: {
+            type: 'column'
+          },
+          title: {
+            text: this.selectedRobot === undefined ? '叠合板总面积' : '叠合板面积'
+          },
+          subtitle: {
+            text: '来源： 系统统计'
+          },
+          xAxis: {
+            categories: time,
+            crosshair: true
+          },
+          yAxis: {
+            min: 0,
             title: {
-              text: '叠合板面积'
-            },
-            subtitle: {
-              text: '来源： 系统统计'
-            },
-            xAxis: {
-              categories: time,
-              crosshair: true
-            },
-            yAxis: {
-              min: 0,
-              title: {
-                text: '叠合板面积（㎡）'
-              }
-            },
-            tooltip: {
-              headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-              pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} ㎡</b></td></tr>',
-              footerFormat: '</table>',
-              shared: true,
-              useHTML: true
-            },
-            plotOptions: {
-              column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-              }
-            },
-            time: {
-              enabled: false
-            },
-            series: [{
-              name: '叠合板面积',
-              data: areaNum
-            }]
-          });
+              text: '叠合板面积（㎡）'
+            }
+          },
+          tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+              '<td style="padding:0"><b>{point.y:.1f} ㎡</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+          },
+          plotOptions: {
+            column: {
+              pointPadding: 0.2,
+              borderWidth: 0
+            }
+          },
+          time: {
+            enabled: false
+          },
+          series: [{
+            name: '叠合板面积',
+            data: areaNum
+          }]
         });
-    }
+      });
+
 
   }
   @Output() onQuery: EventEmitter<any> = new EventEmitter<any>();

@@ -169,6 +169,7 @@ export class JsglComponent implements OnInit {
     this.jsglService.getMenus()
       .subscribe((res: any) => {
         this.menus = res.data;
+        console.log(this.menus);
       });
   }
 
