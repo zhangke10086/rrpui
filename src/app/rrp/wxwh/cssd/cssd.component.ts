@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Lease, RobotData} from '../../../core/entity/entity';
 import {CssdService} from '../service/cssd.service';
 import {ActivatedRoute} from '@angular/router';
-import { NzMessageService } from 'ng-zorro-antd';
+import {NzMessageService} from 'ng-zorro-antd';
 import {Zlgl1Service} from '../../zlgl/service/zlgl1.service';
 
 @Component({
@@ -12,19 +12,20 @@ import {Zlgl1Service} from '../../zlgl/service/zlgl1.service';
 })
 export class CssdComponent implements OnInit {
   jsondata = {
-        province: '',
-        city: '',
-        companyid: '',
-        owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
-        companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
-        robotid: ''
-      };
+    province: '',
+    city: '',
+    companyid: '',
+    owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+    companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
+    robotid: ''
+  };
   leases: Lease[];
   lease: Lease;
   isVisible = false;
   robotDatas: RobotData[];
   robotData: RobotData;
   operation;
+
   constructor(
     private zlgl1Service: Zlgl1Service,
     private cssdService: CssdService,
@@ -87,6 +88,7 @@ export class CssdComponent implements OnInit {
         alert(res.msg);
       });
   }
+
   onquery(data) {
     // 保留上次查询
     if (this.jsondata === data) {
@@ -128,6 +130,55 @@ export class CssdComponent implements OnInit {
       });
     }
   }
+
+  setZero(): void {
+    this.robotData.encodervalue_zero_X = 0;
+    this.robotData.encodervalue_zero_Y = 0;
+    this.robotData.encodervalue_zero_Z = 0;
+    this.update();
+  }
+
+  setZero1(): void {
+    this.robotData.enddistance = 0;
+    this.update();
+  }
+
+  shake1(): void {
+    if (this.robotData.vibrate_outputs0 === true) {
+      this.robotData.vibrate_outputs0 = false;
+    }
+    if (this.robotData.vibrate_outputs0 === false) {
+      this.robotData.vibrate_outputs0 = true;
+    }
+  }
+
+  shake2(): void {
+    if (this.robotData.vibrate_outputs1 === true) {
+      this.robotData.vibrate_outputs1 = false;
+    }
+    if (this.robotData.vibrate_outputs1 === false) {
+      this.robotData.vibrate_outputs1 = true;
+    }
+  }
+
+  shake3(): void {
+    if (this.robotData.vibrate_outputs2 === true) {
+      this.robotData.vibrate_outputs2 = false;
+    }
+    if (this.robotData.vibrate_outputs2 === false) {
+      this.robotData.vibrate_outputs2 = true;
+    }
+  }
+
+  shake4(): void {
+    if (this.robotData.vibrate_outputs3 === true) {
+      this.robotData.vibrate_outputs3 = false;
+    }
+    if (this.robotData.vibrate_outputs3 === false) {
+      this.robotData.vibrate_outputs3 = true;
+    }
+  }
+
   // query(data) {
   //   if (data != null) {
   //     this.jsondata = data;

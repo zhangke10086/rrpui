@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {BenchData} from '../../../core/entity/entity';
 import {ActivatedRoute} from '@angular/router';
 import {MtcsService} from '../service/mtcs.service';
 import {SccsComponent} from '../sccs/sccs.component';
-import { NzMessageService } from 'ng-zorro-antd';
+import {NzMessageService} from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-mtcs',
@@ -19,34 +19,36 @@ export class MtcsComponent implements OnInit {
   benchDatas: BenchData[];
   benchData: BenchData;
   benchid;
+  accountArray;
   operation;
   // 前端传参
   jsondata = {
-    province:'',
-    city:'',
+    province: '',
+    city: '',
     companyid: '',
     owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
     companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
-    robotid:''
-  }
+    robotid: ''
+  };
   @ViewChild(SccsComponent, {static: false}) sccsComponent: SccsComponent;
+
   constructor(
     private benchDataService: MtcsService,
     private route: ActivatedRoute,
     private message: NzMessageService
   ) {
     this.route.queryParams.subscribe(params => {
-      if(params!=null){
-        let operation=JSON.parse(localStorage.getItem("Authority")).filter(t=>{
-          if(t.menu.toString() === params['menuid']){
+      if (params != null) {
+        let operation = JSON.parse(localStorage.getItem("Authority")).filter(t => {
+          if (t.menu.toString() === params['menuid']) {
             return t.operations;
           }
         });
         this.operation = operation[0].operations;
       }
     });
-    if (this.operation.indexOf(4)==-1){
-      this.message.info('您没有打开此页面的权限')
+    if (this.operation.indexOf(4) === -1) {
+      this.message.info('您没有打开此页面的权限');
     }
   }
 
@@ -54,15 +56,21 @@ export class MtcsComponent implements OnInit {
     this.isVisible1 = true;
   }
 
-  // add(): void {
-  //   this.isVisible1 = false;
-  //   const add = {number: this.number, description: this.des, workshop: this.workshop};
-  //   this.benchDataService.addBenchData(add)
-  //     .subscribe((res: any) => {
-  //       this.getBenchDatas();
-  //       alert(res.msg);
-  //     });
-  // }
+  selectCheckbox(check: boolean, value: string) {
+    if (check) {
+      this.accountArray.push(value);
+    }
+  }
+
+  add(): void {
+    this.isVisible1 = false;
+    const add = {number: this.number, description: this.des, workshop: this.workshop};
+    this.benchDataService.addBenchData(add)
+      .subscribe((res: any) => {
+        this.getBenchDatas();
+        alert(res.msg);
+      });
+  }
 
   handleCancel1(): void {
     this.onquery(this.jsondata);
@@ -111,11 +119,12 @@ export class MtcsComponent implements OnInit {
   fresh(): void {
     window.location.reload();
   }
-  onquery(data){
+
+  onquery(data) {
     // 保留上次查询
-    if(this.jsondata === data){
-      this.benchDataService.query(this.jsondata).then((res:any)=>{
-        if (res.state === 200){
+    if (this.jsondata === data) {
+      this.benchDataService.query(this.jsondata).then((res: any) => {
+        if (res.state === 200) {
           this.benchDatas = res.data;
         }
       })
@@ -133,20 +142,20 @@ export class MtcsComponent implements OnInit {
       };
       // 传参赋值
       // 若不选条件 则向后端传空值
-      if (data.province){
+      if (data.province) {
         this.jsondata.province = data.province;
       }
-      if (data.city){
+      if (data.city) {
         this.jsondata.city = data.city;
       }
-      if (data.robot){
+      if (data.robot) {
         this.jsondata.robotid = data.robot.id;
       }
       if (data.company) {
         this.jsondata.companyid = data.company.id;
       }
-      this.benchDataService.query(this.jsondata).then((res:any)=>{
-        if (res.state === 200){
+      this.benchDataService.query(this.jsondata).then((res: any) => {
+        if (res.state === 200) {
           this.benchDatas = res.data;
         }
       })

@@ -13,6 +13,7 @@ export class SoftwareUpgrade {
 export class Warning {
   id: number;
   time: Date;
+  num: WarnContent;
   // tslint:disable-next-line:variable-name
   machine_signal0: boolean;
   // tslint:disable-next-line:variable-name
@@ -64,6 +65,7 @@ export class Warning {
   // tslint:disable-next-line:variable-name
   machine_signal24: boolean;
   robot: Robot;
+  company: Company;
 }
 
 export class BenchData {
@@ -80,6 +82,11 @@ export class Bench {
   workshop: string;
   robot: Robot;
   company: Company;
+}
+export class WarnContent {
+  id: number;
+  name: string;
+  description: string;
 }
 
 export class CompanyType {

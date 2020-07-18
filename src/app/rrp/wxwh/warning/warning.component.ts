@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {WarningService} from '../service/warning.service';
 import {Warning} from '../../../core/entity/entity';
-import { NzMessageService } from 'ng-zorro-antd';
+import {NzMessageService} from 'ng-zorro-antd';
 import {Zlgl1Service} from '../../zlgl/service/zlgl1.service';
 
 @Component({
@@ -19,13 +19,14 @@ export class WarningComponent implements OnInit {
   // warning1: Warning;
   operation;
   jsondata = {
-        province: '',
-        city: '',
-        companyid: '',
-        owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
-        companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
-        robotid: ''
-      };
+    province: '',
+    city: '',
+    companyid: '',
+    owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+    companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
+    robotid: ''
+  };
+
   constructor(
     private zlgl1Service: Zlgl1Service,
     private warningService: WarningService,
@@ -75,11 +76,11 @@ export class WarningComponent implements OnInit {
   update(): void {
     this.isVisible = false;
     this.warningService.updateWarning(this.warning)
-        .subscribe((res) => {
+      .subscribe((res) => {
 
-          this.onquery(this.jsondata);
-          alert(res.msg);
-        });
+        this.onquery(this.jsondata);
+        alert(res.msg);
+      });
   }
 
   handleCancel(): void {
@@ -89,16 +90,16 @@ export class WarningComponent implements OnInit {
   }
 
   ngOnInit() {
+    // this.getWarnings();
     this.onquery(this.jsondata);
-
   }
 
-  // getWarnings(): void {
-  //   this.warningService.getWarnings()
-  //     .subscribe(res => {
-  //       this.warnings = res.data;
-  //     });
-  // }
+  getWarnings(): void {
+    this.warningService.getWarnings()
+      .subscribe(res => {
+        this.warnings = res.data;
+      });
+  }
 
   delete(data: Warning | number): void {
     this.warningService.deleteWarning(data)
@@ -151,6 +152,20 @@ export class WarningComponent implements OnInit {
       });
     }
   }
+
+  // show(): void {
+  //   this.warningService.getWarnings()
+  //     .subscribe(res => {
+  //       this.warnings = res.data;
+  //       for (let i = 0; i < this.warnings.length; i++) {
+  //         for (let j = 0; j < 29; j++) {
+  //           if (this.warnings[i].)
+  //         }
+  //       }
+  //     });
+  // }
+
+
   // query(data) {
   //   if (data != null) {
   //     this.jsondata = data;

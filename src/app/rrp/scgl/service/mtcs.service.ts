@@ -43,12 +43,12 @@ export class MtcsService {
       catchError(this.handleError<Response>(`getBenchData id=${id}`))
     );
   }
-  // /** POST: add a new benchData to the server */
-  // addBenchData(benchData: {number: string, description: string, workshop: string}): Observable<Response> {
-  //   return this.http.post<Response>(this.benchDataAddteUrl, benchData, httpOptions).pipe(
-  //     catchError(this.handleError<any>('addBenchData'))
-  //   );
-  // }
+  /** POST: add a new benchData to the server */
+  addBenchData(benchData: {number: string, description: string, workshop: string}): Observable<Response> {
+    return this.http.post<Response>(this.benchDataAddteUrl, benchData, httpOptions).pipe(
+      catchError(this.handleError<any>('addBenchData'))
+    );
+  }
   /** PUT: update the hero on the server */
   updateBenchData(benchData: BenchData): Observable<Response> {
     return this.http.put<Response>(this.benchDataUpdateUrl, benchData, httpOptions).pipe(

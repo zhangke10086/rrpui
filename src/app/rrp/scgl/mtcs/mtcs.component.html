@@ -1,8 +1,22 @@
-<app-querylist (onQuery)="onquery($event)"></app-querylist>
-<div *ngIf="operation.indexOf(4)!=-1">
+  <app-querylist style="float: left" (onQuery)="onquery($event)"></app-querylist>
+  &nbsp;&nbsp;&nbsp;<button style="float: left; margin-top:15px;width: 80px;height:30px">启动生产</button>
+  &nbsp;&nbsp;&nbsp; <button style="margin-top:15px;width: 80px;height:30px" *ngIf="operation.indexOf(1)!=-1" class="topbutton" (click)="showModal1()"><span>增加</span></button>
+  <nz-modal [(nzVisible)]="isVisible1" nzTitle="增加" (nzOnCancel)="handleCancel1()" (nzOnOk)="add()">
+    <form nz-form *ngIf="isVisible1">
+<!--      <div nz-row>-->
+<!--        <nz-form-item>-->
+<!--          <input type="checkbox" name="checkboxDelete" value={{item.account}}-->
+<!--                 (click)="selectCheckbox($event.target.checked,item.account)"/>-->
+<!--        </nz-form-item >-->
+<!--      </div>-->
+    </form>
+  </nz-modal>
+
+  <div *ngIf="operation.indexOf(4)!=-1">
 <nz-table #basicTable [nzData]="benchDatas">
   <thead>
   <tr>
+    <th></th>
     <th>序号</th>
     <th>状态</th>
     <th>模台编号</th>
@@ -14,6 +28,7 @@
   </thead>
   <tbody>
   <tr *ngFor="let data of basicTable.data">
+    <td><input value='' type='checkbox'/></td>
     <td>{{ data.id }}</td>
     <td  >
         <i *ngIf="data.state == '0'; else tpl" nz-icon style="color: hotpink">
