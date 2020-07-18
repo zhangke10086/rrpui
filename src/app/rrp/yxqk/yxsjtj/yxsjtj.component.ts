@@ -67,15 +67,17 @@ export class YxsjtjComponent implements OnInit {
         // @ts-ignore
         require('highcharts/modules/exporting')(highCharts);
         // 创建图表
+        highCharts.setOptions({
+          colors: ['#5d93ff', '#5381df', '#486dbe', '#425fa6' , '#38508c', '#334a80', '#2e4274'],
+        });
         highCharts.chart('container', {
           chart: {
-            type: 'column'
+            type: 'column',
+            backgroundColor: '#1e2340',
+            plotShadow: true,
           },
           title: {
-            text: '历史运行数据'
-          },
-          subtitle: {
-            text: '来源： 系统统计'
+            text: ''
           },
           xAxis: {
             categories: time,
@@ -84,7 +86,10 @@ export class YxsjtjComponent implements OnInit {
           yAxis: {
             min: 0,
             title: {
-              text: '历史运行数据'
+              text: '开机时长',
+              style: {
+                color: '#b1b1b1'
+              },
             }
           },
           tooltip: {
@@ -98,7 +103,9 @@ export class YxsjtjComponent implements OnInit {
           plotOptions: {
             column: {
               pointPadding: 0.2,
-              borderWidth: 0
+              borderWidth: 0,
+              shadow: true,
+              colorByPoint: true
             }
           },
           time: {
