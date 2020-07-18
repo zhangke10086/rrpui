@@ -65,13 +65,19 @@ export class MtlylComponent implements OnInit {
         // 创建图表
         highCharts.chart('container', {
           chart: {
-            type: 'line'
+            type: 'line',
+            backgroundColor: '#1e2340',
+            plotShadow: true,
+            style: {
+              shadow: true,
+              color: '#b1b1bb1'
+            },
           },
           title: {
-            text: this.selectedRobot !== null ? '模台利用率' : '平均模台利用率'
-          },
-          subtitle: {
-            text: '来源： 系统统计'
+            text: this.selectedRobot !== null ? '平均模台利用率' : '',
+            style: {
+              color: '#b1b1b1'
+            },
           },
           xAxis: {
             categories: time,
@@ -80,7 +86,10 @@ export class MtlylComponent implements OnInit {
           yAxis: {
             min: 0,
             title: {
-              text: '利用率（%）'
+              text: '利用率（%）',
+              style: {
+                color: '#b1b1b1'
+              },
             }
           },
           tooltip: {

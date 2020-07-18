@@ -64,25 +64,38 @@ export class DhbmjComponent implements OnInit {
         // @ts-ignore
         require('highcharts/modules/exporting')(highCharts);
         // 创建图表
+        highCharts.setOptions({
+          colors: ['#5d93ff', '#5381df', '#486dbe', '#425fa6' , '#38508c', '#334a80', '#2e4274'],
+        });
         highCharts.chart('container', {
           chart: {
-            type: 'column'
+            type: 'column',
+            backgroundColor: '#1e2340',
+            plotShadow: true,
           },
           title: {
-            text: this.selectedRobot === undefined ? '叠合板总面积' : '叠合板面积'
+            text: this.selectedRobot === undefined ? '叠合板总面积' : '',
+            style: {
+              color: '#b1b1b1'
+            },
           },
-          subtitle: {
-            text: '来源： 系统统计'
-          },
-          xAxis: {
+           xAxis: {
             categories: time,
             crosshair: true
           },
           yAxis: {
             min: 0,
             title: {
-              text: '叠合板面积（㎡）'
-            }
+              text: '叠合板面积（㎡）',
+              style: {
+                color: '#b1b1b1'
+              },
+            },
+            labels: {
+              style: {
+                color: '#b1b1b1'
+              },
+            },
           },
           tooltip: {
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
@@ -95,7 +108,9 @@ export class DhbmjComponent implements OnInit {
           plotOptions: {
             column: {
               pointPadding: 0.2,
-              borderWidth: 0
+              borderWidth: 0,
+              shadow: true,
+              colorByPoint: true
             }
           },
           time: {
