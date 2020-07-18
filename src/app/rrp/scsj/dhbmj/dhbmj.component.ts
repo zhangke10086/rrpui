@@ -40,7 +40,7 @@ export class DhbmjComponent implements OnInit {
     // tslint:disable-next-line:variable-name
     let date_begin = '1020-04-23';
     // tslint:disable-next-line:variable-name
-    let date_end = '1020-04-30';
+    let date_end = '3020-04-30';
     if (this.begin !== undefined) {
       // tslint:disable-next-line:variable-name
       date_begin = this.datePipe.transform(this.begin, 'yyyy-MM-dd');
