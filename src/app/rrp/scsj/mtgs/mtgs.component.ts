@@ -146,10 +146,9 @@ export class MtgsComponent implements OnInit {
       });
 
   }
-  onquery(data){
+  onquery(data) {
     console.log(data);
 
-    //参数赋值
     if(data.startdate){
       this.begin = data.startdate;
     }
