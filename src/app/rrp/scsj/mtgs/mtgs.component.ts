@@ -24,7 +24,7 @@ export class MtgsComponent implements OnInit {
   CompanyData;
   selectedRobot;
   RobotData;
-  jsondata={
+  jsondata = {
     robotid:'',
     startdate:'',
     enddate:''
