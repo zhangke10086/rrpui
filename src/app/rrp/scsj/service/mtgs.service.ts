@@ -15,6 +15,7 @@ export class MtgsService {
   response: Response;
   private benchCountListUrl = this.url.hostname + '/benchCount/getBenchCount';
   private benchCountListByIdUrl = this.url.hostname + '/benchCount/getBenchCountById';
+  // private queryUrl = this.url.hostname + '/benchCount/query';
   constructor(private http: HttpClient , private url: UrlService) { }
 
 
@@ -27,13 +28,27 @@ export class MtgsService {
       );
   }
 
-/** GET benchCounts from the server */
+  /** GET benchCounts from the server */
   // tslint:disable-next-line:variable-name
   getBenchCount(time: string): Observable<Response> {
     return this.http.get<Response>(this.benchCountListByIdUrl + '?time=' + time)
       .pipe(
         catchError(this.handleError<Response>('getBenchCount'))
       );
+  }
+
+
+  // 动态查询
+  query(data) {
+    const url = this.url.hostname + '/benchCount/query';
+    return new Promise(((resolve, reject) =>
+      this.http.post(url, data)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      }))
+    );
   }
 
   /**
