@@ -1,9 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {BenchData} from '../../../core/entity/entity';
+import {Bench, BenchData} from '../../../core/entity/entity';
 import {ActivatedRoute} from '@angular/router';
 import {MtcsService} from '../service/mtcs.service';
 import {SccsComponent} from '../sccs/sccs.component';
 import {NzMessageService} from 'ng-zorro-antd';
+import {MtglService} from "../service/mtgl.service";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-mtcs',
@@ -15,10 +17,14 @@ export class MtcsComponent implements OnInit {
   isVisible1 = false;
   number = '';
   des = '';
+  benchs: Bench[];
   workshop = '';
   benchDatas: BenchData[];
   benchData: BenchData;
+  benchData1: BenchData;
   benchid;
+  items;
+  adds = [];
   accountArray;
   operation;
   // 前端传参
@@ -33,6 +39,8 @@ export class MtcsComponent implements OnInit {
   @ViewChild(SccsComponent, {static: false}) sccsComponent: SccsComponent;
 
   constructor(
+    private benchService: MtglService,
+    private datePipe: DatePipe,
     private benchDataService: MtcsService,
     private route: ActivatedRoute,
     private message: NzMessageService
@@ -53,33 +61,47 @@ export class MtcsComponent implements OnInit {
   }
 
   showModal1(): void {
+    this.getBenchs();
     this.isVisible1 = true;
   }
 
-  selectCheckbox(check: boolean, value: string) {
-    if (check) {
-      this.accountArray.push(value);
-    }
-  }
-
-  add(): void {
-    this.isVisible1 = false;
-    const add = {number: this.number, description: this.des, workshop: this.workshop};
-    this.benchDataService.addBenchData(add)
+  clickItem(item) {
+    this.benchDataService.getByBenchMax(item)
       .subscribe((res: any) => {
-        this.getBenchDatas();
-        alert(res.msg);
+        if (res.data !== null) {
+          this.adds.push(res.data);
+        }
       });
   }
 
+  add() {
+    this.isVisible1 = false;
+    console.log(this.adds);
+    if (this.adds !== null) {
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.adds.length; i++) {
+        const time1 = new Date();
+        const time = this.datePipe.transform(time1, 'yyyy-MM-dd HH:mm:ss');
+        const num = time + this.adds[i].bench.number;
+        const add = {number: num, time: time1, bench: this.adds[i].bench, company: this.adds[i].company, state: 0};
+        this.benchDataService.addBenchData(add)
+          .subscribe((res: any) => {
+            this.getBenchDatas();
+            // alert(res.msg);
+          });
+      }
+      this.adds = [];
+    }
+  }
+
+
   handleCancel1(): void {
-    this.onquery(this.jsondata);
     this.isVisible1 = false;
   }
 
   showModal(data: BenchData): void {
     this.benchData = data;
-    this.sccsComponent.getdata(data.id);
+    this.sccsComponent.getdata(data.bench.id);
     this.sccsComponent.isVisible = true;
   }
 
@@ -127,7 +149,7 @@ export class MtcsComponent implements OnInit {
         if (res.state === 200) {
           this.benchDatas = res.data;
         }
-      })
+      });
     } else {
       // data为查询组件所选值
       console.log(data);
@@ -158,7 +180,21 @@ export class MtcsComponent implements OnInit {
         if (res.state === 200) {
           this.benchDatas = res.data;
         }
-      })
+      });
+    }
+  }
+
+  getBenchs(): void {
+    this.benchService.getBenchs()
+      .subscribe((res: any) => {
+        this.benchs = res.data;
+      });
+  }
+
+  produce(): void {
+    // tslint:disable-next-line:variable-name
+    const confirm_ = confirm('确认启动?');
+    if (confirm_) {
     }
   }
 

@@ -1,8 +1,10 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input,HostListener } from '@angular/core';
 import {QuerylistService} from './querylist.service';
 // @ts-ignore
 import j from 'src/assets/json/city.json';
 import { formatDate } from '@angular/common';
+import { Observable } from 'rxjs';
+import {Company, Province, City, Robot} from "../../core/entity/entity";
 @Component({
   selector: 'app-querylist',
   templateUrl: './querylist.component.html',
@@ -17,15 +19,16 @@ export class QuerylistComponent implements OnInit {
   @Input() dateVisible = false;
   @Input() robotVisible = true;
   @Input() robotManagement = false;
+  @Input() cache = false;
   isCollapse = false;
-  selectedCompany;
-  CompanyData;
-  selectedRobot;
-  selectedProvince;
-  selectedCity;
-  RobotData;
-  ProvinceData;
-  CityData;
+  selectedCompany:Company;
+  CompanyData = [];
+  selectedRobot:Robot;
+  selectedProvince:Province;
+  selectedCity:City;
+  RobotData = [];
+  ProvinceData =[];
+  CityData =[];
   company;
   startdate;
   enddate;
@@ -38,23 +41,38 @@ export class QuerylistComponent implements OnInit {
         this.getRobot(this.company.id);
       } else {
         //出租企业
-        this.querylistService.getProvince().then((res:any) => this.ProvinceData = res.data);
-        console.log(this.ProvinceData)
+        this.querylistService.getProvince().then((res:any) => {
+          this.ProvinceData = res.data;
+          if(this.cache){
+            this.getcache();
+          }
+        });
       }
     } else {
       // 骊久
-      this.querylistService.getProvince().then((res:any) => this.ProvinceData = res.data);
-      console.log(this.ProvinceData)
+      this.querylistService.getProvince().then((res:any) => {
+        this.ProvinceData = res.data;
+        if(this.cache){
+          this.getcache();
+        }
+      });
     }
     // this.getCompany();
-
   }
   query() {
     const data = {};
-    data['province'] = this.selectedProvince.name;
-    data['city'] = this.selectedCity;
-    data['company'] = this.selectedCompany;
-    data['robot'] = this.selectedRobot;
+    if(this.selectedProvince && this.selectedProvince.name){
+      data['province'] = this.selectedProvince;
+    }
+    if(this.selectedCity && this.selectedCity.name){
+      data['city'] = this.selectedCity;
+    }
+    if(this.selectedCompany){
+      data['company'] = this.selectedCompany;
+    }
+    if(this.selectedRobot){
+      data['robot'] = this.selectedRobot;
+    }
     if(this.startdate){
       data['startdate'] = formatDate(this.startdate.getTime(), 'yyyy-MM-dd', 'zh-Hans');
     }
@@ -112,16 +130,18 @@ export class QuerylistComponent implements OnInit {
 
     this.selectedRobot = data;
   }
-  provinceChange(value: string): void {
+  provinceChange(value): void {
     this.querylistService.getCity().then((res:any)=>{
       this.CityData = res.data.filter(t=>t.provinceid === this.selectedProvince.provinceid);
-      if(this.CityData) {
-        this.selectedCity = this.CityData[0];
-        this.cityChange(this.selectedCity);
+      if(this.CityData){
+        if(!this.selectedCity){
+          this.selectedCity = this.CityData[0];
+          this.cityChange(this.selectedCity);
+        }
       }
     })
   }
-  cityChange(value: string){
+  cityChange(value){
     // 骊久
     if (this.company.id==1) {
       this.querylistService.getCompany().then((res: any) => {
@@ -144,6 +164,31 @@ export class QuerylistComponent implements OnInit {
       }
     }
   }
+  // 取缓存 上次查询条件
+  getcache() {
+    const data = JSON.parse(localStorage.getItem('query'));
+    if (data.province && data.province.id) {
+      this.selectedProvince = this.ProvinceData.filter(t => t.id === data.province.id)[0];
+      this.provinceChange(data.province);
+    }
+    if(data.city && data.city.id){
+      this.CityData.push(data.city);
+      this.selectedCity = this.CityData[0];
+      this.cityChange(data.city)
+    }
+    if(data.company && data.company.id){
+      this.CompanyData.push(data.company);
+      this.selectedCompany = this.CompanyData.filter(t => t.id === data.company.id)[0];
+      this.CompanyChange(data.company);
+    }
+    if(data.robot && data.robot.id){
+      this.RobotData.push(data.robot);
+      this.RobotChange(data.robot);
+    }
+  }
+  sayHello(){
+    console.log('hello')
+  }
   reset(){
     this.selectedProvince = undefined;
     this.selectedCity = undefined;
@@ -152,10 +197,5 @@ export class QuerylistComponent implements OnInit {
     this.startdate = undefined;
     this.enddate = undefined;
   }
-  // onStartChange(data){
-  //   this.startdate
-  // }
-  // onEndChange(data){
-  //
-  // }
+
 }

@@ -8,6 +8,7 @@ import { JfglComponent } from './jfgl/jfgl.component';
 import {QuerylistModule} from '../../helpcenter/querylist/querylist.module';
 import { SpglComponent } from './spgl/spgl.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import {CoreModule} from "../../core/core.module";
 
 @NgModule({
   declarations: [Zlgl1Component, JfglComponent, SpglComponent],
@@ -17,7 +18,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
         NgZorroAntdModule,
         FormsModule,
         QuerylistModule,
-        PdfViewerModule
+        PdfViewerModule,
+        CoreModule
     ]
 })
 export class ZlglModule { }

@@ -14,14 +14,15 @@ declare var $: any;
 export class YhglComponent implements OnInit {
   isVisible = false;
   isVisible1 = false;
+  updateVisible = false;
   deleteVisible = false;
   resetVisible = false;
-   user: any;
-   users: [];
-   companies: [];
-   company: any;
-   role: any;
-   roles: [];
+  user: any;
+  users: [];
+  companies: [];
+  company: any;
+  role: any;
+  roles: [];
   operation;
   jsondata = {
     province: '',
@@ -31,6 +32,7 @@ export class YhglComponent implements OnInit {
     companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
   };
   ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('userinfo'));
     this.onquery(this.jsondata);
     this.getCompanies();
     this.getRoles();
@@ -62,6 +64,7 @@ export class YhglComponent implements OnInit {
     if (this.jsondata === data) {
       this.yhglService.query(this.jsondata).then((res: any) => {
         if (res.state === 200) {
+          this.user = res.data[0];
           this.users = res.data;
         }
       });
@@ -78,11 +81,11 @@ export class YhglComponent implements OnInit {
       };
       // 传参赋值
       // 若不选条件 则向后端传空值
-      if (data.province) {
-        this.jsondata.province = data.province;
+      if (data.province && data.province.name){
+        this.jsondata.province=data.province.name;
       }
-      if (data.city) {
-        this.jsondata.city = data.city;
+      if (data.city && data.city.name){
+        this.jsondata.city=data.city.name;
       }
       if (data.company) {
         this.jsondata.companyid = data.company.id;
@@ -129,6 +132,13 @@ export class YhglComponent implements OnInit {
     this.isVisible1 = true;
     // this.getUser(1);
   }
+  showUpdateModal(id: number): void {
+    this.getUser(id);
+    this.updateVisible = true;
+  }
+  updateHandleCancel(): void {
+    this.updateVisible = false;
+  }
 
   showDeleteModal(): void {
     this.deleteVisible = true;
@@ -159,9 +169,10 @@ export class YhglComponent implements OnInit {
     this.isVisible = false;
     this.yhglService.updateUser(this.user)
       .subscribe((res: any) => {
-        this.user();
+        // this.user;
         if (res.state === 200) { this.message.success(res.msg); } else { this.message.error(res.msg); }
       });
+    this.updateVisible = false;
   }
 
   getCompanies(): void {
@@ -191,12 +202,12 @@ export class YhglComponent implements OnInit {
       });
   }
 
-  // getUser(id: number): void {
-  //   this.yhglService.getUser(id)
-  //     .subscribe((res: any) => {
-  //       this.user = res.data;
-  //     });
-  // }
+  getUser(id: number): void {
+    this.yhglService.getUser(id)
+      .subscribe((res: any) => {
+        this.user = res.data;
+      });
+  }
 
   resetPassword(id: number): void {
     this.resetVisible = false;

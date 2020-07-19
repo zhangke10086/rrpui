@@ -74,10 +74,14 @@
     </thead>
     <tbody>
     <tr *ngFor="let menu2 of Table2.data">
-      <td>{{ menu2.title }}</td>
-      <td *ngFor="let operation2 of operations">
-        <input type="checkbox" [(ngModel)]="checkDic[menu2.id+'$'+operation2.id]" [checked]="checkDic[menu2.id+'$'+operation2.id]" (click)="show()"/><label>{{ operation2.name }}</label><br>
-      </td>
+      <td width="10%">{{ menu2.title }}</td>
+      <ng-container *ngFor="let operation2 of operations">
+        <td width="10%">
+          <div *ngIf="checkDic2[menu2.title+'$'+operation2.name]">
+            <input type="checkbox" [(ngModel)]="checkDic[menu2.id+'$'+operation2.id]" [checked]="checkDic[menu2.id+'$'+operation2.id]" (click)="show()"/><label>{{ operation2.name }}</label><br>
+          </div>
+        </td>
+      </ng-container>
     </tr>
     </tbody>
   </nz-table>

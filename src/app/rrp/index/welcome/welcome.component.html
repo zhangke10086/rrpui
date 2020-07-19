@@ -1,4 +1,4 @@
-<app-querylist (onQuery)="onquery($event)"></app-querylist>
+<app-querylist #querylist (onQuery)="onquery($event)" [cache]="true"></app-querylist>
 <div>
   <div style="width:200px; height:700px; float:left;margin:10px;">
     <div style="height:160px; border-radius: 5px;padding:5px; background:#191b30;">

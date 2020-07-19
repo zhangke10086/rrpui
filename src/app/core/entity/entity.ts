@@ -73,6 +73,8 @@ export class BenchData {
   number: string;
   time: Date;
   bench: Bench;
+  company: Company;
+  state: number;
 }
 
 export class Bench {
@@ -94,6 +96,18 @@ export class CompanyType {
   type: string;
 }
 
+export class Province {
+  id: string;
+  name: string;
+  value: any;
+  provinceid: string;
+}
+export class City {
+  id: string;
+  name: string;
+  value: any;
+  provinceid: string;
+}
 export class Company {
   id: number;
   name: string;
@@ -149,6 +163,8 @@ export class Pay {
   paymentDuration: string;
   // 缴费凭证
   paymentVouncher: string;
+  // 上传缴费凭证url
+  uploadurl: string;
 }
 
 export class ProcessData {

@@ -53,7 +53,7 @@ export class SccsComponent implements OnInit {
     this.processData.zero_Z = 0;
     this.save();
   }
-setZero1(): void {
+  setZero1(): void {
     this.processData.enddistance = 0;
     this.save();
   }

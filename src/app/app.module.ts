@@ -34,7 +34,6 @@ registerLocaleData(zh);
     { provide: NZ_I18N, useValue: zh_CN },
     {provide: RouteReuseStrategy, useClass: RouteReuse},
     DatePipe,
-
   ],
   bootstrap: [AppComponent]
 })

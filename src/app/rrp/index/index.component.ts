@@ -7,6 +7,8 @@ import {RouteReuse} from '../../core/routereuse/routeReuse';
 import {filter, map, mergeMap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {UrlService} from '../../core/service/url.service';
+import {YhglService} from '../xtpz/service/yhgl.service';
+import {stringify} from 'querystring';
 
 @Component({
   selector: 'app-index',
@@ -21,6 +23,7 @@ export class IndexComponent implements OnInit {
   menu: any ;
   menus = [];
   activemenus = [];
+  isVisible = false;
   isCollapsed = false;
   showALL: boolean;
   tabIndex = 0;
@@ -37,6 +40,7 @@ export class IndexComponent implements OnInit {
               private location: PlatformLocation,
               private http: HttpClient,
               private posturl: UrlService,
+              private yhglService: YhglService,
               private message: NzMessageService) {
     // 锁死浏览器后退事件,防止出现empty缓冲页面
     location.onPopState(() => {
@@ -103,26 +107,26 @@ export class IndexComponent implements OnInit {
       }
       this.menus.push(menu);
     });
-    for(const obj of this.menus) {
-      if(obj.title === '互联网') {
+    for (const obj of this.menus) {
+      if (obj.title === '互联网') {
         obj.icon = 'ie';
       }
-      if(obj.title === '生产数据') {
+      if (obj.title === '生产数据') {
         obj.icon = 'bar-chart';
       }
-      if(obj.title === '生产管理') {
+      if (obj.title === '生产管理') {
         obj.icon = 'robot';
       }
-      if(obj.title === '运行情况') {
+      if (obj.title === '运行情况') {
         obj.icon = 'dashboard';
       }
-      if(obj.title === '维修维护') {
+      if (obj.title === '维修维护') {
         obj.icon = 'scissor';
       }
-      if(obj.title === '租赁管理') {
+      if (obj.title === '租赁管理') {
         obj.icon = 'apartment';
       }
-      if(obj.title === '系统配置') {
+      if (obj.title === '系统配置') {
         obj.icon = 'setting';
       }
     }
@@ -167,6 +171,26 @@ export class IndexComponent implements OnInit {
     delete localStorage.userinfo;
     delete localStorage.Authority;
     this.router.navigate(['/login']);
+  }
+  showModal(): void {
+    this.isVisible = true;
+  }
+  handleCancel(): void {
+    this.isVisible = false;
+  }
+  changePassword(newPassword1: any, newPassword2: any): void {
+    if (newPassword1.value === newPassword2.value) {
+      const userToChangePassword = JSON.parse(localStorage.getItem('userinfo'));
+      userToChangePassword.password = newPassword1.value;
+      console.log(userToChangePassword);
+      this.yhglService.updateUser(userToChangePassword)
+        .subscribe((res: any) => {
+          if (res.state === 200) { this.message.success(res.msg); } else { this.message.error(res.msg); }
+        });
+    } else {
+      alert('密码前后输入不一致！');
+    }
+    this.isVisible = false;
   }
   showSubMenu(item: any, index: any): void {
     // 设置当前子菜单显示

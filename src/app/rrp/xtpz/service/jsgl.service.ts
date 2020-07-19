@@ -27,6 +27,8 @@ export class JsglService {
   private getMenusUrl = this.url.hostname + '/menu/getMenusByMenuNotNull';
   private findByRoleIdUrl = this.url.hostname + '/authority/findByRoleId';
 
+  private getMenuCorrespondingOperationsUrl = this.url.hostname + '/menuCorrespondingOperation/getMenuCorrespondingOperation';
+
   constructor(private http: HttpClient,
               private url: UrlService) { }
 
@@ -68,6 +70,13 @@ export class JsglService {
 
   getMenus(): Observable<Response> {
     return this.http.get<Response>(this.getMenusUrl)
+      .pipe(
+        catchError(this.handleError<Response>('getMenus'))
+      );
+  }
+
+  getMenuCorrespondingOperations(): Observable<Response> {
+    return this.http.get<Response>(this.getMenuCorrespondingOperationsUrl)
       .pipe(
         catchError(this.handleError<Response>('getMenus'))
       );

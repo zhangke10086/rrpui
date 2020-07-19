@@ -14,8 +14,6 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./zlgl1.component.css']
 })
 export class Zlgl1Component implements OnInit {
-  safeUrl;
-  pdfSource;
 // 修改弹窗
   isVisible = false;
   // 增加弹框
@@ -58,6 +56,8 @@ export class Zlgl1Component implements OnInit {
     date: undefined
   };
   dateRange = [];
+  add1 = false;
+  add2 = false;
   ngOnInit() {
     this.query(this.jsondata);
     this.getCompanysWithRobot();
@@ -108,10 +108,6 @@ export class Zlgl1Component implements OnInit {
   }
   showModa2(data: Lease): void {
     this.lease = data;
-    if(data.uploadurl){
-      this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(data.uploadurl);
-      // this.pdfSource = this._base64ToArrayBuffer(this.safeUrl);
-    }
     this.contractId = data.contractId;
     this.costMonth = data.costMonth;
     this.costWay = data.costWay;
@@ -124,6 +120,7 @@ export class Zlgl1Component implements OnInit {
     this.isVisible2 = true;
   }
   showModal1(): void {
+    this.add1 = true;
     this.isVisible1 = true;
     this.dateRange = [];
     this.contractId = undefined;
@@ -163,14 +160,21 @@ export class Zlgl1Component implements OnInit {
   add(): void {
     console.log(this.robots);
     this.isVisible1 = false;
+    this.add1 = false;
+    this.add2 = false;
     const add = { robot: this.robot, contractId: this.contractId, companyId: this.company1,
       costWay: this.costWay, costMonth: this.costMonth, startTime: this.dateRange[0], endTime: this.dateRange[1],
       paymentSituation: '0', workshopId: this.workshopId, internalId: this.internalId,
       contract: this.contract, connector: this.connector, uploadurl: this.responseurl, state: '未启用'};
     this.zlgl1Service.addLease(add)
       .subscribe((res: any) => {
-        this.onquery(this.jsondata);
-        this.message.success('增加成功！');
+        if(res.state === 200) {
+          this.onquery(this.jsondata);
+          this.message.success('增加成功！');
+        } else {
+          this.onquery(this.jsondata);
+          this.message.error('增加失败！');
+        }
       });
   }
   delete(data: Lease | number): void {
@@ -195,8 +199,9 @@ export class Zlgl1Component implements OnInit {
     this.isVisible = false;
   }
   handleCancel1(): void {
-    console.log(this.companys);
     this.isVisible1 = false;
+    this.add1 = false;
+    this.add2 =  false;
   }
   handleCancel2(): void {
     this.isVisible2 = false;
@@ -271,6 +276,11 @@ export class Zlgl1Component implements OnInit {
 
     }
   }
+  modelAdd() {
+    this.add1 = !this.add1;
+    this.add2 = !this.add2;
+  }
+
   onquery(data) {
     console.log(data);
     this.query(data);
@@ -285,11 +295,11 @@ export class Zlgl1Component implements OnInit {
           companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
           robotid: ''
         };
-        if (data.province) {
-          this.jsondata.province = data.province;
+        if (data.province && data.province.name) {
+          this.jsondata.province = data.province.name;
         }
-        if (data.city) {
-          this.jsondata.city = data.city;
+        if (data.city && data.city.name) {
+          this.jsondata.city = data.city.name;
         }
         if (data.robot) {
           this.jsondata.robotid = data.robot.id;
