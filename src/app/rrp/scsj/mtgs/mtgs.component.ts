@@ -18,12 +18,13 @@ export class MtgsComponent implements OnInit {
   end: Date;
   dateFormat = 'yyyy/MM/dd';
   benchCounts: BenchCount[];
+  benchCount: BenchCount;
   isCollapse = false;
   selectedCompany;
   CompanyData;
   selectedRobot;
   RobotData;
-  jsondata={
+  jsondata = {
     robotid:'',
     startdate:'',
     enddate:''
@@ -39,7 +40,12 @@ export class MtgsComponent implements OnInit {
   ngOnInit() {
     this.getMtgs();
   }
-
+  getMtgsByRobot(robotId: number): void {
+    this.mtgsService.getCountByRobotId(robotId)
+      .subscribe((res: any) => {
+        this.benchCount = res.data;
+      });
+  }
   getMtgs(): void {
     // tslint:disable-next-line:variable-name
     let date_begin = '1000-04-23';
