@@ -15,6 +15,7 @@ export class MtlylService {
   response: Response;
   private benchRatioListUrl = this.url.hostname + '/benchRatio/getBenchRatio';
   private benchRatioListByIdUrl = this.url.hostname + '/benchRatio/getBenchRatioById';
+  private newestLeaseByIdUrl = this.url.hostname + '/benchRatio/findNewestByRobot';
   constructor(private http: HttpClient , private url: UrlService) { }
 
 
@@ -46,5 +47,12 @@ export class MtlylService {
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
+  }
+  // 根据RobotID查找最新的模台个数
+  getRatioByRobotId(id: number): Observable<Response> {
+    const url = this.newestLeaseByIdUrl + '?id=' + id;
+    return this.http.get<Response>(url).pipe(
+      catchError(this.handleError<Response>(`getLease id=${id}`))
+    );
   }
 }

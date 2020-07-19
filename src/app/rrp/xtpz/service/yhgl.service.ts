@@ -45,8 +45,7 @@ export class YhglService {
         resolve(res);
       }, error => {
         reject(error);
-      }))
-    );
+      })));
   }
   /** DELETE: detail the user from the server */
   deleteUser(id: number): Observable<Response> {

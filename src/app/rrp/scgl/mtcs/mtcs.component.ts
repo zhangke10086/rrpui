@@ -25,7 +25,6 @@ export class MtcsComponent implements OnInit {
   benchid;
   items;
   adds = [];
-  produces = [];
   accountArray;
   operation;
   // 前端传参
@@ -205,40 +204,9 @@ export class MtcsComponent implements OnInit {
   }
 
   produce(): void {
-
     // tslint:disable-next-line:variable-name
     const confirm_ = confirm('确认启动?');
     if (confirm_) {
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < this.produces.length; i++) {
-        this.benchDataService.getBenchData(this.produces[i])
-          .subscribe((res: any) => {
-            const update = res.data;
-            update.state = 2;
-            this.benchDataService.updateBenchData(update)
-              .subscribe((res1: any) => {
-                this.getBenchDatas();
-              });
-          });
-      }
-    }
-  }
-
-  checkProduce(item): void {
-    let check = true;
-    if (this.produces !== null) {
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < this.produces.length; i++) {
-        // alert(this.produces[i].id === item.id);
-        if (this.produces[i] === item) {
-          check = false;
-          this.produces.splice(i, 1);
-        }
-      }
-      if (check) {
-        this.produces.push(item);
-      }
-      console.log(this.produces);
     }
   }
 

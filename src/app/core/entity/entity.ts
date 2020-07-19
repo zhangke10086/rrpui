@@ -125,6 +125,7 @@ export class Robot {
   belongingCompany: Company;
   way: string;
   useSituation: string;
+  shengchanxian: string;
 }
 
 export class Lease {
@@ -320,6 +321,20 @@ export class ProductRatio {
   id: number;
   ratio: number;
   time: Date;
+  robot: Robot;
+}
+
+export class Sczt {
+  id: number;
+  mtjr: string;
+  smsb: string;
+  znbl: string;
+  zdms: string;
+  ntsc: string;
+  dcxz: string;
+  xczx: string;
+  zdpt: string;
+  znbl1: string;
   robot: Robot;
 }
 
