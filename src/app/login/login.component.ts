@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
         const userinfo = localStorage.getItem('userinfo');
         const au = localStorage.getItem('Authority');
         if (userinfo && au && JSON.parse(userinfo).id === res.data.id) {
+          sessionStorage.setItem('userinfo', JSON.stringify(res.data));
           this.message.success( '登陆成功,请稍后...');
           setTimeout(() => {
               this.router.navigate(['/index/welcome']);
