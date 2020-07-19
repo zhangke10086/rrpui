@@ -53,7 +53,8 @@
          border-radius:10px 10px 0 0;margin-bottom: 0;border:2px solid #2e3659">{{activeMenuname}}</span>
       <nz-content style="width: 100%;height: calc(100% - 48px);overflow-y: auto;
        margin: 0;  border:2px solid #2e3659">
-        <router-outlet> </router-outlet>
+        <router-outlet (voted)="doSomething($event)"> </router-outlet>
+        <!--<app-child (voted)="doSomething($event)"> </app-child>-->
       </nz-content>
     </nz-layout>
   </nz-layout>

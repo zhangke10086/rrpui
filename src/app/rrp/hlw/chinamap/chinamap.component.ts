@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, Output, ViewChild, ElementRef, EventEmitter} from '@angular/core';
 import * as echarts from 'echarts';
 import 'echarts/map/js/province/shandong.js';
 import 'echarts/map/js/china.js';
@@ -55,6 +55,11 @@ export class ChinamapComponent implements OnInit {
 
   header; // 测试
   footer = '生产数据汇总图表';
+  @Output() voted = new EventEmitter<boolean>();
+// 向父组件发射 一个boolean型的参数 agreed
+  vote(agreed: boolean) {
+    this.voted.emit(agreed);
+  }
   ngOnInit() {
     this.num = 0;
     this.querylisthelp.getCity().then((res: any) => this.CityData = res.data);

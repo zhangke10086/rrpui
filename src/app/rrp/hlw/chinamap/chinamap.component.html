@@ -20,7 +20,7 @@
       </nz-list-item>
     </ng-template>
     <ng-template #nzTitle>
-      <a [routerLink]="['/index/scsj/mtlyl']">{{ footer }}</a>
+      <a (click)="vote(true)">{{ footer }}</a>
     </ng-template>
   </nz-list>
 </div>
