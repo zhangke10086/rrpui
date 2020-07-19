@@ -66,17 +66,29 @@ export class MtcsComponent implements OnInit {
   }
 
   clickItem(item) {
+    let check = true;
     this.benchDataService.getByBenchMax(item)
       .subscribe((res: any) => {
         if (res.data !== null) {
-          this.adds.push(res.data);
+          // console.log(this.adds);
+          // tslint:disable-next-line:prefer-for-of
+          for (let i = 0; i < this.adds.length; i++) {
+            // alert(this.adds[i].id === res.data.id);
+            if (this.adds[i].id === res.data.id) {
+              check = false;
+              this.adds.splice(i, 1);
+            }
+          }
+          if (check) {
+            this.adds.push(res.data);
+          }
         }
       });
   }
 
   add() {
     this.isVisible1 = false;
-    console.log(this.adds);
+    // console.log(this.adds);
     if (this.adds !== null) {
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.adds.length; i++) {
