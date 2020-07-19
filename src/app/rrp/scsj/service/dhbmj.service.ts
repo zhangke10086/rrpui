@@ -14,6 +14,7 @@ const httpOptions = {
 export class DhbmjService {
   response: Response;
   private boardAreaListUrl = this.url.hostname + '/boardArea/getBoardArea';
+  private newestLeaseByIdUrl = this.url.hostname + '/boardArea/findNewestByRobot';
   private boardAreaListByIdUrl = this.url.hostname + '/boardArea/getBoardAreaById';
   constructor(private http: HttpClient , private url: UrlService) { }
 
@@ -46,5 +47,12 @@ export class DhbmjService {
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
+  }
+  // 根据RobotID查找最新的模台个数
+  getAreaByRobotId(id: number): Observable<Response> {
+    const url = this.newestLeaseByIdUrl + '?id=' + id;
+    return this.http.get<Response>(url).pipe(
+      catchError(this.handleError<Response>(`getArea id=${id}`))
+    );
   }
 }

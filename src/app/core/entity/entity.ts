@@ -324,6 +324,20 @@ export class ProductRatio {
   robot: Robot;
 }
 
+export class Sczt {
+  id: number;
+  mtjr: string;
+  smsb: string;
+  znbl: string;
+  zdms: string;
+  ntsc: string;
+  dcxz: string;
+  xczx: string;
+  zdpt: string;
+  znbl1: string;
+  robot: Robot;
+}
+
 export class Run {
   id: number;
   open: number;

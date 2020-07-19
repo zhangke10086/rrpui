@@ -123,6 +123,7 @@ export class BljqrglComponent implements OnInit {
     this.isVisible2 = false;
     this.add1 = false;
     this.add2 = false;
+    this.robot.way = '已租赁';
     const add = { robot: this.robot, contractId: this.contractId, companyId: this.company,
       costWay: this.costWay, costMonth: this.costMonth, startTime: this.dateRange[0], endTime: this.dateRange[1],
       paymentSituation: '0', workshopId: this.workshopId, internalId: this.internalId,
@@ -136,6 +137,11 @@ export class BljqrglComponent implements OnInit {
           this.onquery(this.jsondata);
           this.message.error('租赁失败！');
         }
+      });
+    this.bljqrglService.updateRobot(this.robot)
+      .subscribe((res: any) => {
+        this.getRobots();
+        alert(res.msg);
       });
   }
   add(): void {

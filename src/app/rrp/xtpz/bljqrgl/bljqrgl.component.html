@@ -45,7 +45,7 @@
       <nz-divider nzType="vertical"></nz-divider>
       <button *ngIf="operation.indexOf(2)!=-1" nz-button [nzType]="'primary'" (click)="delete(data)"><span>删除</span></button>
       <nz-divider nzType="vertical"></nz-divider>
-      <button *ngIf="data.ways!=='租赁'" [disabled]="data.way === '租赁'" nz-button [nzType]="'primary'" (click)="showModal2(data)">租赁</button>
+      <button *ngIf="data.ways!=='租赁'" [disabled]="data.way === '已租赁' || data.way === '购买'" nz-button [nzType]="'primary'" (click)="showModal2(data)">租赁</button>
     </td>
   </tr>
 

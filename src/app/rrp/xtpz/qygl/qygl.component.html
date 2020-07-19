@@ -55,7 +55,7 @@
 
 
       <nz-divider nzType="vertical"></nz-divider>
-      <button nz-button [nzType]="'primary'" (click)="showModal3(data)"><span>机器租赁</span></button>
+      <button nz-button [nzType]="'primary'" (click)="showModal3(data)" [disabled]="data.companyType.type === '租用企业' || data.companyType.type === '购买企业'" ><span>机器租赁</span></button>
       <nz-divider nzType="vertical"></nz-divider>
 
 

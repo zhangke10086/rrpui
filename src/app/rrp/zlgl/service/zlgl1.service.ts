@@ -16,6 +16,8 @@ export class Zlgl1Service {
   response: Response;
   private leaseListUrl = this.url.hostname + '/lease/findAllLease';
   private leaseListByIdUrl = this.url.hostname + '/lease/findAllByRobot';
+  private newestLeaseByIdUrl = this.url.hostname + '/lease/findNewestByRobot';
+
   private leaseDeleteUrl = this.url.hostname + '/lease/deleteLease';
   private leaseUpdateUrl = this.url.hostname + '/lease/updateLease';
   private leaseAddteUrl = this.url.hostname + '/lease/addLease';
@@ -54,6 +56,13 @@ export class Zlgl1Service {
   /** GET lease by id. Will 404 if id not found */
   getLease(id: number): Observable<Response> {
     const url = this.leaseListByIdUrl + '?id=' + id;
+    return this.http.get<Response>(url).pipe(
+      catchError(this.handleError<Response>(`getLease id=${id}`))
+    );
+  }
+  // 根据RobotID查找最新的Lease
+  getLeaseByRobotId(id: number): Observable<Response> {
+    const url = this.newestLeaseByIdUrl + '?id=' + id;
     return this.http.get<Response>(url).pipe(
       catchError(this.handleError<Response>(`getLease id=${id}`))
     );

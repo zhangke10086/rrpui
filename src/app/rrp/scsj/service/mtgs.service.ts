@@ -15,6 +15,7 @@ export class MtgsService {
   response: Response;
   private benchCountListUrl = this.url.hostname + '/benchCount/getBenchCount';
   private benchCountListByIdUrl = this.url.hostname + '/benchCount/getBenchCountById';
+  private newestLeaseByIdUrl = this.url.hostname + '/benchCount/findNewestByRobot';
   constructor(private http: HttpClient , private url: UrlService) { }
 
 
@@ -47,5 +48,12 @@ export class MtgsService {
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
+  }
+  // 根据RobotID查找最新的模台个数
+  getCountByRobotId(id: number): Observable<Response> {
+    const url = this.newestLeaseByIdUrl + '?id=' + id;
+    return this.http.get<Response>(url).pipe(
+      catchError(this.handleError<Response>(`getLease id=${id}`))
+    );
   }
 }
