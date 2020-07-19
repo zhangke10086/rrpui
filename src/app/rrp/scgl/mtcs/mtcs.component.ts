@@ -1,11 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Bench, BenchData} from '../../../core/entity/entity';
+import {Bench, BenchData, Robot} from '../../../core/entity/entity';
 import {ActivatedRoute} from '@angular/router';
 import {MtcsService} from '../service/mtcs.service';
 import {SccsComponent} from '../sccs/sccs.component';
 import {NzMessageService} from 'ng-zorro-antd';
 import {MtglService} from "../service/mtgl.service";
 import {DatePipe} from "@angular/common";
+import {SccsService} from "../service/sccs.service";
 
 @Component({
   selector: 'app-mtcs',
@@ -23,8 +24,13 @@ export class MtcsComponent implements OnInit {
   benchData: BenchData;
   benchData1: BenchData;
   benchid;
+  bench1;
+  robots: Robot[];
+  bench: Bench;
+  company;
   items;
   adds = [];
+  add1;
   produces = [];
   accountArray;
   operation;
@@ -41,6 +47,7 @@ export class MtcsComponent implements OnInit {
 
   constructor(
     private benchService: MtglService,
+    private sccsService: SccsService,
     private datePipe: DatePipe,
     private benchDataService: MtcsService,
     private route: ActivatedRoute,
@@ -83,8 +90,29 @@ export class MtcsComponent implements OnInit {
           if (check) {
             this.adds.push(res.data);
           }
+        } else {
+          // tslint:disable-next-line:prefer-for-of
+          for (let i = 0; i < this.adds.length; i++) {
+            // alert(this.adds[i].id === res.data.id);
+            if (this.adds[i].id === res.data.id) {
+              check = false;
+              this.adds.splice(i, 1);
+            }
+          }
+          if (check) {
+            this.benchService.getBench(item)
+              .subscribe((res1: any) => {
+                const da = {bench: res1.data, company: res1.data.company};
+                this.adds.push(da);
+              });
+          }
         }
       });
+  }
+
+  // @ts-ignore
+  compareFn(o1: Compare, o2: Compare): boolean {
+    return o1 && o2 ? o1.id === o2.id : o1 === o2;
   }
 
   add() {
@@ -95,9 +123,16 @@ export class MtcsComponent implements OnInit {
       for (let i = 0; i < this.adds.length; i++) {
         const time1 = new Date();
         const time = this.datePipe.transform(time1, 'yyyy-MM-dd HH:mm:ss');
-        const num = time + this.adds[i].bench.number;
-        const add = {number: num, time: time1, bench: this.adds[i].bench, company: this.adds[i].company, state: 0};
-        this.benchDataService.addBenchData(add)
+        if (this.adds[i].state !== undefined) {
+          const num = time + this.adds[i].bench.number;
+          this.add1 = {number: num, time: time1, bench: this.adds[i].bench, company: this.adds[i].company, state: 0};
+        } else {
+          this.add1 = {number: '', time: time1, bench: this.adds[i].bench, company: this.adds[i].company, state: 0};
+          this.sccsService.addProcessData({bench: this.adds[i].bench})
+            .subscribe((res1: any) => {
+            });
+        }
+        this.benchDataService.addBenchData(this.add1)
           .subscribe((res: any) => {
             this.getBenchDatas();
             // alert(res.msg);
@@ -133,6 +168,7 @@ export class MtcsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getRobots();
     this.onquery(this.jsondata);
   }
 
@@ -204,6 +240,13 @@ export class MtcsComponent implements OnInit {
       });
   }
 
+  getRobots(): void {
+    this.benchService.getRobots()
+      .subscribe((res: any) => {
+        this.robots = res.data;
+      });
+  }
+
   produce(): void {
 
     // tslint:disable-next-line:variable-name
@@ -240,6 +283,14 @@ export class MtcsComponent implements OnInit {
       }
       console.log(this.produces);
     }
+  }
+
+  getBenchByRobot(id) {
+    this.benchService.getBenchByRobot(id)
+      .subscribe((res: any) => {
+        this.benchs = res.data;
+        console.log(this.benchs);
+      });
   }
 
 }

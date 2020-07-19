@@ -2,6 +2,12 @@
   &nbsp;&nbsp;&nbsp;<button style="float: left; margin-top:15px;width: 80px;height:30px" (click)="produce()">启动生产</button>
   &nbsp;&nbsp;&nbsp; <button style="margin-top:15px;width: 80px;height:30px" *ngIf="operation.indexOf(1)!=-1" class="topbutton" (click)="showModal1()"><span>增加</span></button>
   <nz-modal [(nzVisible)]="isVisible1" nzTitle="增加" (nzOnCancel)="handleCancel1()" (nzOnOk)="add()">
+    <div style="margin-top: 8px">
+      <label>隶属机器人:&nbsp;</label>
+      <select [(ngModel)]="this.bench" [compareWith]="compareFn" (change)="getBenchByRobot(bench.id)">
+        <option *ngFor="let obj of robots" [ngValue]="obj">{{obj.name}}</option>
+      </select>
+    </div>
     <nz-table #basicTable1 [nzData]="benchs">
       <thead>
       <tr>

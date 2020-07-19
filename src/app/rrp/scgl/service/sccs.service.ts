@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Response, ProcessData} from '../../../core/entity/entity';
+import {Response, ProcessData, Robot, Bench} from '../../../core/entity/entity';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {UrlService} from '../../../core/service/url.service';
 import {Observable, of} from 'rxjs';
@@ -31,7 +31,6 @@ export class SccsService {
       catchError(this.handleError<Response>('deleteProcessData'))
     );
   }
-
   /** GET processDatas from the server */
   getProcessDatas(): Observable<Response> {
     return this.http.get<Response>(this.processDataListUrl)
@@ -55,12 +54,12 @@ export class SccsService {
     );
   }
 
-  // /** POST: add a new processData to the server */
-  // addProcessData(processData: {number: string, description: string, workshop: string}): Observable<Response> {
-  //   return this.http.post<Response>(this.processDataAddteUrl, processData, httpOptions).pipe(
-  //     catchError(this.handleError<any>('addProcessData'))
-  //   );
-  // }
+  /** POST: add a new processData to the server */
+  addProcessData(processData: {bench: Bench}): Observable<Response> {
+    return this.http.post<Response>(this.processDataAddteUrl, processData, httpOptions).pipe(
+      catchError(this.handleError<any>('addProcessData'))
+    );
+  }
   /** PUT: update the hero on the server */
   updateProcessData(processData: ProcessData): Observable<Response> {
     return this.http.put<Response>(this.processDataUpdateUrl, processData, httpOptions).pipe(
