@@ -68,31 +68,40 @@ export class CphglComponent implements OnInit {
         // 创建图表
         highCharts.chart('container', {
           chart: {
-            type: 'line'
+            type: 'line',
+            backgroundColor: '#1e2340',
+            plotShadow: true,
           },
           title: {
-            text: this.selectedRobot !== undefined ? '产品合格率' : '平均产品合格率'
-          },
-          subtitle: {
-            text: '来源： 系统统计'
+            text: this.selectedRobot !== undefined ? '' : '平均产品合格率',
+            style: {
+              color: '#b1b1b1'
+            },
           },
           xAxis: {
             categories: time,
-            crosshair: true
-          },
+            crosshair: true,
+              },
           yAxis: {
             min: 0,
             title: {
-              text: '合格率（%）'
-            }
+              text: '合格率（%）',
+              style: {
+                color: '#b1b1b1'
+              },
+            },
           },
+
           tooltip: {
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
               '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
             footerFormat: '</table>',
             shared: true,
-            useHTML: true
+            useHTML: true,
+            style: {
+                 shadow: true,
+            },
           },
           plotOptions: {
             column: {

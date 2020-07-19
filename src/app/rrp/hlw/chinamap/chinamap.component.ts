@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, Output, ViewChild, ElementRef, EventEmitter} from '@angular/core';
 import * as echarts from 'echarts';
 import 'echarts/map/js/province/shandong.js';
 import 'echarts/map/js/china.js';
@@ -52,9 +52,15 @@ export class ChinamapComponent implements OnInit {
   num = 0;
   data;
   selectProvinceData;
+  cityCompany;
 
   header; // 测试
   footer = '生产数据汇总图表';
+  @Output() voted = new EventEmitter<boolean>();
+// 向父组件发射 一个boolean型的参数 agreed
+  vote(agreed: boolean) {
+    this.voted.emit(agreed);
+  }
   ngOnInit() {
     this.num = 0;
     this.querylisthelp.getCity().then((res: any) => this.CityData = res.data);
@@ -154,7 +160,11 @@ export class ChinamapComponent implements OnInit {
               }
             }
           }
+          if (obj.name.includes('市') || obj.name.includes('州') || obj.name.includes('区')) {
+            console.log(obj.data)
+            this.getLease(obj.data.name);
           }
+        }
       }.bind(this));
     });
   }
@@ -164,6 +174,7 @@ export class ChinamapComponent implements OnInit {
       this.data = res.data;
       this.regionOptions = this.chinaOptions;
       this.header = '各省地图|布料机器人分布';
+      this.cityCompany = undefined;
       for (const obj of res.data) {
         if (obj.value > 0) {
           this.num  += obj.value;
@@ -171,5 +182,13 @@ export class ChinamapComponent implements OnInit {
       }
     });
   }
+
+  getLease(data) {
+    this.querylisthelp.getLeaseByCity(data).then((res:any)=>{
+      this.cityCompany = res.data;
+      this.header = data + '|布料机器人分布';
+    })
+  }
+
 
 }

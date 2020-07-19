@@ -88,4 +88,17 @@ export class QuerylistService {
         reject(error);
       })));
   }
+  getLeaseByCity(data){
+    const url = this.url.hostname + '/lease/findRobotByCity';
+    const body = {
+      city: data
+    }
+    return new Promise(((resolve, reject) =>
+      this.http.post(url, body)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      })));
+  }
 }

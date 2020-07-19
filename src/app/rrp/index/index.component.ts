@@ -203,4 +203,8 @@ export class IndexComponent implements OnInit {
     // 设置当前子菜单不显示
     // item.showSubMenu = false;
   }
+  doSomething(is: boolean) {
+    this.navigateTo(this.menus[1]);
+    this.activemenus = this.menus[1];
+  }
 }

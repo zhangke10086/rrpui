@@ -72,25 +72,44 @@ export class MtgsComponent implements OnInit {
         // @ts-ignore
         require('highcharts/modules/exporting')(highCharts);
         // 创建图表
+        highCharts.setOptions({
+          colors: ['#5d93ff', '#5381df', '#486dbe', '#425fa6' , '#38508c', '#334a80', '#2e4274'],
+        });
         highCharts.chart('container', {
           chart: {
-            type: 'column'
+            type: 'column',
+            backgroundColor: '#1e2340',
+            plotShadow: true,
           },
           title: {
-            text: this.selectedRobot !== undefined ? '模台个数' : '模台总数'
-          },
-          subtitle: {
-            text: '来源： 系统统计'
+            text: this.selectedRobot !== undefined ? '' : '模台总数',
+            style: {
+                shadow: true,
+                color: '#b1b1b1'
+            },
           },
           xAxis: {
             categories: time,
-            crosshair: true
+            crosshair: true,
+            gridLineWidth: '0px',
+            plotLines: [{
+              width: 1,
+              color: '#f00'
+            }],
           },
           yAxis: {
             min: 0,
             title: {
-              text: this.selectedRobot !== undefined ? '模台个数(个)' : '模台总数(个)'
-            }
+              text: this.selectedRobot !== undefined ? '模台个数(个)' : '模台总数(个)',
+              style: {
+                color: '#b1b1b1'
+              },
+            },
+            labels: {
+              style: {
+                 color: '#b1b1b1'
+              },
+            },
           },
           tooltip: {
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
@@ -103,14 +122,23 @@ export class MtgsComponent implements OnInit {
           plotOptions: {
             column: {
               pointPadding: 0.2,
-              borderWidth: 0
+              borderWidth: 0,
+              shadow: true,
+              colorByPoint: true
             }
           },
           time: {
             enabled: false
           },
+
           series: [{
             name: '模台个数',
+            labels: {
+              style: {
+                shadow: true,
+                color: '#b1b1b1'
+              },
+            },
             data: countNum
           }]
         });

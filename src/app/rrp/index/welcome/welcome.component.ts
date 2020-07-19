@@ -25,7 +25,11 @@ export class WelcomeComponent implements OnInit {
   }
   ngOnInit() {
     const query = JSON.parse(localStorage.getItem('query'));
-    this.onquery(query);
+    if (query.province) {
+      this.onquery(query);
+    } else {
+      this.onquery(this.jsondata);
+    }
   }
   onquery(data) {
     // 保留上次查询

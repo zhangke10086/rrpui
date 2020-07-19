@@ -63,15 +63,26 @@ export class HntflComponent implements OnInit {
         // @ts-ignore
         require('highcharts/modules/exporting')(highCharts);
         // 创建图表
+        const colors = ['#e0a23b', '#90BF18', '#F59656' ];
+        // const colors = ['#2c2830', '#604c33', '#e0a23b'];
+        highCharts.getOptions().colors = highCharts.map(colors, function (color) {
+          return {
+            radialGradient: { cx: 0, cy: -0.5, r: 2.5 },
+            stops: [[0, color], [1, highCharts.Color(color).brighten(-60).get('rgb')]]
+          };
+        });
         highCharts.chart('container', {
           chart: {
-            type: 'area'
+            type: 'areaspline',
+            hreshold : null,
+            backgroundColor: '#1e2340',
+            plotShadow: true,
           },
           title: {
-            text: this.selectedRobot === undefined ? '总混凝土方量' : '混凝土方量'
-          },
-          subtitle: {
-            text: '来源： 系统统计'
+            text: this.selectedRobot === undefined ? '总混凝土方量' : '',
+            style: {
+              color: '#b1b1b1'
+            },
           },
           xAxis: {
             categories: time,
@@ -80,7 +91,10 @@ export class HntflComponent implements OnInit {
           yAxis: {
             min: 0,
             title: {
-              text: this.selectedRobot === undefined ? '总混凝土方量（个）' : '混凝土方量（个）'
+              text: this.selectedRobot === undefined ? '总混凝土方量（个）' : '混凝土方量（个）',
+              style: {
+                color: '#b1b1b1'
+              },
             }
           },
           tooltip: {
@@ -94,7 +108,9 @@ export class HntflComponent implements OnInit {
           plotOptions: {
             column: {
               pointPadding: 0.2,
-              borderWidth: 0
+              borderWidth: 0,
+              shadow: true,
+              colorByPoint: true
             }
           },
           time: {
