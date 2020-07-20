@@ -40,69 +40,37 @@
         </div>
       </div>
     </div>
-    <div style="height:200px; border-radius: 5px;padding:5px; background:#191b30; margin-top: 10px">
+    <div style="height:180px; border-radius: 5px;padding:5px; background:#191b30; margin-top: 10px">
         <div style="border-radius: 5px; height:90%; border:1px solid #5d74c4; margin-top:10px; position: relative">
           <div style="border: 9px solid transparent; border-right: 9px solid #5d74c4;  width:0; height:0;
         display:inline-block; position: absolute; top:-10px; left:-18px;"></div>
           <span style="position: absolute; top:-10px;font-weight:bolder; z-index:2;
         background: linear-gradient(to right, #5d74c4, #191b30);left:0;">
           今日已浇筑生产 </span>
-          <div style="width:49%; height:40%; margin-top:30px; padding:1px;
+          <div style="width:49%; height:30%; margin-top:30px; padding:1px;
         border-right:1px solid #5d74c4; text-align: center; float:left">模台数量<br>
             <span style="font:18px border; color: dodgerblue">{{benchNum}}</span>块
           </div>
-          <div style="width:50%; height:40%; margin-top:30px; padding:1px; text-align: center;float:left">叠合板数量<br>
+          <div style="width:50%; height:30%; margin-top:30px; padding:1px; text-align: center;float:left">叠合板数量<br>
             <span style="font:18px border; color: dodgerblue">{{boardNum}}</span>块
           </div>
-          <hr style="color:#5d74c4; width: 60%; float: left;margin-left:20px">
-          <div style="width:49%; height:50%; margin-top:30px; padding:1px; text-align: center;float:left">
+          <hr style="color:#5d74c4; width:80%; float: left;margin-left:20px">
+          <div style="width:49%; height:50%; padding:1px; text-align: center;float:left">
+            <div style="width:10px; height: 40px;margin-left:49%; border:1px solid #5d74c4; border-radius: 3px; overflow:hidden;">
+              <div style="width:10px; height: 40px; margin-top:20px; background-color: #2b3"></div>
+            </div><!--margin-top需要计算-->
             混凝土方量
           </div>
-          <div style="width:49%; height:60%; margin-top:30px; padding:1px; text-align: center;float:left">
+          <div style="width:49%; height:60%; padding:1px; text-align: center;float:left">
+            <div style="width:10px; height: 40px;margin-left:49%; border:1px solid #5d74c4; border-radius: 3px; overflow:hidden;">
+              <div style="width:10px; height: 40px; margin-top:20px; background-color: #23b"></div>
+            </div><!--margin-top需要计算-->
             待浇筑方量
           </div>
         </div>
       </div>
 
 
-
-
-    <div style="height:160px; border-radius: 5px;padding:5px; background:#191b30; left: 100px">
-      <div style="border-radius: 5px; height:90%; border:1px solid #5d74c4; margin-top:10px; position: relative">
-        <div style="border: 9px solid transparent; border-right: 9px solid #5d74c4;  width:0; height:0;
-          display:inline-block; position: absolute; top:-10px; left:-18px;"></div>
-        <span style="position: absolute; top:-10px;font-weight:bolder; left:0;
-        background: linear-gradient(to right, #5d74c4, #191b30)">工艺流程 </span>
-        <span style="background: linear-gradient(to right, #5d74c4, #191b30);display:inline-block;
-          width:90%; margin-left:10px; margin-top:20px; padding:1px 5px;">模台进入: {{mtjr}}</span>
-        <span style="background: linear-gradient(to right, #191b30,#5d74c4);display:inline-block;
-          width:90%; height:10px; border:0; margin:0 0 0 10px; ">扫描识别：{{smsb}} </span>
-        <span style="background: linear-gradient(to right, #5d74c4, #191b30);display:inline-block;
-          width:90%; margin:0 0 0 10px; padding:1px 5px;">智能布料：{{znbl}}</span>
-        <span style="background: linear-gradient(to right, #191b30,#5d74c4);display:inline-block;
-          width:90%; height:10px; border:0; margin:0 0 0 10px; padding:1px 5px;">振捣密室：{{zdms}} </span>
-        <span style="background: linear-gradient(to right, #5d74c4, #191b30);display:inline-block;
-          width:90%; margin:0 0 0 10px; padding:1px 5px;">模台驶出: {{ntsc}}</span>
-      </div>
-    </div>
-
-
-    <div style="height:160px; border-radius: 5px;padding:5px; background:#191b30;">
-      <div style="border-radius: 5px; height:90%; border:1px solid #5d74c4; margin-top:10px; position: relative">
-        <div style="border: 9px solid transparent; border-right: 9px solid #5d74c4;  width:0; height:0;
-          display:inline-block; position: absolute; top:-10px; left:-18px;"></div>
-        <span style="position: absolute; top:-10px;font-weight:bolder; left:0;
-        background: linear-gradient(to right, #5d74c4, #191b30)">设备状态 </span>
-        <span style="background: linear-gradient(to right, #5d74c4, #191b30);display:inline-block;
-          width:90%; margin-left:10px; margin-top:20px; padding:1px 5px;">大车行走: {{dcxz}}</span>
-        <span style="background: linear-gradient(to right, #191b30,#5d74c4);display:inline-block;
-          width:90%; height:10px; border:0; margin:0 0 0 10px; ">小车行走：{{xczx}} </span>
-        <span style="background: linear-gradient(to right, #5d74c4, #191b30);display:inline-block;
-          width:90%; margin:0 0 0 10px; padding:1px 5px;">智能布料：{{znbl1}}</span>
-        <span style="background: linear-gradient(to right, #191b30,#5d74c4);display:inline-block;
-          width:90%; height:10px; border:0; margin:0 0 0 10px; padding:1px 5px;">振动平台：{{zdpt}} </span>
-      </div>
-    </div>
   </div>
 
   <div style="width:530px; height:450px; float:left;margin:10px; padding:0; border-radius: 5px;  border:1px solid #5d74c4;">
@@ -116,6 +84,42 @@
            style="border:1px solid #aaa; margin-left:5px;"> </video>
     <video [src]="" controls="controls" width="260" height="200"
            style="border:1px solid #aaa;"> </video>
+  </div>
+  <div style="width:200px; height:700px; float:left;margin:10px;">
+    <div style="height:160px; border-radius: 5px;padding:5px; background:#191b30; left: 100px">
+      <div style="border-radius: 5px; height:90%; border:1px solid #5d74c4; margin-top:10px; position: relative">
+        <div style="border: 9px solid transparent; border-right: 9px solid #5d74c4;  width:0; height:0;
+          display:inline-block; position: absolute; top:-10px; left:-17px;"></div>
+        <span style="position: absolute; top:-10px;font-weight:bolder; left:0;
+        background: linear-gradient(to right, #5d74c4, #191b30)">工艺流程 </span><!--[ngClass]="{'blue': mtjr=='已完成'}"-->
+        <div  style="display:inline-block; width:90%; margin-left:10px; margin-top:20px; padding:0 5px;
+           border:1px solid #5d74c4; border-radius:5px;" >模台进入: <span syle="float:right; border-radius:5px">{{mtjr}}</span></div>
+        <div style="display:inline-block; width:90%; margin:3px 0 0 10px; padding:0 5px;
+             border:1px solid #5d74c4; border-radius:5px;">扫描识别：<span>{{smsb}} </span></div>
+        <div style="display:inline-block; width:90%; margin:3px 0 0 10px; padding:0 5px;
+          border:1px solid #5d74c4; border-radius:5px;">智能布料：{{znbl}}</div>
+        <div style="display:inline-block; width:90%; margin:3px 0 0 10px; padding:0 5px;
+          border:1px solid #5d74c4; border-radius:5px;">振捣密室：{{zdms}} </div>
+        <div style="display:inline-block; width:90%; margin:3px 0 0 10px; padding:0 5px;
+          border:1px solid #5d74c4; border-radius:5px;">模台驶出: {{ntsc}}</div>
+      </div>
+    </div>
+    <div style="height:180px; border-radius: 5px;padding:5px; background:#191b30; margin-top:10px; ">
+      <div style="border-radius: 5px; height:90%; border:1px solid #5d74c4; margin-top:10px; position: relative">
+        <div style="border: 9px solid transparent; border-right: 9px solid #5d74c4;  width:0; height:0;
+          display:inline-block; position: absolute; top:-10px; left:-17px;"></div>
+        <span style="position: absolute; top:-10px;font-weight:bolder; left:0;
+           background: linear-gradient(to right, #5d74c4, #191b30)">设备状态 </span>
+        <div style="display:inline-block; width:45%; margin:20px 0 0 10px; padding:0 5px; text-align: center">
+          <div style="width:40px;height:40px; border-radius:50%; border:5px solid cornflowerblue;margin:0 auto" >{{dcxz}}</div>大车行走</div>
+        <div style="display:inline-block; width:45%; margin:3px 0 0 5px; padding:0 5px; text-align: center">
+          <div style="width:40px;height:40px; border-radius:50%; border:5px solid cornflowerblue;margin:0 auto" >{{xczx}}</div>小车行走 </div>
+        <div style="display:inline-block; width:45%; margin:3px 0 0 10px; padding:0 5px; text-align: center">
+          <div style="width:40px;height:40px; border-radius:50%; border:5px solid cornflowerblue;margin:0 auto">{{znbl1}}</div>智能布料</div>
+        <div style="display:inline-block; width:45%; margin:3px 0 0 5px; padding:0 5px; text-align: center">
+          <div style="width:40px;height:40px; border-radius:50%; border:5px solid cornflowerblue;margin:0 auto">{{zdpt}}</div>振动平台 </div>
+      </div>
+    </div>
   </div>
 
 </div>
