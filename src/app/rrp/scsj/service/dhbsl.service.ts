@@ -20,7 +20,6 @@ export class DhbslService {
   private boardCountListByIdUrl = this.url.hostname + '/boardCount/getBoardCountById';
   constructor(private http: HttpClient , private url: UrlService) { }
 
-
   /** GET boardCounts from the server */
   // tslint:disable-next-line:variable-name
   getBoardCounts(date_begin: string, date_end: string, robot_id: string): Observable<Response> {

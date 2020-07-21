@@ -14,6 +14,7 @@ import {UrlService} from "../../../core/service/url.service";
   styleUrls: ['./jfgl.component.css']
 })
 export class JfglComponent implements OnInit {
+
   // 修改弹窗
   isVisible = false;
   // 增加弹框

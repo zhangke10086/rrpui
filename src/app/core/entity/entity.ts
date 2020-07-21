@@ -301,6 +301,7 @@ export class BoardArea {
   area: number;
   time: Date;
   robot: Robot;
+
 }
 
 export class BoardCount {

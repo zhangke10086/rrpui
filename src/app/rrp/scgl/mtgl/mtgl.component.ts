@@ -29,6 +29,7 @@ export class MtglComponent implements OnInit {
         companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
         robotid: ''
       };
+
   operation;
 
   constructor(

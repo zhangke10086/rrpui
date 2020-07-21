@@ -17,7 +17,6 @@ export class HntflService {
   private concreteCountListByIdUrl = this.url.hostname + '/concreteCount/getConcreteCountById';
   constructor(private http: HttpClient , private url: UrlService) { }
 
-
   /** GET concreteCounts from the server */
   // tslint:disable-next-line:variable-name
   getConcreteCounts(date_begin: string, date_end: string, robot_id: string): Observable<Response> {

@@ -17,7 +17,6 @@ export class Zlgl1Service {
   private leaseListUrl = this.url.hostname + '/lease/findAllLease';
   private leaseListByIdUrl = this.url.hostname + '/lease/findAllByRobot';
   private newestLeaseByIdUrl = this.url.hostname + '/lease/findNewestByRobot';
-
   private leaseDeleteUrl = this.url.hostname + '/lease/deleteLease';
   private leaseUpdateUrl = this.url.hostname + '/lease/updateLease';
   private leaseAddteUrl = this.url.hostname + '/lease/addLease';

@@ -41,6 +41,7 @@ export class BljqrglComponent implements OnInit {
   uploadUrl = this.url.hostname + '/lease/upload';
   robot: Robot;
   operation;
+
   jsondata = {
     province : '',
     city : '',

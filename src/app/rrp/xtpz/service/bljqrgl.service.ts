@@ -18,7 +18,6 @@ export class BljqrglService {
   private robotDeleteUrl = this.url.hostname + '/robot/deleteRobot';
   private robotUpdateUrl = this.url.hostname + '/robot/updateRobot';
   private robotAddteUrl = this.url.hostname + '/robot/addRobot';
-
   // private robotAddteUrl = 'http://localhost:8080/robot/addrobot';
   constructor(private http: HttpClient,
               private url: UrlService) { }

@@ -40,7 +40,7 @@ export class WelcomeComponent implements OnInit {
   jsondata = {
     province: '',
     city: '',
-    companyid: '',
+    companyid : '',
     owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
     companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
     robotid: ''
@@ -98,7 +98,7 @@ export class WelcomeComponent implements OnInit {
         this.zdms = res.data.zdms;
         this.ntsc = res.data.ntsc;
         this.dcxz = res.data.dcxz;
-        this.xczx = res.data.xczx;
+        this.xczx = res.data.xcxz;
         this.zdpt = res.data.zdpt;
         this.znbl1 = res.data.znbl1;
       });

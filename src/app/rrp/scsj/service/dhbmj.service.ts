@@ -18,7 +18,6 @@ export class DhbmjService {
   private boardAreaListByIdUrl = this.url.hostname + '/boardArea/getBoardAreaById';
   constructor(private http: HttpClient , private url: UrlService) { }
 
-
   /** GET boardAreas from the server */
   // tslint:disable-next-line:variable-name
   getBoardAreas(date_begin: string, date_end: string, robot_id: string): Observable<Response> {

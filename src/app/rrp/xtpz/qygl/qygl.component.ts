@@ -57,6 +57,7 @@ export class QyglComponent implements OnInit {
     this.getCompanyTypes();
     this.getprovince();
   }
+
   constructor(
     private qyglService: QyglService,
     private zlgl1Service: Zlgl1Service,

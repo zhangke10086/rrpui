@@ -21,6 +21,7 @@ nz-select{
 }
 #form2 nz-upload{
   width: 200px;
+
 }
 #form2 .ant-calendar-picker-input.ant-input {
   line-height: 1.5;

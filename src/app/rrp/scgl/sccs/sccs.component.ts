@@ -18,6 +18,7 @@ export class SccsComponent implements OnInit {
     private sccsService: SccsService,
     private location: Location,
     private message: NzMessageService
+
   ) {
     this.route.queryParams.subscribe(params => {
       if (params != null) {

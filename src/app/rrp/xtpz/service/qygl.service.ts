@@ -30,6 +30,7 @@ export class QyglService {
       catchError(this.handleError<any>('addCompany'))
     );
   }
+
   /** DELETE: delete the company from the server */
   deleteCompany(company: Company | number): Observable<Response> {
     const id = typeof company === 'number' ? company : company.id;

@@ -34,6 +34,7 @@ export class MtcsComponent implements OnInit {
   produces = [];
   accountArray;
   operation;
+
   // 前端传参
   jsondata = {
     province: '',

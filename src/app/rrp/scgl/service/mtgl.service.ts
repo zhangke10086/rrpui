@@ -21,7 +21,6 @@ export class MtglService {
   private benchUpdateUrl = this.url.hostname + '/bench/updateBench';
   private benchAddteUrl = this.url.hostname + '/bench/addBench';
   constructor(private http: HttpClient , private url: UrlService) { }
-
   /** DELETE: detail the bench from the server */
   deleteBench(bench: Bench | number): Observable<Response> {
     const id = typeof bench === 'number' ? bench : bench.id;

@@ -18,7 +18,6 @@ export class MtlylService {
   private newestLeaseByIdUrl = this.url.hostname + '/benchRatio/findNewestByRobot';
   constructor(private http: HttpClient , private url: UrlService) { }
 
-
   /** GET benchRatios from the server */
   // tslint:disable-next-line:variable-name
   getBenchRatios(date_begin: string, date_end: string, robot_id: string): Observable<Response> {

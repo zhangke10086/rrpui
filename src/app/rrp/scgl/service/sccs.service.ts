@@ -20,7 +20,6 @@ export class SccsService {
   private processDataDeleteUrl = this.url.hostname + '/processData/deleteById';
   private processDataUpdateUrl = this.url.hostname + '/processData/updateProcessData';
   private processDataAddteUrl = this.url.hostname + '/processData/addProcessData';
-
   constructor(private http: HttpClient, private url: UrlService) {
   }
 

@@ -11,7 +11,6 @@ import {QuerylistService} from '../../../helpcenter/querylist/querylist.service'
   styleUrls: ['./mtlyl.component.css']
 })
 export class MtlylComponent implements OnInit {
-
   // tslint:disable-next-line:variable-name
   begin: Date;
   // tslint:disable-next-line:variable-name
