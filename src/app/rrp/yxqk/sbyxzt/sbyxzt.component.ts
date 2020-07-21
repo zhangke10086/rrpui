@@ -1,5 +1,14 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {BenchCount, BenchData, BoardCount, ConcreteCount, Lease, Robot, Sczt} from '../../../core/entity/entity';
+import {
+  BenchCount,
+  BenchData,
+  BoardArea,
+  BoardCount,
+  ConcreteCount,
+  Lease,
+  Robot,
+  Sczt
+} from '../../../core/entity/entity';
 import {QuerylistComponent} from '../../../helpcenter/querylist/querylist.component';
 import {MtcsService} from '../../scgl/service/mtcs.service';
 import {BljqrglService} from '../../xtpz/service/bljqrgl.service';
@@ -22,11 +31,18 @@ export class SbyxztComponent implements OnInit {
   connector: string;
   benchCount: BenchCount;
   benchNum: number;
+  benchPlanCount: number;
   boardCount: BoardCount;
+  boardPlanCount: number;
   boardNum: number;
   concreteCount: ConcreteCount;
+  conPlanCount: number;
   conCount: number;
+  boardArea: BoardArea;
+  area: number;
+  planArea: number;
   sczt: Sczt;
+  sczt1: string;
   mtjr: string;
   smsb: string;
   znbl: string;
@@ -39,7 +55,7 @@ export class SbyxztComponent implements OnInit {
   jsondata = {
     province: '',
     city: '',
-    companyid: '',
+    companyid : '',
     owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
     companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
     robotid: ''
@@ -71,6 +87,7 @@ export class SbyxztComponent implements OnInit {
       .subscribe((res: any) => {
         this.benchCount = res.data;
         this.benchNum = res.data.count;
+        this.benchPlanCount = res.data.plan_count;
       });
   }
   getBoardNum(id: number): void {
@@ -78,6 +95,7 @@ export class SbyxztComponent implements OnInit {
       .subscribe((res: any) => {
         this.boardCount = res.data;
         this.boardNum = res.data.count;
+        this.boardPlanCount = res.data.plan_count;
       });
   }
   getConcreteCount(id: number): void {
@@ -85,6 +103,15 @@ export class SbyxztComponent implements OnInit {
       .subscribe((res: any) => {
         this.concreteCount = res.data;
         this.conCount = res.data.count;
+        this.conPlanCount = res.data.plan_count;
+      });
+  }
+  getBoardArea(id: number): void {
+    this.dhbslService.getBoardAreaByRobotId(id)
+      .subscribe((res: any) => {
+        this.boardArea = res.data;
+        this.area = res.data.area;
+        this.planArea = res.data.plan_area;
       });
   }
   getSczt(id: number): void {
@@ -97,9 +124,14 @@ export class SbyxztComponent implements OnInit {
         this.zdms = res.data.zdms;
         this.ntsc = res.data.ntsc;
         this.dcxz = res.data.dcxz;
-        this.xczx = res.data.xczx;
+        this.xczx = res.data.xcxz;
         this.zdpt = res.data.zdpt;
         this.znbl1 = res.data.znbl1;
+        if (this.dcxz === '正常' && this.xczx === '正常' && this.zdpt === '正常' && this.znbl1 === '正常') {
+          this.sczt1 = '正常';
+        } else {
+          this.sczt1 = '异常';
+        }
       });
   }
   ngOnInit() {
@@ -144,6 +176,7 @@ export class SbyxztComponent implements OnInit {
         this.getBoardNum(data.robot.id);
         this.getConcreteCount(data.robot.id);
         this.getSczt(data.robot.id);
+        this.getBoardArea(data.robot.id);
       }
       if (data.company) {
         this.jsondata.companyid = data.company.id;
