@@ -4,6 +4,8 @@ import {ActivatedRoute} from '@angular/router';
 import {BljqrglService} from '../service/bljqrgl.service';
 import {QyglService} from '../service/qygl.service';
 import { NzMessageService } from 'ng-zorro-antd';
+import {UrlService} from '../../../core/service/url.service';
+import {Zlgl1Service} from '../../zlgl/service/zlgl1.service';
 
 @Component({
   selector: 'app-bljqrgl',
@@ -14,16 +16,32 @@ export class BljqrglComponent implements OnInit {
   // 更新用
   isVisible = false;
   isVisible1 = false;
+  isVisible2 = false;
+  responseurl;
   id = '';
   name = '';
   way = '';
+  add1 = false;
+  add2 = false;
+  contract;
+  workshopId = '';
+  internalId = '';
+  shengchanxian = '';
+  contractId;
+  costMonth;
+  costWay;
+  connector;
+  dateRange = [];
   useSituation = '未启用';
   ways: string[] = ['租赁', '购买', '制造'];
   company: Company;
   robots: Robot[];
   companys: Company[];
+  isDisabled = false;
+  uploadUrl = this.url.hostname + '/lease/upload';
   robot: Robot;
   operation;
+
   jsondata = {
     province : '',
     city : '',
@@ -36,7 +54,9 @@ export class BljqrglComponent implements OnInit {
     private bljqrglService: BljqrglService,
     private qyglService: QyglService,
     private route: ActivatedRoute,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private zlgl1Service: Zlgl1Service,
+    private url: UrlService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params != null) {
@@ -64,16 +84,71 @@ export class BljqrglComponent implements OnInit {
   showModal1(): void {
     this.isVisible1 = true;
   }
+  showModal2(data: Robot): void {
+    this.add1 = true;
+    this.robot = data;
+    this.isVisible2 = true;
+  }
   handleCancel1(): void {
     this.isVisible1 = false;
   }
   handleCancel(): void {
     this.isVisible = false;
   }
-
+  handleCancel2(): void {
+    this.isVisible2 = false;
+  }
+  handleChange(info: any): void {
+    if (info) {
+      if (info.type === 'success') {
+        if (info.file) {
+          if (info.file.response) {
+            if (info.file.response.data !== undefined) {
+              const data = info.file.response.data;
+              this.responseurl = data;
+            }
+          }
+        }
+      }
+    }
+  }
+  modelAdd() {
+    this.add1 = !this.add1;
+    this.add2 = !this.add2;
+  }
+  isDis(data: Robot): void {
+    alert(data.way === '租赁');
+  }
+  zulin(): void {
+    console.log(this.robots);
+    this.isVisible2 = false;
+    this.add1 = false;
+    this.add2 = false;
+    this.robot.way = '已租赁';
+    const add = { robot: this.robot, contractId: this.contractId, companyId: this.company,
+      costWay: this.costWay, costMonth: this.costMonth, startTime: this.dateRange[0], endTime: this.dateRange[1],
+      paymentSituation: '0', workshopId: this.workshopId, internalId: this.internalId,
+      contract: this.contract, connector: this.connector, uploadurl: this.responseurl, state: '未启用'};
+    this.zlgl1Service.addLease(add)
+      .subscribe((res: any) => {
+        if (res.state === 200) {
+          this.onquery(this.jsondata);
+          this.message.success('租赁成功！');
+        } else {
+          this.onquery(this.jsondata);
+          this.message.error('租赁失败！');
+        }
+      });
+    this.bljqrglService.updateRobot(this.robot)
+      .subscribe((res: any) => {
+        this.getRobots();
+        alert(res.msg);
+      });
+  }
   add(): void {
     this.isVisible1 = false;
-    const add = {id: this.id, name: this.name, way: this.way, belongingCompany: this.company, use_situation: this.useSituation}
+    const add = {id: this.id
+      , name: this.name, way: this.way, belongingCompany: this.company, use_situation: this.useSituation, shengchanxian: this.shengchanxian}
     this.bljqrglService.addRobot(add)
       .subscribe((res: any) => {
         this.getRobots();
@@ -107,6 +182,7 @@ export class BljqrglComponent implements OnInit {
         this.robot = res.data;
       });
   }
+
   getCompanys(): void {
     this.qyglService.getCompanys()
       .subscribe((res: any) => {

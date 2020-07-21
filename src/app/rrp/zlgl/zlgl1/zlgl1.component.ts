@@ -13,6 +13,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   templateUrl: './zlgl1.component.html',
   styleUrls: ['./zlgl1.component.css']
 })
+
 export class Zlgl1Component implements OnInit {
 // 修改弹窗
   isVisible = false;

@@ -15,8 +15,8 @@ export class MtlylService {
   response: Response;
   private benchRatioListUrl = this.url.hostname + '/benchRatio/getBenchRatio';
   private benchRatioListByIdUrl = this.url.hostname + '/benchRatio/getBenchRatioById';
+  private newestLeaseByIdUrl = this.url.hostname + '/benchRatio/findNewestByRobot';
   constructor(private http: HttpClient , private url: UrlService) { }
-
 
   query(data) {
     const url = this.url.hostname + '/benchRatio/query';
@@ -29,7 +29,6 @@ export class MtlylService {
       }))
     );
   }
-
   /** GET benchRatios from the server */
   // tslint:disable-next-line:variable-name
   getBenchRatios(date_begin: string, date_end: string, robot_id: string): Observable<Response> {
@@ -46,7 +45,13 @@ export class MtlylService {
         catchError(this.handleError<Response>('getBenchRatio'))
       );
   }
-
+  // 根据RobotID查找最新的模台个数
+  getRatioByRobotId(id: number): Observable<Response> {
+    const url = this.newestLeaseByIdUrl + '?id=' + id;
+    return this.http.get<Response>(url).pipe(
+      catchError(this.handleError<Response>(`getLease id=${id}`))
+    );
+  }
   /**
    * Handle Http operation that failed.
    * @param operation - name of the operation that failed

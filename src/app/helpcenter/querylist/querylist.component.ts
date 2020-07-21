@@ -35,15 +35,15 @@ export class QuerylistComponent implements OnInit {
   ngOnInit() {
     this.company = JSON.parse(localStorage.getItem('userinfo')).company;
     // 非骊久
-    if (this.company.id != 1) {
+    if (this.company.id!=1){
       // 购买 或 租用 企业
-      if (this.company.companyType.id === 3 || this.company.companyType.id === 4 ) {
+      if(this.company.companyType.id === 3 || this.company.companyType.id === 4 ){
         this.getRobot(this.company.id);
       } else {
-        // 出租企业
+        //出租企业
         this.querylistService.getProvince().then((res:any) => {
           this.ProvinceData = res.data;
-          if (this.cache) {
+          if(this.cache){
             this.getcache();
           }
         });
@@ -52,7 +52,7 @@ export class QuerylistComponent implements OnInit {
       // 骊久
       this.querylistService.getProvince().then((res:any) => {
         this.ProvinceData = res.data;
-        if(this.cache) {
+        if(this.cache){
           this.getcache();
         }
       });
@@ -98,17 +98,17 @@ export class QuerylistComponent implements OnInit {
         if(this.company.id != 1){
           this.querylistService.getRobotByCompany(this.selectedCompany.id,this.company.id).then((res:any)=>{
             this.RobotData = res.data;
-          });
+          })
         } else {
           this.querylistService.getRobotByCompanyid(this.selectedCompany.id).then((res:any)=>{
             this.RobotData = res.data;
-          });
+          })
         }
       } else {
-        // 购买或租用企业 只能看自己企业下的机器人
+        //购买或租用企业 只能看自己企业下的机器人
         this.querylistService.getRobotByCompanyid(id).then((res:any) => {
           this.RobotData = res.data;
-        });
+        })
       }
     }
   }

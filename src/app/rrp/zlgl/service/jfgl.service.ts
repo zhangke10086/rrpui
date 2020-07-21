@@ -29,6 +29,7 @@ export class JfglService {
       catchError(this.handleError<any>('addPay'))
     );
   }
+
   /** DELETE: delete the pay from the server */
   deletePay(pay: Pay | number): Observable<Response> {
     const id = typeof pay === 'number' ? pay : pay.id;

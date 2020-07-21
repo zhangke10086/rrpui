@@ -125,6 +125,7 @@ export class Robot {
   belongingCompany: Company;
   way: string;
   useSituation: string;
+  shengchanxian: string;
 }
 
 export class Lease {
@@ -284,6 +285,7 @@ export class RobotData {
 export class BenchCount {
   id: number;
   count: number;
+  planCount: number;
   time: Date;
   robot: Robot;
 }
@@ -298,13 +300,16 @@ export class BenchRatio {
 export class BoardArea {
   id: number;
   area: number;
+  planArea: number;
   time: Date;
   robot: Robot;
+
 }
 
 export class BoardCount {
   id: number;
   count: number;
+  planCount: number;
   time: Date;
   robot: Robot;
 }
@@ -312,6 +317,7 @@ export class BoardCount {
 export class ConcreteCount {
   id: number;
   count: number;
+  planCount: number;
   time: Date;
   robot: Robot;
 }
@@ -320,6 +326,20 @@ export class ProductRatio {
   id: number;
   ratio: number;
   time: Date;
+  robot: Robot;
+}
+
+export class Sczt {
+  id: number;
+  mtjr: string;
+  smsb: string;
+  znbl: string;
+  zdms: string;
+  ntsc: string;
+  dcxz: string;
+  xczx: string;
+  zdpt: string;
+  znbl1: string;
   robot: Robot;
 }
 

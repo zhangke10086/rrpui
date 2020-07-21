@@ -3,7 +3,7 @@ import {BoardCount} from '../../../core/entity/entity';
 import {ActivatedRoute} from '@angular/router';
 import {DatePipe} from '@angular/common';
 import {DhbslService} from '../service/dhbsl.service';
-import {QuerylistService} from "../../../helpcenter/querylist/querylist.service";
+import {QuerylistService} from '../../../helpcenter/querylist/querylist.service';
 
 @Component({
   selector: 'app-dhbsl',

@@ -3,7 +3,7 @@ import {BoardArea} from '../../../core/entity/entity';
 import {ActivatedRoute} from '@angular/router';
 import {DatePipe} from '@angular/common';
 import {DhbmjService} from '../service/dhbmj.service';
-import {QuerylistService} from "../../../helpcenter/querylist/querylist.service";
+import {QuerylistService} from '../../../helpcenter/querylist/querylist.service';
 
 @Component({
   selector: 'app-dhbmj',
@@ -11,7 +11,6 @@ import {QuerylistService} from "../../../helpcenter/querylist/querylist.service"
   styleUrls: ['./dhbmj.component.css']
 })
 export class DhbmjComponent implements OnInit {
-
   // tslint:disable-next-line:variable-name
   begin: Date;
   // tslint:disable-next-line:variable-name

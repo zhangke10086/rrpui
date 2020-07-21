@@ -20,7 +20,6 @@ export class MtcsService {
   private benchDataDeleteUrl = this.url.hostname + '/benchData/deleteById';
   private benchDataUpdateUrl = this.url.hostname + '/benchData/updateBenchData';
   private benchDataAddteUrl = this.url.hostname + '/benchData/addBenchData';
-
   constructor(private http: HttpClient, private url: UrlService) {
   }
 
