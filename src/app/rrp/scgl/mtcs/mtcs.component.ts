@@ -91,21 +91,21 @@ export class MtcsComponent implements OnInit {
             this.adds.push(res.data);
           }
         } else {
-          // tslint:disable-next-line:prefer-for-of
-          for (let i = 0; i < this.adds.length; i++) {
-            // alert(this.adds[i].id === res.data.id);
-            if (this.adds[i].id === res.data.id) {
-              check = false;
-              this.adds.splice(i, 1);
-            }
-          }
-          if (check) {
-            this.benchService.getBench(item)
-              .subscribe((res1: any) => {
-                const da = {bench: res1.data, company: res1.data.company};
-                this.adds.push(da);
-              });
-          }
+          // // tslint:disable-next-line:prefer-for-of
+          // for (let i = 0; i < this.adds.length; i++) {
+          //   // alert(this.adds[i].id === res.data.id);
+          //   if (this.adds[i].id === res.data.id) {
+          //     check1 = false;
+          //     this.adds.splice(i, 1);
+          //   }
+          // }
+          // if (check1) {
+          this.benchService.getBench(item)
+            .subscribe((res1: any) => {
+              const da = {bench: res1.data, company: res1.data.company};
+              this.adds.push(da);
+            });
+          // }
         }
       });
   }
@@ -127,9 +127,17 @@ export class MtcsComponent implements OnInit {
           const num = time + this.adds[i].bench.number;
           this.add1 = {number: num, time: time1, bench: this.adds[i].bench, company: this.adds[i].company, state: 0};
         } else {
-          this.add1 = {number: '', time: time1, bench: this.adds[i].bench, company: this.adds[i].company, state: 0};
-          this.sccsService.addProcessData({bench: this.adds[i].bench})
-            .subscribe((res1: any) => {
+          const num = time + this.adds[i].bench.number;
+          this.add1 = {number: num, time: time1, bench: this.adds[i].bench, company: this.adds[i].company, state: 0};
+          const addBench = this.adds[i].bench;
+          this.sccsService.getProcessDataByBench(this.adds[i].bench.id)
+            .subscribe((res0: any) => {
+              console.log(res0.data);
+              if (res0.data === null) {
+                this.sccsService.addProcessData({bench: addBench})
+                  .subscribe((res1: any) => {
+                  });
+              }
             });
         }
         this.benchDataService.addBenchData(this.add1)
