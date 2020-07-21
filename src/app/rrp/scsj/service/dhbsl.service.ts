@@ -17,6 +17,17 @@ export class DhbslService {
   private boardCountListByIdUrl = this.url.hostname + '/boardCount/getBoardCountById';
   constructor(private http: HttpClient , private url: UrlService) { }
 
+  query(data) {
+    const url = this.url.hostname + '/boardCount/query';
+    return new Promise(((resolve, reject) =>
+      this.http.post(url, data)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      }))
+    );
+  }
 
   /** GET boardCounts from the server */
   // tslint:disable-next-line:variable-name

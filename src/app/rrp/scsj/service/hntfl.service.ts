@@ -17,7 +17,18 @@ export class HntflService {
   private concreteCountListByIdUrl = this.url.hostname + '/concreteCount/getConcreteCountById';
   constructor(private http: HttpClient , private url: UrlService) { }
 
-
+  // 动态查询
+  query(data) {
+    const url = this.url.hostname + '/concreteCount/query';
+    return new Promise(((resolve, reject) =>
+      this.http.post(url, data)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      }))
+    );
+  }
   /** GET concreteCounts from the server */
   // tslint:disable-next-line:variable-name
   getConcreteCounts(date_begin: string, date_end: string, robot_id: string): Observable<Response> {

@@ -18,6 +18,18 @@ export class MtlylService {
   constructor(private http: HttpClient , private url: UrlService) { }
 
 
+  query(data) {
+    const url = this.url.hostname + '/benchRatio/query';
+    return new Promise(((resolve, reject) =>
+      this.http.post(url, data)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      }))
+    );
+  }
+
   /** GET benchRatios from the server */
   // tslint:disable-next-line:variable-name
   getBenchRatios(date_begin: string, date_end: string, robot_id: string): Observable<Response> {

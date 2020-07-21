@@ -18,6 +18,18 @@ export class DhbmjService {
   constructor(private http: HttpClient , private url: UrlService) { }
 
 
+  query(data) {
+    const url = this.url.hostname + '/boardArea/query';
+    return new Promise(((resolve, reject) =>
+      this.http.post(url, data)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      }))
+    );
+  }
+
   /** GET boardAreas from the server */
   // tslint:disable-next-line:variable-name
   getBoardAreas(date_begin: string, date_end: string, robot_id: string): Observable<Response> {

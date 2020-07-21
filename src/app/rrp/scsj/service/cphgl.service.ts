@@ -17,6 +17,17 @@ export class CphglService {
   private productRatioListByIdUrl = this.url.hostname + '/productRatio/getProductRatioById';
   constructor(private http: HttpClient , private url: UrlService) { }
 
+  query(data) {
+    const url = this.url.hostname + '/productRatio/query';
+    return new Promise(((resolve, reject) =>
+      this.http.post(url, data)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      }))
+    );
+  }
 
   /** GET productRatios from the server */
   // tslint:disable-next-line:variable-name
