@@ -13,8 +13,10 @@ const httpOptions = {
 })
 export class MtglService {
   response: Response;
+  private robotListUrl = this.url.hostname + '/robot/findAllRobot';
   private benchListUrl = this.url.hostname + '/bench/getBench';
   private benchListByIdUrl = this.url.hostname + '/bench/getBenchById';
+  private benchListByRobotIdUrl = this.url.hostname + '/bench/getBenchByRobot';
   private benchDeleteUrl = this.url.hostname + '/bench/deleteById';
   private benchUpdateUrl = this.url.hostname + '/bench/updateBench';
   private benchAddteUrl = this.url.hostname + '/bench/addBench';
@@ -35,12 +37,26 @@ export class MtglService {
         catchError(this.handleError<Response>('getBenchs'))
       );
   }
+  /** GET benchs from the server */
+  getRobots(): Observable<Response> {
+    return this.http.get<Response>(this.robotListUrl)
+      .pipe(
+        catchError(this.handleError<Response>('getRobots'))
+      );
+  }
 
   /** GET bench by id. Will 404 if id not found */
   getBench(id: number): Observable<Response> {
     const url = this.benchListByIdUrl + '?id=' + id;
     return this.http.get<Response>(url).pipe(
       catchError(this.handleError<Response>(`getBench id=${id}`))
+    );
+  }
+  /** GET bench by id. Will 404 if id not found */
+  getBenchByRobot(id: number): Observable<Response> {
+    const url = this.benchListByRobotIdUrl + '?robot_id=' + id;
+    return this.http.get<Response>(url).pipe(
+      catchError(this.handleError<Response>(`getBenchByRobot robot_id=${id}`))
     );
   }
   /** POST: add a new bench to the server */
