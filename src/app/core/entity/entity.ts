@@ -285,6 +285,7 @@ export class RobotData {
 export class BenchCount {
   id: number;
   count: number;
+  planCount: number;
   time: Date;
   robot: Robot;
 }
@@ -299,6 +300,7 @@ export class BenchRatio {
 export class BoardArea {
   id: number;
   area: number;
+  planArea: number;
   time: Date;
   robot: Robot;
 
@@ -307,6 +309,7 @@ export class BoardArea {
 export class BoardCount {
   id: number;
   count: number;
+  planCount: number;
   time: Date;
   robot: Robot;
 }
@@ -314,6 +317,7 @@ export class BoardCount {
 export class ConcreteCount {
   id: number;
   count: number;
+  planCount: number;
   time: Date;
   robot: Robot;
 }

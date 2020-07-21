@@ -17,6 +17,8 @@ export class DhbslService {
   private newestLeaseByIdUrl = this.url.hostname + '/boardCount/findNewestByRobot';
   private newestLeaseByIdUrl1 = this.url.hostname + '/concreteCount/findNewestByRobot';
   private newestLeaseByIdUrl2 = this.url.hostname + '/sczt/findScztByRobot';
+  private newestLeaseByIdUrl3 = this.url.hostname + '/boardArea/findNewestByRobot';
+
   private boardCountListByIdUrl = this.url.hostname + '/boardCount/getBoardCountById';
   constructor(private http: HttpClient , private url: UrlService) { }
 
@@ -54,7 +56,7 @@ export class DhbslService {
   getCountByRobotId(id: number): Observable<Response> {
     const url = this.newestLeaseByIdUrl + '?id=' + id;
     return this.http.get<Response>(url).pipe(
-      catchError(this.handleError<Response>(`getArea id=${id}`))
+      catchError(this.handleError<Response>(`getCount id=${id}`))
     );
   }
 
@@ -62,13 +64,21 @@ export class DhbslService {
   getConcreteCountByRobotId(id: number): Observable<Response> {
     const url = this.newestLeaseByIdUrl1 + '?id=' + id;
     return this.http.get<Response>(url).pipe(
-      catchError(this.handleError<Response>(`getArea id=${id}`))
+      catchError(this.handleError<Response>(`getConcrete id=${id}`))
     );
   }
 
   // 根据RobotID查找最新的生产状态
   getScztByRobotId(id: number): Observable<Response> {
     const url = this.newestLeaseByIdUrl2 + '?id=' + id;
+    return this.http.get<Response>(url).pipe(
+      catchError(this.handleError<Response>(`getSczt id=${id}`))
+    );
+  }
+
+  // 根据RobotID查找最新的浇筑面积
+  getBoardAreaByRobotId(id: number): Observable<Response> {
+    const url = this.newestLeaseByIdUrl3 + '?id=' + id;
     return this.http.get<Response>(url).pipe(
       catchError(this.handleError<Response>(`getArea id=${id}`))
     );

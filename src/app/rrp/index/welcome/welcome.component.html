@@ -12,7 +12,7 @@
         <span style="background: linear-gradient(to right, #191b30,#5d74c4);display:inline-block;
           width:90%; height:10px; border:0; margin:0 0 0 10px; "> </span>
         <span style="background: linear-gradient(to right, #5d74c4, #191b30);display:inline-block;
-          width:90%; margin:0 0 0 10px; padding:1px 5px;">生产状态: {{zdpt}}</span>
+          width:90%; margin:0 0 0 10px; padding:1px 5px;">生产状态: {{sczt1}}</span>
         <span style="background: linear-gradient(to right, #191b30,#5d74c4);display:inline-block;
           width:90%; height:10px; border:0; margin:0 0 0 10px; padding:1px 5px;"> </span>
         <span style="background: linear-gradient(to right, #5d74c4, #191b30);display:inline-block;
@@ -28,15 +28,15 @@
           今日产能安排 </span>
         <div style="width:30%; height:70%; margin-top:15px; padding:1px;
         border-right:1px solid #5d74c4; text-align: center; float:left">模台数量<br>
-          <span style="font:18px border; color: dodgerblue">{{benchNum}}</span>块
+          <span style="font:18px border; color: dodgerblue">{{benchPlanCount}}</span>块
         </div>
         <div style="width:35%; height:70%; margin-top:15px; padding:1px;
         border-right:1px solid #5d74c4; text-align: center;float:left">叠合板数量<br>
-          <span style="font:18px border; color: dodgerblue">{{boardNum}}</span>块
+          <span style="font:18px border; color: dodgerblue">{{boardPlanCount}}</span>块
         </div>
         <div style="width:34%; height:70%; margin-top:15px; padding:1px;
          text-align: center;float:left">混凝土方量<br>
-          <span style="font:18px border; color: dodgerblue">{{conCount}}</span>m<sup>2</sup>
+          <span style="font:18px border; color: dodgerblue">{{conPlanCount}}</span>m<sup>2</sup>
         </div>
       </div>
     </div>
@@ -59,17 +59,17 @@
             <div style="width:10px; height: 40px;margin-left:49%; border:1px solid #5d74c4; border-radius: 3px; overflow:hidden;">
               <div style="width:10px; height: 40px; margin-top:20px; background-color: #2b3"></div>
             </div><!--margin-top需要计算-->
-            混凝土方量：<span style="font:18px border; color: dodgerblue"><!--加变量--></span>m<sup>3</sup>
+            混凝土方量：<span style="font:18px border; color: dodgerblue">{{conCount}}</span>m<sup>3</sup>
           </div>
           <div style="width:49%; height:35%; padding:1px; text-align: center;float:left">
             <div style="width:10px; height: 40px;margin-left:49%; border:1px solid #5d74c4; border-radius: 3px; overflow:hidden;">
               <div style="width:10px; height: 40px; margin-top:20px; background-color: #23b"></div>
             </div><!--margin-top需要计算-->
-            待浇筑方量：<span style="font:18px border; color: dodgerblue"><!--加变量--></span>m<sup>3</sup>
+            待浇筑方量：<span style="font:18px border; color: dodgerblue">{{conPlanCount-conCount}}</span>m<sup>3</sup>
           </div>
           <hr style="color:#5d74c4; width:85%; float: left;margin-left:15px; height:2px;">
           <div style="width:95%; height:15%; padding:1px; text-align: center; float:left">已浇筑面积<br>
-            <span style="font:18px border; color: dodgerblue"><!--加变量--></span>m<sup>2</sup>
+            <span style="font:18px border; color: dodgerblue">{{area}}</span>m<sup>2</sup>
           </div>
         </div>
 
