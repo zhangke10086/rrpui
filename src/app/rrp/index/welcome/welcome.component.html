@@ -41,39 +41,39 @@
       </div>
     </div>
     <div style="height:230px; border-radius: 5px;padding:5px; background:#191b30; margin-top: 10px">
-        <div style="border-radius: 5px; height:95%; border:1px solid #5d74c4; margin-top:10px; position: relative">
-          <div style="border: 9px solid transparent; border-right: 9px solid #5d74c4;  width:0; height:0;
+      <div style="border-radius: 5px; height:95%; border:1px solid #5d74c4; margin-top:10px; position: relative">
+        <div style="border: 9px solid transparent; border-right: 9px solid #5d74c4;  width:0; height:0;
         display:inline-block; position: absolute; top:-10px; left:-18px;"></div>
-          <span style="position: absolute; top:-10px;font-weight:bolder; z-index:2;
+        <span style="position: absolute; top:-10px;font-weight:bolder; z-index:2;
         background: linear-gradient(to right, #5d74c4, #191b30);left:0;">
           今日已浇筑生产 </span>
-          <div style="width:49%; height:25%; margin-top:15px; padding:1px;
+        <div style="width:49%; height:25%; margin-top:15px; padding:1px;
         border-right:1px solid #5d74c4; text-align: center; float:left">模台数量<br>
-            <span style="font:18px border; color: dodgerblue">{{benchNum}}</span>块
-          </div>
-          <div style="width:50%; height:25%; margin-top:15px; padding:1px; text-align: center;float:left">叠合板数量<br>
-            <span style="font:18px border; color: dodgerblue">{{boardNum}}</span>块
-          </div>
-          <hr style="color:#5d74c4; width:85%; float: left;margin-left:15px; height:2px;">
-          <div style="width:49%; height:35%; padding:1px; text-align: center;float:left">
-            <div style="width:10px; height: 40px;margin-left:49%; border:1px solid #5d74c4; border-radius: 3px; overflow:hidden;">
-              <div style="width:10px; height: 40px; background-color: #263" [ngStyle]="{'margin-top':(1-conCount/conPlanCount)*40+'px'}"></div>
-            </div><!--margin-top需要计算-->
-            混凝土方量：<span style="font:18px border; color: dodgerblue">{{conCount}}</span>m<sup>3</sup>
-          </div>
-          <div style="width:49%; height:35%; padding:1px; text-align: center;float:left">
-            <div style="width:10px; height: 40px;margin-left:49%; border:1px solid #5d74c4; border-radius: 3px; overflow:hidden;">
-              <div [ngStyle]="{'margin-top':(conCount/conPlanCount)*40+'px'}" style="width:10px; height: 40px; background-color: #23b"></div>
-            </div><!--margin-top需要计算-->
-            待浇筑方量：<span style="font:18px border; color: dodgerblue">{{conPlanCount-conCount}}</span>m<sup>3</sup>
-          </div>
-          <hr style="color:#5d74c4; width:85%; float: left;margin-left:15px; height:2px;">
-          <div style="width:95%; height:15%; padding:1px; text-align: center; float:left">已浇筑面积<br>
-            <span style="font:18px border; color: dodgerblue">{{area}}</span>m<sup>2</sup>
-          </div>
+          <span style="font:18px border; color: dodgerblue">{{benchNum}}</span>块
         </div>
-
+        <div style="width:50%; height:25%; margin-top:15px; padding:1px; text-align: center;float:left">叠合板数量<br>
+          <span style="font:18px border; color: dodgerblue">{{boardNum}}</span>块
+        </div>
+        <hr style="color:#5d74c4; width:85%; float: left;margin-left:15px; height:2px;">
+        <div style="width:49%; height:35%; padding:1px; text-align: center;float:left">
+          <div style="width:10px; height: 40px;margin-left:49%; border:1px solid #5d74c4; border-radius: 3px; overflow:hidden;">
+            <div style="width:10px; height: 40px; background-color: #263" [ngStyle]="{'margin-top':(1-conCount/conPlanCount)*40+'px'}"></div>
+          </div><!--margin-top需要计算-->
+          混凝土方量：<span style="font:18px border; color: dodgerblue">{{conCount}}</span>m<sup>3</sup>
+        </div>
+        <div style="width:49%; height:35%; padding:1px; text-align: center;float:left">
+          <div style="width:10px; height: 40px;margin-left:49%; border:1px solid #5d74c4; border-radius: 3px; overflow:hidden;">
+            <div [ngStyle]="{'margin-top':(conCount/conPlanCount)*40+'px'}" style="width:10px; height: 40px; background-color: #23b"></div>
+          </div><!--margin-top需要计算-->
+          待浇筑方量：<span style="font:18px border; color: dodgerblue">{{conPlanCount-conCount}}</span>m<sup>3</sup>
+        </div>
+        <hr style="color:#5d74c4; width:85%; float: left;margin-left:15px; height:2px;">
+        <div style="width:95%; height:15%; padding:1px; text-align: center; float:left">已浇筑面积<br>
+          <span style="font:18px border; color: dodgerblue">{{area}}</span>m<sup>2</sup>
+        </div>
       </div>
+
+    </div>
 
 
   </div>
@@ -90,10 +90,16 @@
     <video [src]="" controls="controls" width="260" height="200"
            style="border:1px solid #aaa;"> </video>
   </div>
-  <div style="width:420px; height:300px; float:left;margin:10px; padding:0; border-radius: 5px;  border:1px solid #5d74c4;">
+  <div style="width:620px; height:300px; float:left;margin:10px; padding:0; border-radius: 5px;  border:1px solid #5d74c4;">
     <span style="background: #2e3659; display:inline-block; width:418px; font-weight:bolder; padding:2px 0 2px 5px;
          border-radius:5px 5px 0 0;margin-bottom: 0;">参数报表</span>
     <!--加图表-->
+    <div id="chart1" style="width:33.3%;height:50%;float:left;"></div>
+    <div id="chart2" style="width:33.3%;height:50%;float:left;"></div>
+    <div id="chart3" style="width:33.3%;height:50%;float:left;"></div>
+    <div id="chart4" style="width:33.3%;height:50%;float:left;clear: left;"></div>
+    <div id="chart5" style="width:33.3%;height:50%;float:left;"></div>
+    <div id="chart6" style="width:33.3%;height:50%;float:left;"></div>
   </div>
   <div style="width:420px; height:200px; float:left;margin:2px 0 0 10px;">
     <div style="height:180px; border-radius: 5px;padding:5px; background:#191b30; float:left; width:48%">

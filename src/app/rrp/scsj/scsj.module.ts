@@ -13,18 +13,21 @@ import {QuerylistModule} from "../../helpcenter/querylist/querylist.module";
 
 @NgModule({
   declarations: [
-  MtgsComponent,
-  MtlylComponent,
-  HntflComponent,
-  DhbslComponent,
-  DhbmjComponent,
-  CphglComponent],
-    imports: [
-        CommonModule,
-        ScsjRoutingModule,
-        NgZorroAntdModule,
-        FormsModule,
-        QuerylistModule
-    ]
+    MtgsComponent,
+    MtlylComponent,
+    HntflComponent,
+    DhbslComponent,
+    DhbmjComponent,
+    CphglComponent],
+  exports: [
+    MtgsComponent
+  ],
+  imports: [
+    CommonModule,
+    ScsjRoutingModule,
+    NgZorroAntdModule,
+    FormsModule,
+    QuerylistModule
+  ]
 })
 export class ScsjModule { }
