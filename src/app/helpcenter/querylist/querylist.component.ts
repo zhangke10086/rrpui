@@ -134,10 +134,9 @@ export class QuerylistComponent implements OnInit {
     this.querylistService.getCity().then((res:any)=>{
       this.CityData = res.data.filter(t=>t.provinceid === this.selectedProvince.provinceid);
       if(this.CityData){
-        if(!this.selectedCity){
-          this.selectedCity = this.CityData[0];
-          this.cityChange(this.selectedCity);
-        }
+        this.selectedCity = undefined;
+        this.selectedCompany = undefined;
+        this.selectedRobot = undefined;
       }
     })
   }
