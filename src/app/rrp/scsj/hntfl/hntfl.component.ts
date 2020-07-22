@@ -178,7 +178,7 @@ export class HntflComponent implements OnInit {
         for (const concreteCount of this.concreteCounts) {
           countNum.push(concreteCount.count);
           // tslint:disable-next-line:variable-name
-          const time_str = this.datePipe.transform(concreteCount.time, 'yyyy年MM月dd日');
+          const time_str = this.datePipe.transform(concreteCount.time, 'yy.M.d');
           time.push(time_str);
         }
         // @ts-ignore
@@ -236,6 +236,14 @@ export class HntflComponent implements OnInit {
               colorByPoint: true
             }
           },
+          legend:
+            {
+              layout: 'vertical',
+              align: 'center',
+              verticalAlign: 'top',
+              x: -80,
+              y: -100,
+            },
           time: {
             enabled: false
           },

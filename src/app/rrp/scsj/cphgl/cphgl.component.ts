@@ -90,7 +90,7 @@ export class CphglComponent implements OnInit {
         for (const productRatio of this.productRatios) {
           ratioNum.push(productRatio.ratio);
           // tslint:disable-next-line:variable-name
-          const time_str = this.datePipe.transform(productRatio.time, 'yyyy年MM月dd日');
+          const time_str = this.datePipe.transform(productRatio.time, 'yy.M.d');
           time.push(time_str);
         }
         // @ts-ignore
@@ -141,6 +141,14 @@ export class CphglComponent implements OnInit {
               borderWidth: 0
             }
           },
+          legend:
+            {
+              layout: 'vertical',
+              align: 'center',
+              verticalAlign: 'top',
+              x: -80,
+              y: -100,
+            },
           time: {
             enabled: false
           },

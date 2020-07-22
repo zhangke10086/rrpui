@@ -132,7 +132,7 @@ export class DhbslComponent implements OnInit {
         for (const benchCount of this.benchCounts) {
           countNum.push(benchCount.count);
           // tslint:disable-next-line:variable-name
-          const time_str = this.datePipe.transform(benchCount.time, 'yyyy年MM月dd日');
+          const time_str = this.datePipe.transform(benchCount.time, 'yy.M.d');
           time.push(time_str);
         }
         // @ts-ignore
@@ -189,6 +189,14 @@ export class DhbslComponent implements OnInit {
               colorByPoint: true
             }
           },
+          legend:
+            {
+              layout: 'vertical',
+              align: 'center',
+              verticalAlign: 'top',
+              x: -80,
+              y: -100,
+            },
           time: {
             enabled: false
           },

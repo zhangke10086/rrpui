@@ -87,7 +87,7 @@ export class MtgsComponent implements OnInit {
         for (const benchCount of this.benchCounts) {
           countNum.push(benchCount.count);
           // tslint:disable-next-line:variable-name
-          const time_str = this.datePipe.transform(benchCount.time, 'yyyy年MM月dd日');
+          const time_str = this.datePipe.transform(benchCount.time, 'yy.M.d');
           time.push(time_str);
         }
         // @ts-ignore
@@ -108,7 +108,7 @@ export class MtgsComponent implements OnInit {
           title: {
             text: '模台总数',
             style: {
-              color: '#b1b1b1'
+              color: '#b1b1b1',
             },
           },
           xAxis: {
@@ -120,7 +120,7 @@ export class MtgsComponent implements OnInit {
             title: {
               text: '模台个数(个)',
               style: {
-                color: '#b1b1b1'
+                color: '#b1b1b1',
               },
             }
           },
@@ -137,15 +137,23 @@ export class MtgsComponent implements OnInit {
               pointPadding: 0.2,
               borderWidth: 0,
               shadow: true,
-              colorByPoint: true
-            }
+              colorByPoint: true,
+          }
           },
+          legend:
+            {
+              layout: 'vertical',
+              align: 'center',
+              verticalAlign: 'top',
+              x: -80,
+              y: -100,
+            },
           time: {
             enabled: false
           },
           series: [{
             name: '模台个数',
-            data: countNum
+            data: countNum,
           }]
         });
       });

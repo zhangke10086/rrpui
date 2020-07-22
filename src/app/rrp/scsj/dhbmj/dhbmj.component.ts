@@ -131,7 +131,7 @@ export class DhbmjComponent implements OnInit {
         for (const benchArea of this.benchAreas) {
           areaNum.push(benchArea.area);
           // tslint:disable-next-line:variable-name
-          const time_str = this.datePipe.transform(benchArea.time, 'yyyy年MM月dd日');
+          const time_str = this.datePipe.transform(benchArea.time, 'yy.M.d');
           time.push(time_str);
         }
         // @ts-ignore
@@ -188,6 +188,14 @@ export class DhbmjComponent implements OnInit {
               colorByPoint: true
             }
           },
+          legend:
+            {
+              layout: 'vertical',
+              align: 'center',
+              verticalAlign: 'top',
+              x: -80,
+              y: -100,
+            },
           time: {
             enabled: false
           },

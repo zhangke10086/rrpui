@@ -122,7 +122,7 @@ export class MtlylComponent implements OnInit {
         for (const benchRatio of this.benchRatios) {
           ratioNum.push(benchRatio.ratio);
           // tslint:disable-next-line:variable-name
-          const time_str = this.datePipe.transform(benchRatio.time, 'yyyy年MM月dd日');
+          const time_str = this.datePipe.transform(benchRatio.time, 'yy.M.d');
           time.push(time_str);
         }
         // @ts-ignore
@@ -173,6 +173,14 @@ export class MtlylComponent implements OnInit {
               borderWidth: 0
             }
           },
+          legend:
+            {
+              layout: 'vertical',
+              align: 'center',
+              verticalAlign: 'top',
+              x: -80,
+              y: -100,
+            },
           time: {
             enabled: false
           },
