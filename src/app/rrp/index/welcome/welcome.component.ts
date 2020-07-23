@@ -330,10 +330,14 @@ export class WelcomeComponent implements OnInit {
               enabled: false
             },
           title: {
-            text: '模台总数',
+            text: '模台个数',
             style: {
-              color: '#b1b1b1'
+              color: '#b1b1b1',
+              fontSize: '11px'
             },
+          },
+          exporting: {
+              enabled: false,  //设置导出bai按钮不可用
           },
           xAxis: {
             categories: time,
@@ -417,7 +421,8 @@ export class WelcomeComponent implements OnInit {
           title: {
             text:  '平均模台利用率',
             style: {
-              color: '#b1b1b1'
+              color: '#b1b1b1',
+              fontSize: '11px'
             },
           },
           legend:
@@ -441,6 +446,9 @@ export class WelcomeComponent implements OnInit {
                 color: '#b1b1b1'
               },
             }
+          },
+          exporting: {
+            enabled: false,  //设置导出bai按钮不可用
           },
           tooltip: {
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
@@ -515,7 +523,8 @@ export class WelcomeComponent implements OnInit {
           title: {
             text: '总混凝土方量',
             style: {
-              color: '#b1b1b1'
+              color: '#b1b1b1',
+              fontSize: '11px'
             },
           },
           xAxis: {
@@ -539,6 +548,9 @@ export class WelcomeComponent implements OnInit {
                 color: '#b1b1b1'
               },
             }
+          },
+          exporting: {
+            enabled: false,  //设置导出bai按钮不可用
           },
           tooltip: {
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
@@ -609,7 +621,8 @@ export class WelcomeComponent implements OnInit {
           title: {
             text:  '叠合板总数量' ,
             style: {
-              color: '#b1b1b1'
+              color: '#b1b1b1',
+              fontSize: '11px'
             },
           },
           xAxis: {
@@ -624,11 +637,9 @@ export class WelcomeComponent implements OnInit {
                 color: '#b1b1b1'
               },
             },
-            labels: {
-              style: {
-                color: '#b1b1b1'
-              },
-            },
+          },
+          exporting: {
+            enabled: false,  //设置导出bai按钮不可用
           },
           tooltip: {
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
@@ -709,7 +720,8 @@ export class WelcomeComponent implements OnInit {
           title: {
             text: '叠合板总面积',
             style: {
-              color: '#b1b1b1'
+              color: '#b1b1b1',
+              fontSize: '11px'
             },
           },
           xAxis: {
@@ -733,11 +745,9 @@ export class WelcomeComponent implements OnInit {
                 color: '#b1b1b1'
               },
             },
-            labels: {
-              style: {
-                color: '#b1b1b1'
-              },
-            },
+          },
+          exporting: {
+            enabled: false,  //设置导出bai按钮不可用
           },
           tooltip: {
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
@@ -806,7 +816,8 @@ export class WelcomeComponent implements OnInit {
           title: {
             text: '平均产品合格率',
             style: {
-              color: '#b1b1b1'
+              color: '#b1b1b1',
+              fontSize: '11px'
             },
           },
           legend:
@@ -831,7 +842,9 @@ export class WelcomeComponent implements OnInit {
               },
             },
           },
-
+          exporting: {
+            enabled: false,  //设置导出bai按钮不可用
+          },
           tooltip: {
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
