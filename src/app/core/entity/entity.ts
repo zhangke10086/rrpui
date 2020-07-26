@@ -13,6 +13,7 @@ export class SoftwareUpgrade {
 export class Warning {
   id: number;
   time: Date;
+  location: string;
   num: WarnContent;
   // tslint:disable-next-line:variable-name
   machine_signal0: boolean;
@@ -350,5 +351,6 @@ export class Run {
   wait: number;
   warn: number;
   time: Date;
+  robot: Robot;
 }
 
