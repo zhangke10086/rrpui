@@ -57,8 +57,6 @@ export class Zlgl1Component implements OnInit {
     date: undefined
   };
   dateRange = [];
-  add1 = false;
-  add2 = false;
   ngOnInit() {
     this.query(this.jsondata);
     this.getCompanysWithRobot();
@@ -121,7 +119,6 @@ export class Zlgl1Component implements OnInit {
     this.isVisible2 = true;
   }
   showModal1(): void {
-    this.add1 = true;
     this.isVisible1 = true;
     this.dateRange = [];
     this.contractId = undefined;
@@ -161,8 +158,6 @@ export class Zlgl1Component implements OnInit {
   add(): void {
     console.log(this.robots);
     this.isVisible1 = false;
-    this.add1 = false;
-    this.add2 = false;
     const add = { robot: this.robot, contractId: this.contractId, companyId: this.company1,
       costWay: this.costWay, costMonth: this.costMonth, startTime: this.dateRange[0], endTime: this.dateRange[1],
       paymentSituation: '0', workshopId: this.workshopId, internalId: this.internalId,
@@ -201,8 +196,6 @@ export class Zlgl1Component implements OnInit {
   }
   handleCancel1(): void {
     this.isVisible1 = false;
-    this.add1 = false;
-    this.add2 =  false;
   }
   handleCancel2(): void {
     this.isVisible2 = false;
@@ -276,10 +269,6 @@ export class Zlgl1Component implements OnInit {
       });
 
     }
-  }
-  modelAdd() {
-    this.add1 = !this.add1;
-    this.add2 = !this.add2;
   }
 
   onquery(data) {
