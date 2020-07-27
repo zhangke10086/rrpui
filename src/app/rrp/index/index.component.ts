@@ -125,7 +125,6 @@ export class IndexComponent implements OnInit {
       this.router.navigate(['/index/empty']).then(() => {
         this.router.navigate([data.url], { queryParams: { menuid: data.id } });
         });
-      this.tabIndex = this.tabs.findIndex(p => data.url.includes(p.url));
     }
   }
 
@@ -183,7 +182,10 @@ export class IndexComponent implements OnInit {
     // item.showSubMenu = false;
   }
   doSomething() {
-    this.navigateTo(this.menus[1].children[0]);
+    this.activeMenuname =  this.menus[1].children[0].title;
+    this.router.navigate(['/index/empty']).then(() => {
+      this.router.navigate([this.menus[1].children[0].url], { queryParams: { menuid: this.menus[1].children[0].id , data: sessionStorage.getItem('mapquery')} });
+    });
     this.activemenus = this.menus[1].children;
   }
 }

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {MtgsService} from '../service/mtgs.service';
 import {BenchCount} from '../../../core/entity/entity';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {DatePipe} from '@angular/common';
 import {QuerylistService} from '../../../helpcenter/querylist/querylist.service';
 
@@ -39,18 +39,16 @@ export class MtgsComponent implements OnInit {
     private route: ActivatedRoute,
     private datePipe: DatePipe,
     private querylistService: QuerylistService,
-    private mtgsService: MtgsService
+    private mtgsService: MtgsService,
+    private router: Router,
   ) {
   }
 
   ngOnInit() {
-    const CACHE = sessionStorage.getItem('mapquery');
-    if (CACHE) {
-      const data = JSON.parse(CACHE);
-      this.selectedProvince = data.province;
-      this.selectedCity = data.city;
-    }
-    // this.getMtgs();
+    const data = JSON.parse(this.route.snapshot.queryParams.data);
+    this.selectedProvince = data.province;
+    this.selectedCity = data.city;
+    
     this.onquery(this.jsondata);
   }
   onquery(data) {
