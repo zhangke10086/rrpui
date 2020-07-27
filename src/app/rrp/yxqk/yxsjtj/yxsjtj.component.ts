@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Run, Warning} from '../../../core/entity/entity';
+import {Run, Trouble, Warning} from '../../../core/entity/entity';
 import {ActivatedRoute} from '@angular/router';
 import {DatePipe} from '@angular/common';
 import {YxsjtjService} from '../Service/yxsjtj.service';
+import {NzMessageService} from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-yxsjtj',
@@ -18,40 +19,65 @@ export class YxsjtjComponent implements OnInit {
   dateFormat = 'yyyy/MM/dd';
   value: string;
   runs: Run[];
-  warnings: Warning[];
+  operation;
+  text = '运行时长';
+  troubles: Trouble[];
+  private message: NzMessageService;
+  jsondata = {
+    province: '',
+    city: '',
+    companyid: '',
+    owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+    companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
+    robotid: ''
+  };
 
   constructor(
     private route: ActivatedRoute,
     private datePipe: DatePipe,
     private yxsjtjService: YxsjtjService
   ) {
+    this.route.queryParams.subscribe(params => {
+      if (params != null) {
+        const operation = JSON.parse(localStorage.getItem('Authority')).filter(t => {
+          if (t.menu.toString() === params.menuid) {
+            return t.operations;
+          }
+        });
+        this.operation = operation[0].operations;
+      }
+    });
+    if (this.operation.indexOf(4) === -1) {
+      this.message.info('您没有打开此页面的权限');
+    }
   }
 
   ngOnInit() {
     this.getYxsjtj();
+    this.onquery(this.jsondata);
   }
 
   getYxsjtj(): void {
     // tslint:disable-next-line:variable-name
-    let date_begin = '1020-04-23';
+    let date_begin = '2020-04-03';
     // tslint:disable-next-line:variable-name
-    let date_end = '3020-04-30';
-    if (this.begin !== undefined) {
+    let date_end = '2020-04-10';
+    if (this.begin !== undefined || this.end !== undefined) {
       // tslint:disable-next-line:variable-name
       date_begin = this.datePipe.transform(this.begin, 'yyyy-MM-dd');
       // tslint:disable-next-line:variable-name
       date_end = this.datePipe.transform(this.end, 'yyyy-MM-dd');
     }
+    const owncompanyid = JSON.parse(localStorage.getItem('userinfo')).company.id;
 
-    this.yxsjtjService.getRuns(date_begin, date_end)
+    this.yxsjtjService.getRunsByCompany(owncompanyid, date_begin, date_end)
       .subscribe((res: any) => {
         this.runs = res.data;
+        console.log(this.runs);
         const ratioNum = [];
         const time = [];
         for (const run of this.runs) {
-          if (this.value === 'open') {
-            ratioNum.push(run.open);
-          } else if (this.value === 'warn') {
+          if (this.value === 'warn') {
             ratioNum.push(run.warn);
           } else if (this.value === 'wait') {
             ratioNum.push(run.wait);
@@ -68,7 +94,7 @@ export class YxsjtjComponent implements OnInit {
         require('highcharts/modules/exporting')(highCharts);
         // 创建图表
         highCharts.setOptions({
-          colors: ['#5d93ff', '#5381df', '#486dbe', '#425fa6' , '#38508c', '#334a80', '#2e4274'],
+          colors: ['#5d93ff', '#5381df', '#486dbe', '#425fa6', '#38508c', '#334a80', '#2e4274'],
         });
         highCharts.chart('container', {
           chart: {
@@ -86,7 +112,7 @@ export class YxsjtjComponent implements OnInit {
           yAxis: {
             min: 0,
             title: {
-              text: '开机时长',
+              text: this.text,
               style: {
                 color: '#b1b1b1'
               },
@@ -121,17 +147,67 @@ export class YxsjtjComponent implements OnInit {
 
   getValueOpen(): void {
     this.value = 'open';
+    this.text = '开机时长';
   }
 
   getValueRun(): void {
     this.value = 'run';
+    this.text = '运行时长';
+    this.getYxsjtj();
   }
 
   getValueWait(): void {
     this.value = 'wait';
+    this.text = '待机时长';
+    this.getYxsjtj();
   }
 
   getValueWarn(): void {
     this.value = 'warn';
+    this.text = '故障时长';
+    this.getYxsjtj();
+  }
+
+  onquery(data) {
+    // 保留上次查询
+    if (this.jsondata === data) {
+      this.yxsjtjService.query(this.jsondata).then((res: any) => {
+        if (res.state === 200) {
+          this.troubles = res.data;
+        }
+      });
+    } else {
+      // data为查询组件所选值
+      console.log(data);
+      // 初始化 传参jsondata
+      this.jsondata = {
+        province: '',
+        city: '',
+        companyid: '',
+        owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+        companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
+        robotid: ''
+      };
+      // 传参赋值
+      // 若不选条件 则向后端传空值
+      if (data.province && data.province.name) {
+        this.jsondata.province = data.province.name;
+      }
+      if (data.city && data.city.name) {
+        this.jsondata.city = data.city.name;
+      }
+      if (data.robot) {
+        this.jsondata.robotid = data.robot.id;
+      }
+      if (data.company) {
+        this.jsondata.companyid = data.company.id;
+      }
+
+      this.yxsjtjService.query(this.jsondata).then((res: any) => {
+        if (res.state === 200) {
+          this.troubles = res.data;
+        }
+      });
+    }
   }
 }

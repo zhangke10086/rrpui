@@ -243,14 +243,16 @@ export class MtcsComponent implements OnInit {
   }
 
   getBenchs(): void {
-    this.benchService.getBenchs()
+    const owncompanyid = JSON.parse(localStorage.getItem('userinfo')).company.id;
+    this.benchService.getBenchByRobot(owncompanyid)
       .subscribe((res: any) => {
         this.benchs = res.data;
       });
   }
 
   getRobots(): void {
-    this.benchService.getRobots()
+    const owncompanyid = JSON.parse(localStorage.getItem('userinfo')).company.id;
+    this.benchService.getRobots(owncompanyid)
       .subscribe((res: any) => {
         this.robots = res.data;
       });

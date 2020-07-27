@@ -37,8 +37,9 @@
   <thead>
   <tr>
     <th>序号</th>
-    <th>报警号</th>
+    <th>故障号</th>
     <th>内容</th>
+    <th>位置</th>
     <th>所属机器人</th>
     <th>时间</th>
     <th>操作</th>
@@ -46,9 +47,10 @@
   </thead>
   <tbody>
   <tr *ngFor="let data of basicTable.data">
-    <td>{{ data.id }}</td>
+    <td>{{ basicTable.data.indexOf(data) + 1 }}</td>
     <td>{{ data.num.id}}</td>
     <td>{{ data.num.description}}</td>
+    <td>{{ data.location}}</td>
     <td>{{ data.robot.name}}</td>
     <td>{{ data.time | date:'yyyy-MM-dd' }}</td>
     <td>

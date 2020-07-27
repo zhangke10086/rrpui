@@ -14,6 +14,8 @@ const httpOptions = {
 export class MtglService {
   response: Response;
   private robotListUrl = this.url.hostname + '/robot/findAllRobot';
+  private getByCompany = this.url.hostname + '/robot/getByCompany';
+  private getBenchByCompany = this.url.hostname + '/bench/getByCompany';
   private benchListUrl = this.url.hostname + '/bench/getBench';
   private benchListByIdUrl = this.url.hostname + '/bench/getBenchById';
   private benchListByRobotIdUrl = this.url.hostname + '/bench/getBenchByRobot';
@@ -36,11 +38,24 @@ export class MtglService {
         catchError(this.handleError<Response>('getBenchs'))
       );
   }
+
   /** GET benchs from the server */
-  getRobots(): Observable<Response> {
-    return this.http.get<Response>(this.robotListUrl)
+  // tslint:disable-next-line:variable-name
+  getRobots(company_id: number): Observable<Response> {
+    const url = this.getByCompany + '?company_id=' + company_id;
+    return this.http.get<Response>(url)
       .pipe(
         catchError(this.handleError<Response>('getRobots'))
+      );
+  }
+
+ /** GET benchs from the server */
+  // tslint:disable-next-line:variable-name
+  getBenchsByCompany(company_id: number): Observable<Response> {
+    const url = this.getBenchByCompany + '?company_id=' + company_id;
+    return this.http.get<Response>(url)
+      .pipe(
+        catchError(this.handleError<Response>('getBenchsByCompany'))
       );
   }
 
