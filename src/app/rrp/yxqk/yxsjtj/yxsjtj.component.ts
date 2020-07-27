@@ -16,6 +16,7 @@ export class YxsjtjComponent implements OnInit {
   begin: Date;
   // tslint:disable-next-line:variable-name
   end: Date;
+  runsData: Run[];
   dateFormat = 'yyyy/MM/dd';
   value: string;
   runs: Run[];
@@ -53,96 +54,176 @@ export class YxsjtjComponent implements OnInit {
   }
 
   ngOnInit() {
+    // this.getRatioLate();
     this.getYxsjtj();
     this.onquery(this.jsondata);
   }
 
   getYxsjtj(): void {
+    const owncompanyid = JSON.parse(localStorage.getItem('userinfo')).company.id;
+    // this.yxsjtjService.getRatioLate(owncompanyid)
+    //   .subscribe((res: any) => {
+    //     this.runsData = res.data;
+    //     console.log(res.data);
+    //   });
+    // this.getRatioLate();
+    // console.log(this.runsData);
     // tslint:disable-next-line:variable-name
-    let date_begin = '2020-04-03';
-    // tslint:disable-next-line:variable-name
-    let date_end = '2020-04-10';
+    // let date_begin = this.runsData[0].time;
+    // // tslint:disable-next-line:variable-name
+    // let date_end = this.runsData[this.runsData.length - 1].time;
     if (this.begin !== undefined || this.end !== undefined) {
       // tslint:disable-next-line:variable-name
-      date_begin = this.datePipe.transform(this.begin, 'yyyy-MM-dd');
+      const date_begin = this.datePipe.transform(this.begin, 'yyyy-MM-dd');
       // tslint:disable-next-line:variable-name
-      date_end = this.datePipe.transform(this.end, 'yyyy-MM-dd');
-    }
-    const owncompanyid = JSON.parse(localStorage.getItem('userinfo')).company.id;
+      const date_end = this.datePipe.transform(this.end, 'yyyy-MM-dd');
 
-    this.yxsjtjService.getRunsByCompany(owncompanyid, date_begin, date_end)
-      .subscribe((res: any) => {
-        this.runs = res.data;
-        console.log(this.runs);
-        const ratioNum = [];
-        const time = [];
-        for (const run of this.runs) {
-          if (this.value === 'warn') {
-            ratioNum.push(run.warn);
-          } else if (this.value === 'wait') {
-            ratioNum.push(run.wait);
-          } else {
-            ratioNum.push(run.run);
+      this.yxsjtjService.getRunsByCompany(owncompanyid, date_begin, date_end)
+        .subscribe((res: any) => {
+          this.runs = res.data;
+          const ratioNum = [];
+          const time = [];
+          for (const run of this.runs) {
+            if (this.value === 'warn') {
+              ratioNum.push(run.warn);
+            } else if (this.value === 'wait') {
+              ratioNum.push(run.wait);
+            } else {
+              ratioNum.push(run.run);
+            }
+            // tslint:disable-next-line:variable-name
+            const time_str = this.datePipe.transform(run.time, 'yyyy年MM月dd日');
+            time.push(time_str);
           }
-          // tslint:disable-next-line:variable-name
-          const time_str = this.datePipe.transform(run.time, 'yyyy年MM月dd日');
-          time.push(time_str);
-        }
-        // @ts-ignore
-        const highCharts = require('highCharts');
-        // @ts-ignore
-        require('highcharts/modules/exporting')(highCharts);
-        // 创建图表
-        highCharts.setOptions({
-          colors: ['#5d93ff', '#5381df', '#486dbe', '#425fa6', '#38508c', '#334a80', '#2e4274'],
-        });
-        highCharts.chart('container', {
-          chart: {
-            type: 'column',
-            backgroundColor: '#1e2340',
-            plotShadow: true,
-          },
-          title: {
-            text: ''
-          },
-          xAxis: {
-            categories: time,
-            crosshair: true
-          },
-          yAxis: {
-            min: 0,
+          // @ts-ignore
+          const highCharts = require('highCharts');
+          // @ts-ignore
+          require('highcharts/modules/exporting')(highCharts);
+          // 创建图表
+          highCharts.setOptions({
+            colors: ['#5d93ff', '#5381df', '#486dbe', '#425fa6', '#38508c', '#334a80', '#2e4274'],
+          });
+          highCharts.chart('container', {
+            chart: {
+              type: 'column',
+              backgroundColor: '#1e2340',
+              plotShadow: true,
+            },
             title: {
-              text: this.text,
-              style: {
-                color: '#b1b1b1'
-              },
-            }
-          },
-          tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-              '<td style="padding:0"><b>{point.y:.1f} h</b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-          },
-          plotOptions: {
-            column: {
-              pointPadding: 0.2,
-              borderWidth: 0,
-              shadow: true,
-              colorByPoint: true
-            }
-          },
-          time: {
-            enabled: false
-          },
-          series: [{
-            name: '历史运行数据',
-            data: ratioNum
-          }]
+              text: ''
+            },
+            xAxis: {
+              categories: time,
+              crosshair: true
+            },
+            yAxis: {
+              min: 0,
+              title: {
+                text: this.text,
+                style: {
+                  color: '#b1b1b1'
+                },
+              }
+            },
+            tooltip: {
+              headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+              pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} h</b></td></tr>',
+              footerFormat: '</table>',
+              shared: true,
+              useHTML: true
+            },
+            plotOptions: {
+              column: {
+                pointPadding: 0.2,
+                borderWidth: 0,
+                shadow: true,
+                colorByPoint: true
+              }
+            },
+            time: {
+              enabled: false
+            },
+            series: [{
+              name: '历史运行数据',
+              data: ratioNum
+            }]
+          });
         });
-      });
+    } else {
+      this.yxsjtjService.getRatioLate(owncompanyid)
+        .subscribe((res: any) => {
+          this.runs = res.data;
+          const ratioNum = [];
+          const time = [];
+          for (const run of this.runs) {
+            if (this.value === 'warn') {
+              ratioNum.push(run.warn);
+            } else if (this.value === 'wait') {
+              ratioNum.push(run.wait);
+            } else {
+              ratioNum.push(run.run);
+            }
+            // tslint:disable-next-line:variable-name
+            const time_str = this.datePipe.transform(run.time, 'yyyy年MM月dd日');
+            time.push(time_str);
+          }
+          // @ts-ignore
+          const highCharts = require('highCharts');
+          // @ts-ignore
+          require('highcharts/modules/exporting')(highCharts);
+          // 创建图表
+          highCharts.setOptions({
+            colors: ['#5d93ff', '#5381df', '#486dbe', '#425fa6', '#38508c', '#334a80', '#2e4274'],
+          });
+          highCharts.chart('container', {
+            chart: {
+              type: 'column',
+              backgroundColor: '#1e2340',
+              plotShadow: true,
+            },
+            title: {
+              text: ''
+            },
+            xAxis: {
+              categories: time,
+              crosshair: true
+            },
+            yAxis: {
+              min: 0,
+              title: {
+                text: this.text,
+                style: {
+                  color: '#b1b1b1'
+                },
+              }
+            },
+            tooltip: {
+              headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+              pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} h</b></td></tr>',
+              footerFormat: '</table>',
+              shared: true,
+              useHTML: true
+            },
+            plotOptions: {
+              column: {
+                pointPadding: 0.2,
+                borderWidth: 0,
+                shadow: true,
+                colorByPoint: true
+              }
+            },
+            time: {
+              enabled: false
+            },
+            series: [{
+              name: '历史运行数据',
+              data: ratioNum
+            }]
+          });
+        });
+    }
   }
 
   getValueOpen(): void {
@@ -167,6 +248,14 @@ export class YxsjtjComponent implements OnInit {
     this.text = '故障时长';
     this.getYxsjtj();
   }
+
+  // getRatioLate(): void {
+  //   const owncompanyid = JSON.parse(localStorage.getItem('userinfo')).company.id;
+  //   this.yxsjtjService.getRatioLate(owncompanyid)
+  //     .subscribe((res: any) => {
+  //       this.runsData = res.data;
+  //     });
+  // }
 
   onquery(data) {
     // 保留上次查询
