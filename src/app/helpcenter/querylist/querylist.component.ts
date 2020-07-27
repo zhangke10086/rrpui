@@ -20,6 +20,7 @@ export class QuerylistComponent implements OnInit {
   @Input() robotVisible = true;
   @Input() robotManagement = false;
   @Input() cache = false;
+
   isCollapse = false;
   selectedCompany:Company;
   CompanyData = [];
@@ -44,7 +45,7 @@ export class QuerylistComponent implements OnInit {
         this.querylistService.getProvince().then((res:any) => {
           this.ProvinceData = res.data;
           if(this.cache){
-            this.getcache();
+            this.getcache('query');
           }
         });
       }
@@ -53,7 +54,7 @@ export class QuerylistComponent implements OnInit {
       this.querylistService.getProvince().then((res:any) => {
         this.ProvinceData = res.data;
         if(this.cache){
-          this.getcache();
+          this.getcache('query');
         }
       });
     }
@@ -133,11 +134,6 @@ export class QuerylistComponent implements OnInit {
   provinceChange(value): void {
     this.querylistService.getCity().then((res:any)=>{
       this.CityData = res.data.filter(t=>t.provinceid === this.selectedProvince.provinceid);
-      if(this.CityData){
-        this.selectedCity = undefined;
-        this.selectedCompany = undefined;
-        this.selectedRobot = undefined;
-      }
     })
   }
   cityChange(value){
@@ -164,8 +160,8 @@ export class QuerylistComponent implements OnInit {
     }
   }
   // 取缓存 上次查询条件
-  getcache() {
-    const data = JSON.parse(localStorage.getItem('query'));
+  getcache(query) {
+    const data = JSON.parse(localStorage.getItem(query));
     if (data.province && data.province.id) {
       this.selectedProvince = this.ProvinceData.filter(t => t.id === data.province.id)[0];
       this.provinceChange(data.province);

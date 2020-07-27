@@ -35,6 +35,7 @@ import 'echarts/map/js/province/yunnan';
 import 'echarts/map/js/province/zhejiang';
 import 'echarts/map/js/province/hunan';
 import {QuerylistService} from '../../../helpcenter/querylist/querylist.service';
+import {Route, Router} from "@angular/router";
 @Component({
   selector: 'app-chinamap',
   templateUrl: './chinamap.component.html',
@@ -43,7 +44,8 @@ import {QuerylistService} from '../../../helpcenter/querylist/querylist.service'
 export class ChinamapComponent implements OnInit {
 
   @ViewChild('map', {static: false}) chartMap: ElementRef;
-  constructor(private querylisthelp: QuerylistService) {
+  constructor(private querylisthelp: QuerylistService,
+              private router: Router) {
   }
   regionOptions;
   chinaOptions;
@@ -53,13 +55,17 @@ export class ChinamapComponent implements OnInit {
   data;
   selectProvinceData;
   cityCompany;
-
+  query = {
+    province: '',
+    city: ''
+  };
   header; // 测试
   footer = '生产数据汇总图表';
   @Output() voted = new EventEmitter<boolean>();
 // 向父组件发射 一个boolean型的参数 agreed
   vote(agreed: boolean) {
-    this.voted.emit(agreed);
+    sessionStorage.setItem('mapquery', JSON.stringify(this.query));
+    this.router.navigate(['/index'], { queryParams: { scsj: true } });
   }
   ngOnInit() {
     this.num = 0;
@@ -118,6 +124,7 @@ export class ChinamapComponent implements OnInit {
         if (obj.data != null)  {
           if (!(obj.name.includes('市') || obj.name.includes('州') || obj.name.includes('区'))) {
             this.num = 0;
+            this.query.province = obj.data;
             this.selectProvinceData = this.ProvinceData.filter(t => t.name === obj.name)[0];
             this.regionOptions = {
               tooltip: {
@@ -161,8 +168,8 @@ export class ChinamapComponent implements OnInit {
             }
           }
           if (obj.name.includes('市') || obj.name.includes('州') || obj.name.includes('区')) {
-            console.log(obj.data)
             this.getLease(obj.data.name);
+            this.query.city = obj.data;
           }
         }
       }.bind(this));
@@ -174,6 +181,8 @@ export class ChinamapComponent implements OnInit {
       this.data = res.data;
       this.regionOptions = this.chinaOptions;
       this.header = '各省地图|布料机器人分布';
+      this.query.province = '';
+      this.query.city = '';
       this.cityCompany = undefined;
       for (const obj of res.data) {
         if (obj.value > 0) {
@@ -187,7 +196,7 @@ export class ChinamapComponent implements OnInit {
     this.querylisthelp.getLeaseByCity(data).then((res:any)=>{
       this.cityCompany = res.data;
       this.header = data + '|布料机器人分布';
-    })
+    });
   }
 
 
