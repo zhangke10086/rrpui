@@ -1,3 +1,4 @@
+<div *ngIf="operation.indexOf(4)!=-1">
 <app-querylist  (onQuery)="onquery($event)"></app-querylist>
 &nbsp;&nbsp;&nbsp;<button class="topbutton" (click)="produce()">启动生产</button>
 &nbsp;&nbsp;&nbsp; <button *ngIf="operation.indexOf(1)!=-1" class="topbutton" (click)="showModal1()"><span>增加</span></button>
@@ -28,7 +29,7 @@
   </nz-table>
 </nz-modal>
 
-<div *ngIf="operation.indexOf(4)!=-1">
+
   <nz-table #basicTable [nzData]="benchDatas">
     <thead>
     <tr>

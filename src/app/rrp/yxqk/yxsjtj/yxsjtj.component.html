@@ -1,5 +1,5 @@
 <div style="float: left ;margin-right: 3px; width: 48%">
-
+  <app-querylist (onQuery)="onquery($event)"></app-querylist>
   <div>
 <!--    <br><p><b>历史运行数据</b></p><button class="topbutton" [value]="this.value" (click)="getValueOpen()">开机时长</button>-->
     &nbsp;&nbsp;<button class="topbutton"  [value]="this.value" (click)="getValueRun()">运行时长</button>

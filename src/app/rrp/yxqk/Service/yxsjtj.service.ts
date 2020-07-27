@@ -78,7 +78,7 @@ export class YxsjtjService {
       catchError(this.handleError<Response>(`getTrouble id=${id}`))
     );
   }
-  query(data) {
+  query1(data) {
     const url = this.url.hostname + '/trouble/QueryTrouble';
     return new Promise(((resolve, reject) =>
       this.http.post(url, data)
@@ -95,6 +95,16 @@ export class YxsjtjService {
     return this.http.get<Response>(url).pipe(
       catchError(this.handleError<Response>(`getRatioLate company_id=${company_id}`))
     );
+  }
+  query(data) {
+    const url = this.url.hostname + '/run/QueryRun';
+    return new Promise(((resolve, reject) =>
+      this.http.post(url, data)
+        .toPromise().then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      })));
   }
 
   /**
