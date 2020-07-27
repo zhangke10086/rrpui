@@ -409,7 +409,7 @@ export class Run {
   run: number;
   wait: number;
   warn: number;
-  time: Date;
+  time: string;
   robot: Robot;
   company: Company;
 }

@@ -15,6 +15,7 @@ const httpOptions = {
 export class YxsjtjService {
   response: Response;
   private runListUrl = this.url.hostname + '/run/getRun';
+  private runListLateUrl = this.url.hostname + '/run/getRatioLate';
   private runByCompanyListUrl = this.url.hostname + '/run/getRunByCompany';
   private runListByIdUrl = this.url.hostname + '/run/getRunById';
   private troubleListUrl = this.url.hostname + '/trouble/getTrouble';
@@ -86,6 +87,14 @@ export class YxsjtjService {
       }, error => {
         reject(error);
       })));
+  }
+  /** GET trouble by id. Will 404 if id not found */
+  // tslint:disable-next-line:variable-name
+  getRatioLate(company_id: number): Observable<Response> {
+    const url = this.runListLateUrl + '?company_id=' + company_id;
+    return this.http.get<Response>(url).pipe(
+      catchError(this.handleError<Response>(`getRatioLate company_id=${company_id}`))
+    );
   }
 
   /**
