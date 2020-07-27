@@ -20,13 +20,16 @@ export class QuerylistComponent implements OnInit {
   @Input() robotVisible = true;
   @Input() robotManagement = false;
   @Input() cache = false;
-
+  @Input() Province:Province;
+  @Input() City:City;
+  @Input() Company:Company;
+  @Input() Robot:Robot;
+  selectedProvince;
+  selectedCity;
+  selectedRobot;
+  selectedCompany;
   isCollapse = false;
-  selectedCompany:Company;
   CompanyData = [];
-  selectedRobot:Robot;
-  selectedProvince:Province;
-  selectedCity:City;
   RobotData = [];
   ProvinceData =[];
   CityData =[];
@@ -56,9 +59,28 @@ export class QuerylistComponent implements OnInit {
         if(this.cache){
           this.getcache('query');
         }
+        if (this.Province){
+          this.getData();
+        }
       });
     }
     // this.getCompany();
+  }
+  // 取默认数据
+  getData(){
+    if (this.Province){
+      this.selectedProvince = this.ProvinceData.filter(t=>t.id === this.Province.id)[0];
+      this.provinceChange(this.selectedProvince);
+    }
+    if (this.City) {
+      if (this.CityData.length>0){
+        this.selectedCity = this.CityData.filter(t=>t.id===this.City.id)[0];
+      } else {
+        this.CityData.push(this.City);
+        this.selectedCity = this.CityData.filter(t=>t.id===this.City.id)[0];
+        this.cityChange(this.selectedCity);
+      }
+    }
   }
   query() {
     const data = {};
