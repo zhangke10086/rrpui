@@ -192,7 +192,7 @@
 </nz-modal>
 <nz-modal [(nzVisible)]="isVisible1" nzTitle="添加缴费记录" (nzOnCancel)="handleCancel1()"
           (nzOnOk)="add()"  [nzFooter]="modalFooter">
-  <form  nz-form *ngIf="add1">
+  <form  nz-form>
     <div nz-row>
       <nz-form-item>
         <nz-form-label [nzSpan]="6">机器人所属公司</nz-form-label>
@@ -255,19 +255,18 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-  </form>
-  <form nz-form *ngIf="add2">
+    <div nz-row>
     <nz-form-item>
       <nz-form-label [nzSpan]="6">上传缴费凭证</nz-form-label>
       <nz-upload  [nzShowUploadList]="true" [nzAction]="uploadUrl"  (nzChange)="handleChange($event)">
         <button style="width: 200px;margin-top: 8px" nz-button><i nz-icon nzType="upload"></i><span>点击上传</span></button>
       </nz-upload>
     </nz-form-item>
+    </div>
   </form>
+
   <ng-template #modalFooter>
-    <button *ngIf="add1" nz-button nzType="primary" (click)="modelAdd()" >下一步</button>
-    <button *ngIf="add2" nz-button nzType="primary" (click)="modelAdd()" >上一步</button>
-    <button *ngIf="add2" nz-button nzType="primary" (click)="add()" >完成</button>
+    <button nz-button nzType="primary" (click)="add()" >完成</button>
   </ng-template>
 
 </nz-modal>

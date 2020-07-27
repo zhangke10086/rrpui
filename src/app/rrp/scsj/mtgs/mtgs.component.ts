@@ -33,6 +33,8 @@ export class MtgsComponent implements OnInit {
     owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
     companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
   };
+  selectedProvince;
+  selectedCity;
   constructor(
     private route: ActivatedRoute,
     private datePipe: DatePipe,
@@ -42,6 +44,12 @@ export class MtgsComponent implements OnInit {
   }
 
   ngOnInit() {
+    const CACHE = sessionStorage.getItem('mapquery');
+    if (CACHE) {
+      const data = JSON.parse(CACHE);
+      this.selectedProvince = data.province;
+      this.selectedCity = data.city;
+    }
     // this.getMtgs();
     this.onquery(this.jsondata);
   }

@@ -32,7 +32,7 @@ export class Zlgl1Component implements OnInit {
    workshopId = '';
    internalId = '';
    leases: Lease[];
-   lease: Lease;
+   lease: Lease = new Lease();
    id;
    robot: Robot;
    robots: Robot[];
@@ -119,6 +119,7 @@ export class Zlgl1Component implements OnInit {
     this.isVisible2 = true;
   }
   showModal1(): void {
+    this.lease = new Lease();
     this.isVisible1 = true;
     this.dateRange = [];
     this.contractId = undefined;
@@ -129,7 +130,7 @@ export class Zlgl1Component implements OnInit {
     this.connector = undefined;
   }
   showModa3(data) {
-    if (data.paymentSituation === '2'){
+    if (data.paymentSituation === '2') {
       this.message.info('已发起续费请求，请耐心等待客服经理审批！');
     } else {
       this.isVisible3 = true;
@@ -164,7 +165,7 @@ export class Zlgl1Component implements OnInit {
       contract: this.contract, connector: this.connector, uploadurl: this.responseurl, state: '未启用'};
     this.zlgl1Service.addLease(add)
       .subscribe((res: any) => {
-        if(res.state === 200) {
+        if (res.state === 200) {
           this.onquery(this.jsondata);
           this.message.success('增加成功！');
         } else {
@@ -184,11 +185,15 @@ export class Zlgl1Component implements OnInit {
     const update = {id: this.id, robot: this.robot, contractId: this.contractId, companyId: this.company1,
       costWay: this.costWay, costMonth: this.costMonth, startTime: Date.parse(new Date().toDateString()) + '',
       paymentSituation: this.paymentSituation, workshopId: this.workshopId, internalId: this.internalId,
-      contract: this.contract, connector: this.connector};
+      contract: this.contract, connector: this.connector, uploadurl: this.responseurl};
     this.zlgl1Service.updateLease(update)
       .subscribe((res: any) => {
-        this.onquery(this.jsondata);
-        this.message.success('修改成功！');
+        if (res.state === 200) {
+          this.onquery(this.jsondata);
+          this.message.success('修改成功！');
+        } else {
+          this.message.error('修改失败');
+        }
       });
   }
   handleCancel(): void {

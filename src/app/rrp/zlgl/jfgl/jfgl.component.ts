@@ -21,8 +21,6 @@ export class JfglComponent implements OnInit {
   isVisible1 = false;
   // 查看详情弹框
   isVisible2 = false;
-  add1 = false; // 添加缴费记录窗口1
-  add2 = false; // 添加缴费记录窗口2
    id;
   belongcompany;
    paymentAmount: number;
@@ -134,10 +132,7 @@ export class JfglComponent implements OnInit {
     this.lease = data.lease;
   }
   showModal1(): void {
-    // this.getCompanysWithRobot();
-    // this.getCompanys();
     this.isVisible1 = true;
-    this.add1 = true;
   }
   showModal(data: Pay): void {
     console.log(data)
@@ -164,8 +159,6 @@ export class JfglComponent implements OnInit {
   }
   add(): void {
     this.isVisible1 = false;
-    this.add2 = false;
-    this.add1 = false;
     const add = {robot: this.robot, paymentAmount: this.paymentAmount, company: this.company,
       paymentTime: this.lease.paymentdeadline, paymentDeadline: formatDate(this.paymentDeadline.getTime(), 'yyyy-MM-dd', 'zh-Hans'), examineSituation: this.examineSituation,
       paymentDuration: this.paymentDuration, paymentVoucher: this.paymentVoucher, lease: this.lease ,
@@ -204,8 +197,6 @@ export class JfglComponent implements OnInit {
   }
   handleCancel1(): void {
     this.isVisible1 = false;
-    this.add1 = false;
-    this.add2 = false;
   }
   handleCancel2(): void {
     this.isVisible2 = false;
@@ -253,10 +244,6 @@ export class JfglComponent implements OnInit {
       }
     })
 
-  }
-  modelAdd() {
-    this.add1 = !this.add1;
-    this.add2 = !this.add2;
   }
   onquery(data) {
     this.query(data);

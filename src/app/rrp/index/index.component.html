@@ -18,8 +18,8 @@
         </span>
       </div>
       <div id="mainNav">
-          <ul  class="nav"  >
-            <li class="menu" *ngFor="let a of menus;let i = index;" (click)="showSubMenu(a ,i-1); navigateTo(a.children[0]);" (mouseleave)="notShowSubMenu(a, i)">
+          <ul  class="nav" >
+            <li class="menu"  *ngFor="let a of menus;let i = index;" (click)="showSubMenu(a ,i-1); navigateTo(a.children[0]);" (mouseleave)="notShowSubMenu(a, i)">
               <span >{{a.title}}</span>
               <dl class="jnNav" *ngIf="a.hasOwnProperty('children') && a.children"  [ngStyle]="{'display': a.showSubMenu ? 'block':'none','margin-left': '-2.6rem'}" >
                 <dd *ngFor="let b of a.children" (click)="navigateTo(b)">

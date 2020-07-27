@@ -41,7 +41,8 @@ export class IndexComponent implements OnInit {
               private http: HttpClient,
               private posturl: UrlService,
               private yhglService: YhglService,
-              private message: NzMessageService) {
+              private message: NzMessageService,
+              private activateInfo: ActivatedRoute) {
     // 锁死浏览器后退事件,防止出现empty缓冲页面
     location.onPopState(() => {
       router.navigate(['/index/empty']).then(res => {
@@ -85,6 +86,13 @@ export class IndexComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (event.url.includes('/index?scsj=true')) {
+          this.doSomething();
+        }
+      }
+    })
   }
   // 拼明细节点菜单
   digoutMenu(data) {
@@ -107,30 +115,6 @@ export class IndexComponent implements OnInit {
       }
       this.menus.push(menu);
     });
-    for (const obj of this.menus) {
-      if (obj.title === '互联网') {
-        obj.icon = 'ie';
-      }
-      if (obj.title === '生产数据') {
-        obj.icon = 'bar-chart';
-      }
-      if (obj.title === '生产管理') {
-        obj.icon = 'robot';
-      }
-      if (obj.title === '运行情况') {
-        obj.icon = 'dashboard';
-      }
-      if (obj.title === '维修维护') {
-        obj.icon = 'scissor';
-      }
-      if (obj.title === '租赁管理') {
-        obj.icon = 'apartment';
-      }
-      if (obj.title === '系统配置') {
-        obj.icon = 'setting';
-      }
-    }
-    console.log(this.menus);
   }
   navigateTo(data: any) {
     if (data.url) {
@@ -138,14 +122,9 @@ export class IndexComponent implements OnInit {
       if (data === this.home && this.tabs.findIndex(p => data.url.includes(p.url))) {
         this.router.navigate([data.url]);
       }
-      if (this.tabs.includes(data)) {
-        this.router.navigate(['/index/empty']).then(() => {
-          this.router.navigate([data.url], { queryParams: { menuid: data.id } });
-        }); } else {
-        this.tabs.push(data);
-        this.router.navigate(['/index/empty']).then(res => {
-          this.router.navigate([data.url], { queryParams: { menuid: data.id } }); });
-      }
+      this.router.navigate(['/index/empty']).then(() => {
+        this.router.navigate([data.url], { queryParams: { menuid: data.id } });
+        });
       this.tabIndex = this.tabs.findIndex(p => data.url.includes(p.url));
     }
   }
@@ -203,8 +182,8 @@ export class IndexComponent implements OnInit {
     // 设置当前子菜单不显示
     // item.showSubMenu = false;
   }
-  doSomething(is: boolean) {
-    this.navigateTo(this.menus[1]);
-    this.activemenus = this.menus[1];
+  doSomething() {
+    this.navigateTo(this.menus[1].children[0]);
+    this.activemenus = this.menus[1].children;
   }
 }
