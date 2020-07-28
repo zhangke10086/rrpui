@@ -46,9 +46,12 @@ export class MtgsComponent implements OnInit {
 
   ngOnInit() {
     const data = JSON.parse(this.route.snapshot.queryParams.data);
-    this.selectedProvince = data.province;
-    this.selectedCity = data.city;
-    
+    if(data) {
+      this.selectedProvince = data.province;
+      this.selectedCity = data.city;
+      this.jsondata.province = data.province;
+      this.jsondata.city = data.city;
+    }
     this.onquery(this.jsondata);
   }
   onquery(data) {

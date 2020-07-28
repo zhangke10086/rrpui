@@ -93,14 +93,13 @@ export class Zlgl1Component implements OnInit {
       });
   }
   getCompanys(): void {
-    this.qyglService.getCompanys()
+    this.qyglService.getLeaseCompanys()
       .subscribe((res: any) => {
         this.companys1 = res.data;
       });
   }
   getRobotsByBelongingComapnyId(data): void {
-    console.log(data);
-    this.qyglService.getRobotByBelongingCompanyId(data.id)
+    this.qyglService.getRobotByBelongAndCanBeLeased(data.id)
       .subscribe((res: any) => {
         this.robots = res.data;
       });

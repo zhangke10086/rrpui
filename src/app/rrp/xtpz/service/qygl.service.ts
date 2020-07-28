@@ -20,8 +20,10 @@ export class QyglService {
   private findAllCompanyTypeUrl = this.url.hostname + '/companyType/findAllCompanyType';
   private findAllCompanyWithRobotUrl = this.url.hostname + '/company/findAllCompanysByTowKeys';
   private findAllCompanyUrl = this.url.hostname + '/company/findAllCompany';
+  private findLeaseCompanyUrl = this.url.hostname + '/company/findLeaseCompany';
   private findCompanyByIdUrl = this.url.hostname + '/company/findById';
   private findRobotsByBeloingingCompanyId = this.url.hostname + '/robot/findAllByCompany';
+  private findRobotsByBeloingingCompanyIdAndCanBeLeased = this.url.hostname + '/robot/findAllByBelongCompanyAndCanBeLeased';
   private findCompanyByKeyWords = this.url.hostname + '/company/findByKey';
   /** POST: add a new company to the server */
   addCompany(company: { name: string, companyType: CompanyType, province: string,
@@ -66,6 +68,12 @@ export class QyglService {
         catchError(this.handleError<Response>('getCompanys'))
       );
   }
+  getLeaseCompanys(): Observable<Response> {
+    return this.http.get<Response>(this.findLeaseCompanyUrl)
+      .pipe(
+        catchError(this.handleError<Response>('getCompanys'))
+      );
+  }
   /** GET company by id. Will 404 if id not found */
   getCompany(id: number): Observable<Response> {
     const url = this.findCompanyByIdUrl + '?id=' + id;
@@ -76,6 +84,12 @@ export class QyglService {
   /** GET company by BelongingCompany_Id. Will 404 if id not found */
   getRobotByBelongingCompanyId(id: number): Observable<Response> {
     const url = this.findRobotsByBeloingingCompanyId + '?id=' + id;
+    return this.http.get<Response>(url).pipe(
+      catchError(this.handleError<Response>(`getRobotByBelongingCompanyId id=${id}`))
+    );
+  }
+  getRobotByBelongAndCanBeLeased(id: number): Observable<Response> {
+    const url = this.findRobotsByBeloingingCompanyIdAndCanBeLeased + '?id=' + id;
     return this.http.get<Response>(url).pipe(
       catchError(this.handleError<Response>(`getRobotByBelongingCompanyId id=${id}`))
     );

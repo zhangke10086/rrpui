@@ -21,11 +21,15 @@
           <ul  class="nav" >
             <li class="menu"  *ngFor="let a of menus;let i = index;" (click)="showSubMenu(a ,i-1); navigateTo(a.children[0]);" (mouseleave)="notShowSubMenu(a, i)">
               <span >{{a.title}}</span>
-              <dl class="jnNav" *ngIf="a.hasOwnProperty('children') && a.children"  [ngStyle]="{'display': a.showSubMenu ? 'block':'none','margin-left': '-2.6rem'}" >
+              <dl class="jnNav" *ngIf="a.hasOwnProperty('children') && a.children "  [ngStyle]="{'display': a.showSubMenu ? 'block':'none','margin-left': '-2.6rem'}" >
                 <dd *ngFor="let b of a.children" (click)="navigateTo(b)">
                   {{b.title}}
                 </dd>
+
               </dl>
+            </li>
+            <li class="menu" (click)="showPdf()">
+              <span>操作指南</span>
             </li>
           </ul>
         </div>
@@ -53,7 +57,7 @@
          border-radius:10px 10px 0 0;margin-bottom: 0;border:2px solid #2e3659">{{activeMenuname}}</span>
       <nz-content style="width: 100%;height: calc(100% - 48px);overflow-y: auto;
        margin: 0;  border:2px solid #2e3659">
-        <router-outlet (voted)="doSomething($event)"> </router-outlet>
+        <router-outlet > </router-outlet>
         <!--<app-child (voted)="doSomething($event)"> </app-child>-->
       </nz-content>
     </nz-layout>
@@ -100,4 +104,13 @@
 <!--  </nz-form-item>-->
 
 </nz-modal>
+<nz-modal class="modal-help" [(nzVisible)]="pdfVisible" nzTitle="操作指南" (nzOnCancel)="pdfVisible = false">
+  <iframe [src]="pdfUrl| safe" width="800px" height="500px">
 
+  </iframe>
+</nz-modal>
+<nz-modal  [(nzVisible)]="pdf2Visible" nzTitle="上传操作指南" (nzOnCancel)="pdf2Visible = false">
+  <nz-upload  [nzAction]="uploadUrl" [nzAccept]="'.pdf'" >
+    <button  style="width: 200px" nz-button><i nz-icon nzType="upload"></i> <span>上传</span></button>
+  </nz-upload>
+</nz-modal>

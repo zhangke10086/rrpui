@@ -14,6 +14,7 @@ import {WxwhComponent} from '../wxwh/wxwh.component';
 import {ScsjComponent} from '../scsj/scsj.component';
 import {ScglComponent} from '../scgl/scgl.component';
 import {QuerylistModule} from "../../helpcenter/querylist/querylist.module";
+import {CoreModule} from "../../core/core.module";
 
 
 const routes: Routes = [
@@ -70,13 +71,14 @@ const routes: Routes = [
     ScsjComponent,
     ScglComponent
   ],
-  imports: [
-    CommonModule,
-    NgZorroAntdModule,
-    RouterModule,
-    RouterModule.forChild(routes),
-    FormsModule,
-    QuerylistModule,
-  ]
+    imports: [
+        CommonModule,
+        NgZorroAntdModule,
+        RouterModule,
+        RouterModule.forChild(routes),
+        FormsModule,
+        QuerylistModule,
+        CoreModule,
+    ]
 })
 export class IndexModule { }

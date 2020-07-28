@@ -28,12 +28,16 @@ export class IndexComponent implements OnInit {
   showALL: boolean;
   tabIndex = 0;
   theme = 'dark';
+  pdfVisible = false;
+  pdf2Visible = false;
   info = JSON.parse(localStorage.getItem('userinfo')).username;
   home = {
     url: '/index/welcome',
     title: '首页'
   };
   activeMenuname = '';
+  uploadUrl = this.posturl.hostname + '/wxwh/upload';
+  pdfUrl = 'http://localhost:8081/instruction.pdf';
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
               private dropDownService: NzDropdownService,
@@ -117,6 +121,10 @@ export class IndexComponent implements OnInit {
     });
   }
   navigateTo(data: any) {
+    if(data.title === '上传操作指南'){
+      this.pdf2Visible = true;
+      return;
+    }
     if (data.url) {
       this.activeMenuname =  data.title;
       if (data === this.home && this.tabs.findIndex(p => data.url.includes(p.url))) {
@@ -175,6 +183,7 @@ export class IndexComponent implements OnInit {
     // item.showSubMenu = true;
     if (item.children) {
       this.activemenus = item.children;
+      console.log(this.activemenus)
     }
 }
   notShowSubMenu(item: any, index: any): void {
@@ -187,5 +196,8 @@ export class IndexComponent implements OnInit {
       this.router.navigate([this.menus[1].children[0].url], { queryParams: { menuid: this.menus[1].children[0].id , data: sessionStorage.getItem('mapquery')} });
     });
     this.activemenus = this.menus[1].children;
+  }
+  showPdf(){
+    this.pdfVisible = true;
   }
 }
