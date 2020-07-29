@@ -298,4 +298,5 @@ export class YxsjtjComponent implements OnInit {
       });
     }
   }
+  delete(data){}
 }
