@@ -57,6 +57,7 @@ export class YxsjtjComponent implements OnInit {
     // this.getRatioLate();
     this.getYxsjtj();
     this.onquery(this.jsondata);
+    this.onquery1(this.jsondata);
   }
 
   getYxsjtj(): void {
@@ -294,6 +295,49 @@ export class YxsjtjComponent implements OnInit {
       this.yxsjtjService.query(this.jsondata).then((res: any) => {
         if (res.state === 200) {
           this.runs = res.data;
+        }
+      });
+    }
+  }
+
+  onquery1(data) {
+    // 保留上次查询
+    if (this.jsondata === data) {
+      this.yxsjtjService.query1(this.jsondata).then((res: any) => {
+        if (res.state === 200) {
+          this.troubles = res.data;
+        }
+      });
+    } else {
+      // data为查询组件所选值
+      console.log(data);
+      // 初始化 传参jsondata
+      this.jsondata = {
+        province: '',
+        city: '',
+        companyid: '',
+        owncompanyid: JSON.parse(localStorage.getItem('userinfo')).company.id,
+        companytypeid: JSON.parse(localStorage.getItem('userinfo')).company.companyType.id,
+        robotid: ''
+      };
+      // 传参赋值
+      // 若不选条件 则向后端传空值
+      if (data.province && data.province.name) {
+        this.jsondata.province = data.province.name;
+      }
+      if (data.city && data.city.name) {
+        this.jsondata.city = data.city.name;
+      }
+      if (data.robot) {
+        this.jsondata.robotid = data.robot.id;
+      }
+      if (data.company) {
+        this.jsondata.companyid = data.company.id;
+      }
+
+      this.yxsjtjService.query(this.jsondata).then((res: any) => {
+        if (res.state === 200) {
+          this.troubles = res.data;
         }
       });
     }
