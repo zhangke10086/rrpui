@@ -102,7 +102,8 @@ export class MtglComponent implements OnInit {
   }
 
   getRobots(): void {
-    this.bljqrglService.getRobots()
+    const owncompanyid = JSON.parse(localStorage.getItem('userinfo')).company.id;
+    this.benchService.getRobots(owncompanyid)
       .subscribe((res: any) => {
         this.robots = res.data;
       });
