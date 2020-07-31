@@ -334,7 +334,6 @@ export class YxsjtjComponent implements OnInit {
       if (data.company) {
         this.jsondata.companyid = data.company.id;
       }
-
       this.yxsjtjService.query(this.jsondata).then((res: any) => {
         if (res.state === 200) {
           this.troubles = res.data;
