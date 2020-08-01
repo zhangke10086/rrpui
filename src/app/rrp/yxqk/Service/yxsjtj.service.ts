@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Response, Trouble} from '../../../core/entity/entity';
+import {Response, Trouble, Warning} from '../../../core/entity/entity';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {UrlService} from '../../../core/service/url.service';
 import {Observable, of} from 'rxjs';
@@ -105,6 +105,18 @@ export class YxsjtjService {
       }, error => {
         reject(error);
       })));
+  }
+  query0(data) {
+    const url = this.url.hostname + '/run/QueryRun';
+    return this.http.post(url, data).pipe(
+      catchError(this.handleError<Response>(`query0 data=${data}`))
+    );
+  }
+query2(data) {
+    const url = this.url.hostname + '/run/QueryRun';
+    return this.http.post(url, data).pipe(
+      catchError(this.handleError<Response>(`query0 data=${data}`))
+    );
   }
 
   /**

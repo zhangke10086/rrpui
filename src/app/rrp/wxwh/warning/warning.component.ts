@@ -19,6 +19,8 @@ export class WarningComponent implements OnInit {
   // warning1: Warning;
   operation;
   jsondata = {
+    startdate: '',
+    enddate: '',
     province: '',
     city: '',
     companyid: '',
@@ -104,7 +106,6 @@ export class WarningComponent implements OnInit {
   delete(data: Warning | number): void {
     this.warningService.deleteWarning(data)
       .subscribe(res => {
-
         this.onquery(this.jsondata);
         alert(res.msg);
       });
@@ -123,6 +124,8 @@ export class WarningComponent implements OnInit {
       console.log(data);
       // 初始化 传参jsondata
       this.jsondata = {
+        startdate: '',
+        enddate: '',
         province: '',
         city: '',
         companyid: '',
@@ -132,17 +135,23 @@ export class WarningComponent implements OnInit {
       };
       // 传参赋值
       // 若不选条件 则向后端传空值
-      if (data.province && data.province.name){
-        this.jsondata.province=data.province.name;
+      if (data.province && data.province.name) {
+        this.jsondata.province = data.province.name;
       }
-      if (data.city && data.city.name){
-        this.jsondata.city=data.city.name;
+      if (data.city && data.city.name) {
+        this.jsondata.city = data.city.name;
       }
       if (data.robot) {
         this.jsondata.robotid = data.robot.id;
       }
       if (data.company) {
         this.jsondata.companyid = data.company.id;
+      }
+      if (data.enddate) {
+        this.jsondata.enddate = data.enddate;
+      }
+      if (data.startdate) {
+        this.jsondata.startdate = data.startdate;
       }
 
       this.warningService.query(this.jsondata).then((res: any) => {
