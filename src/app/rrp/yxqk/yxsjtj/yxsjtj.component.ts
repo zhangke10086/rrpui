@@ -21,10 +21,12 @@ export class YxsjtjComponent implements OnInit {
   value: string;
   runs: Run[];
   operation;
+  check = '';
   text = '运行时长';
   troubles: Trouble[];
   private message: NzMessageService;
   jsondata = {
+    check: '',
     startdate: '',
     enddate: '',
     province: '',
@@ -277,6 +279,9 @@ export class YxsjtjComponent implements OnInit {
   //       this.runsData = res.data;
   //     });
   // }
+  change(): void {
+    this.check = 'true';
+  }
 
   onquery(data) {
     console.log(data);
@@ -360,6 +365,7 @@ export class YxsjtjComponent implements OnInit {
       console.log(data);
       // 初始化 传参jsondata
       this.jsondata = {
+        check: '',
         startdate: '',
         enddate: '',
         province: '',
@@ -388,6 +394,9 @@ export class YxsjtjComponent implements OnInit {
       }
       if (data.startdate) {
         this.jsondata.startdate = data.startdate;
+      }
+      if (this.check !== '') {
+        this.jsondata.check = 'true';
       }
       console.log(this.jsondata);
       this.yxsjtjService.query(this.jsondata).then((res: any) => {
