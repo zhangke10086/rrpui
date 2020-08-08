@@ -120,6 +120,9 @@ export class DhbmjComponent implements OnInit {
     if (data.startdate) {
       this.jsondata.startdate = data.startdate;
     }
+    if (data.robot) {
+      this.jsondata.robotid = data.robot.id;
+    }
 
     console.log(this.jsondata);
 
