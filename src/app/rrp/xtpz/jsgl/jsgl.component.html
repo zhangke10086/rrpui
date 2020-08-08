@@ -48,7 +48,7 @@
     <td>{{ role.description }}</td>
     <td>
       <button *ngIf="operation_Au.indexOf(2)!=-1" nz-button [nzType]="'primary'" (click)="delete(role.id)"><span>删除</span></button>
-      <nz-divider nzType="vertical"></nz-divider>
+      <nz-divider *ngIf="operation_Au.indexOf(2)!=-1" nzType="vertical"></nz-divider>
       <button *ngIf="operation_Au.indexOf(3)!=-1" nz-button [nzType]="'primary'" (click)="showUpdateModal(role)"><span>修改权限</span></button>
     </td>
   </tr>
