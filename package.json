@@ -21,7 +21,7 @@
     "@angular/router": "~8.2.0",
     "angular-highcharts": "^9.0.9",
     "echarts": "^4.7.0",
-    "highcharts": "^8.1.2",
+    "highcharts": "^9.0.0",
     "install": "^0.13.0",
     "ng-zorro-antd": "^8.5.2",
     "ng2-pdf-viewer": "^6.3.2",
